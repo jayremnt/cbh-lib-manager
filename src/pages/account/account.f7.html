@@ -1,0 +1,142 @@
+<template>
+  <div class="page">
+    <div class="page-content">
+
+      <div class="bg-dark m-b-30">
+        <div class="container">
+          <div class="row p-b-60 p-t-60">
+            <div class="col-md-6 text-white p-b-30">
+              <div class="media">
+                <div class="avatar avatar-xl mr-3">
+                  <img src="assets/img/users/user-5.jpg" class="rounded-circle" alt=""/>
+                </div>
+                <div class="media-body">
+                  <h1>Nguyễn Anh Nhân </h1>
+                  <div class="text-overline opacity-75">Public Tester</div>
+                  <p class="opacity-75" style="font-size: 12px; margin-top: 10px;">
+                    <a href="/account/change-info/">[Sửa thông tin của bạn]</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 text-md-right text-white">
+              <div>
+              </div>
+              <p class="m-t-10">
+                <!--a href="#" class="btn btn-white-translucent"> 👑 Infinity Plan</a-->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container pull-up">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card m-b-30">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="avatar mr-2 avatar-xs">
+                    <div class="avatar-title bg-dark rounded-circle">
+                      <i class="mdi mdi-microphone mdi-18px"></i>
+                    </div>
+                  </div>
+                  Introduction
+                </div>
+              </div>
+              <div class="list-group list  list-group-flush">
+
+                <div class="list-group-item p-all-15 h6 ">
+                  <i class="mdi mdi-briefcase"></i>
+                  Tham gia vào ngày 20/10/2021
+                </div>
+                <div class="list-group-item p-all-15 h6 ">
+                  <i class="mdi mdi-facebook"></i>
+                  Liên hệ
+                  <a href="#" target="_blank" class="text-underline"> Facebook</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="card m-b-30">
+
+              <div class="card-header">
+                <div class="avatar mr-2 avatar-xs">
+                  <div class="avatar-title bg-primary rounded-circle">
+                    <i class="mdi mdi-account mdi-18px"></i>
+                  </div>
+                </div>
+               Dự án đã tham gia
+              </div>
+
+              <div class="list-group list list-group-flush">
+
+                <div class="list-group-item d-flex  align-items-center">
+                  <div class="m-r-20">
+                    <div class="avatar avatar-sm ">
+                      <div class="avatar-title rounded-circle bg-success">M</div>
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="name"><span>MonokaiToolkit Android</span></div>
+                    <div class="text-muted">Tester</div>
+                  </div>
+
+                </div>
+                <div class="list-group-item d-flex  align-items-center">
+                  <div class="m-r-20">
+                    <div class="avatar avatar-sm ">
+                      <div class="avatar-title rounded-circle bg-warning">M</div>
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="name">MonikaiToolkit IOS</div>
+                    <div class="text-muted">Tester</div>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+          <div class="col-lg-8 order-1 order-lg-0 m-b-30">
+              <div class="card m-b-30">
+                <div class="card-header">
+                  <div class="card-title">Bài viết mới</div>
+                </div>
+                <div class="card-body">
+                  <div id="summernote"></div>
+                </div>
+              </div>
+<!--              bài đăng của người dùng -->
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  import Mext from "../../js/mext";
+  import Framework7 from "../../js/framework7-custom";
+  import Utils from "../../js/utils/utils";
+  import CONSTANTS from "../../js/constants";
+  import {t} from "../../js/mext";
+
+  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    $on("pageBeforeIn", (e, page) => {
+      window.$("#summernote").summernote({
+        height: 100
+      });
+    });
+
+    // Return render function
+    return $render;
+  }
+</script>

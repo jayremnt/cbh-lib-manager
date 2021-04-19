@@ -1,0 +1,82 @@
+<template>
+    <div class="page">
+        <div class="page-content">
+
+            <section class="admin-content">
+                <div class="container py-5">
+                    <div class="col-md-15">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                <h4 class="m-b-0">
+                                    Người tham gia dự án MonokaiToolkit Android
+                                </h4>
+                                <div class="card-controls">
+                                    <a href="/manage/projects/${projectId}/add-participants/" class="btn btn-primary">Thêm
+                                        người</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover ">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Tên</th>
+                                            <th>Vai trò</th>
+                                            <th>Lựa chọn</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        ${participants.map(item => $h`
+                                        <tr>
+                                            <td>${item.id}</td>
+                                            <td>${item.fullname}</td>
+                                            <td>${item.role}</td>
+                                            <td>
+                                                <button type="button" class="btn m-b-15 ml-2 mr-2 btn-outline-danger"
+                                                        @click="${deleteParticipant}">
+                                                    <i class="mdi mdi-trash-can-outline"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        `)}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</template>
+<script>
+	import Mext from "../../../js/mext";
+	import Framework7 from "../../../js/framework7-custom";
+	import Utils from "../../../js/utils/utils";
+	import CONSTANTS from "../../../js/constants";
+	import {t} from "../../../js/mext";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		let projectId = (props.id);
+		let participants = [];
+		Mext.api("get_project_participants", {
+			project_id: projectId
+		}).then(response => {
+			participants = response.data;
+			$update();
+		});
+
+		const deleteParticipant = (e) => {
+            Mext.api('delete_project_participant', {
+
+            }).then(response => {
+
+            });
+        }
+		// Return render function
+		return $render;
+	}
+</script>

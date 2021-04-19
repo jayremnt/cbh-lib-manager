@@ -1,0 +1,59 @@
+<template>
+  <div class="page">
+    <div class="page-content">
+      <section class="admin-content">
+        <div class="container py-5">
+          <div class="col-md-15">
+            <div class="card m-b-30">
+              <div class="card-header">
+                <h5 class="m-b-0">
+                  <i class="mdi mdi-checkbox-intermediate"></i> Dự án đã tham gia
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Tên dự án</th>
+                      <th class="text-center">Code</th>
+                      <th class="text-center">Nền tảng</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      ${joinedProjects.map(item => $h`
+                        <tr>
+                          <td>
+                            <a href="/projects/${item.id}/">
+                              ${item.title}
+                            </a>
+                          </td>
+                          <td class="text-center">${item.code}</td>
+                          <td class="text-center">${item.platform}</td>
+                        </tr>
+                      `)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</template>
+<script>
+  import Mext from "../../js/mext";
+  import Framework7 from "../../js/framework7-custom";
+  import Utils from "../../js/utils/utils";
+  import CONSTANTS from "../../js/constants";
+  import {t} from "../../js/mext";
+
+  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    let joinedProjects = Mext.joinedProjects;
+    console.log(joinedProjects);
+    // Return render function
+    return $render;
+  }
+</script>

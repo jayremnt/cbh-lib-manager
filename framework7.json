@@ -1,0 +1,26 @@
+{
+  "cwd": "C:\\Users\\jayre\\Repo\\cbn-project\\cbh\\cbh-lib-manager",
+  "type": [
+    "web"
+  ],
+  "name": "CBH Lib Manager",
+  "framework": "core",
+  "template": "tabs",
+  "bundler": "webpack",
+  "cssPreProcessor": "scss",
+  "webpack": {
+    "developmentSourceMap": true,
+    "productionSourceMap": true,
+    "hashAssets": false,
+    "preserveAssetsPaths": false,
+    "inlineAssets": true
+  },
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false
+}

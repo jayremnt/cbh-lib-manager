@@ -1,0 +1,147 @@
+<template>
+    <div class="page js-scrollbar" style="background: #212841">
+        <ul class="menu">
+            <li class="menu-item ">
+                <a href="/" data-view="#view-main" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Overview</span>
+                    </span>
+                    <span class="menu-icon">
+                        <span class="icon-badge badge-success badge badge-pill">4</span>
+                        <i class="icon-placeholder mdi mdi-shape-outline"></i>
+                    </span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="open-dropdown menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">
+                            Borrowers
+                            <span class="menu-arrow"></span>
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <span class="icon-badge badge-success badge badge-pill">4</span>
+                        <i class="icon-placeholder mdi mdi-shape-outline"></i>
+                    </span>
+                </a>
+                <!--submenu-->
+                <ul class="sub-menu">
+                    <li class="menu-item">
+                        <a href="/borrowers/" data-view="#view-main" class="menu-link">
+                            <span class="menu-label">
+                                <span class="menu-name">All borrowers</span>
+                            </span>
+                            <span class="menu-icon">
+                                <i class="icon-placeholder mdi mdi-shape-circle-plus "></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/borrowers/add" data-view="#view-main" class="menu-link">
+                            <span class="menu-label">
+                                <span class="menu-name">Add borrower</span>
+                            </span>
+                            <span class="menu-icon">
+                                <i class="icon-placeholder mdi mdi-shape-circle-plus "></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="open-dropdown menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">
+                            Books
+                            <span class="menu-arrow"></span>
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder mdi mdi-information-outline "></i>
+                    </span>
+                </a>
+                <!--submenu-->
+                <ul class="sub-menu">
+                    <li class="menu-item">
+                        <a href="/books/" data-view="#view-main" class="menu-link">
+                            <span class="menu-label">
+                                <span class="menu-name">All books</span>
+                            </span>
+                            <span class="menu-icon">
+                                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/books/add/" data-view="#view-main" class="menu-link">
+                            <span class="menu-label">
+                                <span class="menu-name">Add book</span>
+                            </span>
+                            <span class="menu-icon">
+                                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/books/available/" data-view="#view-main" class="menu-link">
+                            <span class="menu-label">
+                                <span class="menu-name">Available books</span>
+                            </span>
+                            <span class="menu-icon">
+                                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item ">
+                <a href="/about/" data-view="#view-main" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">About</span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder mdi mdi-information-outline "></i>
+                    </span>
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="popup popup-tablet-fullscreen">
+            <div class="view view-main view-init" data-url="/login/"></div>
+        </div>
+    </div>
+</template>
+<script>
+	import $ from 'jquery';
+	import Mext from "../js/mext";
+	import CONSTANTS from "../js/constants";
+
+	export default function (props, {$f7, $update, $on, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		let account = {};
+		$(document).on('click', '.menu-item', function (e) {
+			$('.menu-item').each((ind, e) => {
+				$(e).removeClass("active");
+			});
+			$(this).addClass("active");
+		});
+
+		$onMounted(() => {
+			window.jQuery('.js-scrollbar').scrollbar();
+		});
+
+
+        let waitBootInterval = setInterval(() => {
+            if (Mext.isBooted) {
+                clearInterval(waitBootInterval);
+
+                account = Mext.account;
+                console.log(account.role);
+                $update();
+            }
+        }, 100);
+
+		return $render;
+	};
+</script>

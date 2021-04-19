@@ -1,0 +1,106 @@
+<template>
+    <div class="page">
+        <div class="page-content">
+            <section class="admin-content">
+                <div class="container py-5">
+                    <div class="card m-b-30">
+                        <div class="card-header">
+                            <h5 class="m-b-0">
+                                Thêm người dùng vào dự án
+                            </h5>
+                        </div>
+                        <form action="#" method="POST" onsubmit="${submitCreation}">
+                            <div class="card-body">
+                                ${isSubmitSent && $h`
+                                <div class="form-group">
+                                    <div class="alert ${addSuccess?'alert-success':'alert-danger'}" role="alert">
+                                        ${returnMessage}
+                                    </div>
+                                </div>
+                                `}
+                                <div class="form-group">
+                                    <label for="accountName">Họ và tên</label>
+                                    <input type="text" class="form-control" id="accountName" name="account-name"
+                                           placeholder="Nhập họ và tên..."/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountEmail">Email</label>
+                                    <input type="text" class="form-control" id="accountEmail" name="account-email"
+                                           placeholder="Nhập địa chỉ email..."/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="role">Vai trò</label>
+                                    <select class="form-control" name="account-role" id="role">
+                                        <option value="" selected>Choose...</option>
+                                        <option value="tester">Tester</option>
+                                        <option value="manager">Manager</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-secondary">Dự Án</label>
+                                    <select multiple class="form-control js-select2">
+                                        <option selected>MonokaiToolkit Android</option>
+                                        <option value="">MonokaiToolkit IOS</option>
+                                        <option value="">MonokaiToolkit Extension</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" name="create-project" value="ok" class="btn btn-primary">Hoàn
+                                        tất
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</template>
+
+<script>
+	import Mext from "../../../js/mext";
+	import Framework7 from "../../../js/framework7-custom";
+	import Utils from "../../../js/utils/utils";
+	import CONSTANTS from "../../../js/constants";
+	import {t} from "../../../js/mext";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		$on('pageBeforeIn', (e, page) => {
+			window.$(".js-select2").select2();
+		});
+
+		let isSubmitSent = false;
+		let addSuccess = false;
+		let returnMessage = "";
+
+		const submitCreation = function (e) {
+			e.preventDefault();
+			isSubmitSent = true;
+			let accountName = document.getElementById("accountName").value;
+			let accountEmail = document.getElementById("accountEmail").value;
+			let role = document.getElementById("role").value;
+			let password = Math.random().toString(36).slice(-8);
+
+			if (!accountName || !accountEmail || !role) {
+				returnMessage = "Chưa điền đủ mục";
+			}
+			else {
+				Mext.api("create_account", {
+					fullname: accountName,
+					email: accountEmail,
+					password: password,
+					role: role
+				}).then(response => {
+					console.log(response);
+					addSuccess = response.status;
+					returnMessage = response.message;
+
+					$update();
+				});
+			}
+		}
+		return $render;
+	}
+</script>

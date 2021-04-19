@@ -1,0 +1,40 @@
+{
+  "name": "MonokaiToolkit",
+  "version": "5.0",
+  "description": "Full protect your privacy",
+  "permissions": [
+    "downloads",
+    "cookies",
+    "storage",
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "https://*.facebook.com/*",
+    "https://*.messenger.com/*",
+    "https://*.monokaitoolkit.com/*",
+    "https://*.gstatic.com/*",
+    "ws://*/*",
+    "wss://*/*"
+  ],
+  "browser_action": {
+    "default_title": "MonokaiToolkit Control Panel"
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.facebook.com/*",
+        "https://*.messenger.com/*"
+      ],
+      "js": ["js/contentScript.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://monokaitoolkit.com https://www.youtube.com/ https://apis.google.com/ https://www.gstatic.com/; object-src 'self'",
+  "manifest_version": 2
+}

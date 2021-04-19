@@ -1,0 +1,99 @@
+<template>
+    <div class="page">
+        <div class="page-content">
+            <section class="admin-content">
+                <div class="container py-5">
+                    <div class="col-md-15">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                <h5 class="m-b-15">
+                                    Quản lí người dùng
+                                </h5>
+                                <div class="card-controls">
+                                    <a href="/manage/accounts/add/" class="btn btn-info">Thêm người dùng</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover ">
+                                        <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Email</th>
+                                            <th>Tên người dùng</th>
+                                            <th>Vai trò</th>
+                                            <th>Lựa chọn</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        ${accounts.map(account => $h`
+                                        <tr>
+                                            <td>${account.id}</td>
+                                            <td>${account.email}</td>
+                                            <td>${account.fullname}</td>
+                                            <td>${account.role}</td>
+                                            <td>
+                                                <a href="" class="btn btn-info projects" role="button">
+                                                    <i class="mdi mdi-pencil-outline"></i>
+                                                </a>
+
+                                                <button @click="${deleteAccount}" type="button" class="btn btn-danger"
+                                                        data-id="${account.id}">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+                                        `)}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+</template>
+<script>
+	import Mext from "../../js/mext";
+	import Framework7 from "../../js/framework7-custom";
+	import Utils from "../../js/utils/utils";
+	import CONSTANTS from "../../js/constants";
+	import {t} from "../../js/mext";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		let accounts = [];
+
+		const resetList = () => {
+			Mext.api("get_all_users").then(response => {
+				accounts = response.data;
+				$update();
+			});
+		}
+
+		resetList();
+
+		const deleteAccount = (e) => {
+            let userID = e.currentTarget.dataset.id;
+
+			Mext.openConfirmModal('deleteUser').then(isConfirmed => {
+				if (!isConfirmed) return;
+
+				Mext.api("delete_account", {
+					id: userID
+				}).then(response => {
+					Mext.alert("Tester Portal", response.message);
+
+					resetList();
+				});
+			});
+		}
+
+		// Return render function
+		return $render;
+	}
+</script>

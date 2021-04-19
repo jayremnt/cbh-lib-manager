@@ -1,0 +1,94 @@
+<template>
+    <div class="page">
+        <div class="page-content">
+            <div class="col-lg-4  bg-white">
+                <div class="row align-items-center m-h-100">
+                    <div class="mx-auto col-md-8">
+                        <div class="p-b-20 text-center">
+                            <p>
+                                <img src="/assets/img/logo.svg" width="80" alt=""/>
+                            </p>
+                            <p class="admin-brand-content">
+                                NorthStudio
+                            </p>
+                        </div>
+                        <h3 class="text-center p-b-20 fw-400">Đăng nhập</h3>
+                        <form class="needs-validation" action="#" method="POST" onsubmit="${submitLogin}">
+                            ${isLoginSent && $h`
+                                <div class="form-row">
+                                    <div class="alert ${loginSuccess?'alert-success':'alert-danger'}" role="alert">
+                                        ${returnMessage}
+                                    </div>
+                                </div>
+                            `}
+                            <div class="form-row">
+                                <div class="form-group floating-label col-md-12">
+                                    <label>Email</label>
+                                    <input @change="${updateEmail}" name="email" type="email" required class="form-control" placeholder="Email"/>
+                                </div>
+                                <div class="form-group floating-label col-md-12">
+                                    <label>Password</label>
+                                    <input @change="${updatePassword}" name="password" type="password" required class="form-control"
+                                           placeholder="Mật khẩu"/>
+                                </div>
+                            </div>
+                            <button value="msc" type="submit" name="login-submit" class="btn btn-primary btn-block btn-lg">
+                                Đăng nhập
+                            </button>
+                        </form>
+                        <p class="text-right p-t-10">
+                            <a href="#" class="text-underline">Quên mật khẩu?</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</template>
+<script>
+	import Mext from "../js/mext";
+	import Utils from "../js/utils/utils";
+	import CONSTANTS from "../js/constants";
+	import {t} from "../js/mext";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+	    let isLoginSent = false;
+		let loginSuccess = false;
+		let returnMessage = "";
+
+		let email = "";
+		let password = "";
+
+		const updateEmail = (e) => {
+		    email = e.target.value;
+        };
+		const updatePassword = (e) => {
+		    password = e.target.value;
+        };
+
+        const submitLogin = (e) => {
+            e.preventDefault();
+            isLoginSent = true;
+            $update();
+            Mext.login(email, password).then(response => {
+                if (response.status === 200) {
+                    loginSuccess = true;
+                    Utils.setData("isLoggedIn", true);
+                    Utils.setData("account", response.data.account);
+                    Utils.setData("sess_key", response.data['sess_key']);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 3000);
+                }
+                returnMessage = response.message;
+                $update();
+            });
+
+            return false;
+        }
+
+		return $render;
+	}
+</script>

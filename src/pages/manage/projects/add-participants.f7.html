@@ -1,0 +1,100 @@
+<template>
+    <div class="page">
+        <div class="page-content">
+            <section class="admin-content">
+                <div class="container py-5">
+                    <div class="col-md-8 col-lg-9 m-auto">
+                        <div class="bg-white rounded m-t-10 m-b-80 shadow-lg  ">
+                            <div class=" padding-box-2 p-all-10">
+                                <div class="">
+                                    <div class="text-center p-b-20 pull-up-sm">
+                                        <div class="avatar avatar-xxl">
+                                <span class="avatar-title rounded-circle bg-success"> <i
+                                    class="mdi mdi-server"></i> </span>
+                                        </div>
+                                    </div>
+                                    <h4 class="text-center">Thêm người tham gia vào dự án <h4 class="text-center">
+                                        MonokaiToolkit Extention</h4></h4>
+                                </div>
+                                <form action="#" method="POST" onsubmit="${submitCreation}">
+                                    <div class="card-body">
+                                        ${isSubmitSent && $h`
+                                        <div class="form-group">
+                                            <div class="alert ${addSuccess?'alert-success':'alert-danger'}"
+                                                 role="alert">
+                                                ${returnMessage}
+                                            </div>
+                                        </div>
+                                        `}
+                                        <div class="form-group">
+                                            <label class="font-secondary">Chọn người tham gia</label>
+                                            <select multiple class="form-control js-select2">
+                                                <option selected>Nguyễn Anh Nhân</option>
+                                                <option value="">Nguyễn Thu Thuy</option>
+                                                <option value="">Nguyễn Gia Minh</option>
+                                                <option value="">Lê Trung Kiên</option>
+                                                <option value="">Nguyen Thi Hoa An</option>
+                                                <option value="">Nguyen Minh Phong</option>
+                                                <option value="">Tống Mỹ Linh</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Ngày hết hạn</label>
+                                            <input type="text" name="expiry-name" class="form-control"
+                                                   data-mask="00/00/0000"
+                                                   data-mask-clearifnotmatch="true" placeholder="00/00/0000"
+                                                   autocomplete="off"
+                                                   maxlength="10"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" name="add-participants" value="ok" class="btn btn-success">Hoàn Tất</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</template>
+<script>
+	import Mext from "../../../js/mext";
+	import Framework7 from "../../../js/framework7-custom";
+	import Utils from "../../../js/utils/utils";
+	import CONSTANTS from "../../../js/constants";
+	import {t} from "../../../js/mext";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		$on('pageBeforeIn', (e, page) => {
+			window.$(".js-select2").select2();
+		});
+
+		let isSubmitSent = false;
+		let addSuccess = false;
+		let returnMessage = "";
+
+		const submitCreation = function (e) {
+			e.preventDefault();
+			isSubmitSent = true;
+
+
+			if (1) {
+				returnMessage = "Chưa điền đủ mục";
+			}
+			else {
+				Mext.api("add_participants", {}).then(response => {
+					console.log(response);
+					addSuccess = response.status;
+					returnMessage = response.message;
+
+					$update();
+				});
+			}
+		}
+		// Return render function
+		return $render;
+	}
+</script>

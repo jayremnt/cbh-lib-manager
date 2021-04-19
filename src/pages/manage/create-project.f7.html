@@ -1,0 +1,114 @@
+<template>
+    <div class="page">
+        <div class="page-content">
+
+            <section class="admin-content">
+                <div class="container py-5">
+                    <div class="card m-b-30">
+                        <div class="card-header">
+                            <h5 class="m-b-0">
+                                Tạo dự án
+                            </h5>
+                        </div>
+                        <form action="#" method="POST" onsubmit="${submitCreation}">
+                            <div class="card-body">
+                                ${isSubmitSent && $h`
+                                <div class="form-group">
+                                    <div class="alert ${createSuccess?'alert-success':'alert-danger'}" role="alert">
+                                        ${returnMessage}
+                                    </div>
+                                </div>
+                                `}
+                                <div class="form-group">
+                                    <label for="projectName">Tên dự án</label>
+                                    <input type="text" class="form-control" id="projectName" name="project-name"
+                                           placeholder="Nhập tên dự án..."/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectCode">Mã dự án</label>
+                                    <input maxlength="15" @change="${onChangeCode}" @paste="${onChangeCode}"
+                                           @keydown="${onChangeCode}" type="text" class="form-control" id="projectCode"
+                                           name="project-code" placeholder="Nhập mã dự án..."/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="platform">Chọn nền tảng</label>
+                                    <select class="form-control" name="project-platform" id="platform">
+                                        <option value="" selected>Choose...</option>
+                                        <option value="android">Android</option>
+                                        <option value="ios">IOS</option>
+                                        <option value="chrome">Chrome</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <p class="font-secondary">File Uploads</p>
+                                    <div class="input-group mb-3">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputFile"/>
+                                            <label class="custom-file-label" for="inputFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" name="create-project" value="ok" class="btn btn-primary">Hoàn
+                                        tất
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</template>
+<script>
+	import Mext from "../../js/mext";
+	import Framework7 from "../../js/framework7-custom";
+	import Utils from "../../js/utils/utils";
+	import CONSTANTS from "../../js/constants";
+	import {t} from "../../js/mext";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		let isSubmitSent = false;
+		let createSuccess = false;
+        let returnMessage = "";
+
+		const submitCreation = function (e) {
+			e.preventDefault();
+            isSubmitSent = true;
+			let projectName = document.getElementById("projectName").value;
+			let projectCode = document.getElementById("projectCode").value;
+			let projectPlatform = document.getElementById("platform").value;
+
+			if(!projectName || !projectCode || !projectPlatform) {
+				returnMessage = "Thiếu 1 trong 3";
+			}
+			else if(projectCode.length > 15) {
+				returnMessage = "Project CODE cần <= 15 ký tự";
+			}
+            else {
+                Mext.api("create_project", {
+                    project_name: projectName,
+                    project_code: projectCode,
+                    project_platform: projectPlatform
+                }).then(response => {
+	                console.log(response);
+                    createSuccess = response.status;
+                    returnMessage = response.message;
+
+                    $update();
+                });
+            }
+		}
+
+
+		const onChangeCode = (e) => {
+			setTimeout(() => {
+				e.target.value = e.target.value.replace(" ", "").toUpperCase();
+			}, 5);
+		}
+		// Return render function
+		return $render;
+	}
+</script>

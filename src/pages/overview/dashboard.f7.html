@@ -1,0 +1,237 @@
+<template>
+  <div class="page">
+    <div class="page-content">
+      <section class="admin-content ">
+        <div class="container py-5">
+          <div class="row ">
+            <div class="col-md-12  pb-3">
+              <h1 class=" fw-600 display-4">
+                <span class="js-greeting">Xin chào</span>!
+              </h1>
+            </div>
+
+            <div class="col-md-4">
+              <!--widget card begin-->
+              <div class="card m-b-30">
+                <div class="card-body">
+                  <div class="row p-t-20 p-b-20">
+                    <div class="my-auto col-md-7">
+                      <h1 class="m-0">${Mext.joinedProjects.length}</h1>
+                      <p class="m-0 text-muted">
+                        Dự án đã tham gia
+                      </p>
+                    </div>
+                    <div class="my-auto text-md-right col-md-5">
+                      <a href="#" class="btn btn-rounded-circle btn-lg btn-primary">
+                        <i class="mdi mdi-laptop"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-md-4">
+              <!--widget card begin-->
+              <div class="card m-b-30">
+                <div class="card-body">
+                  <div class="row p-t-20 p-b-20">
+                    <div class="my-auto col-md-7">
+                      <h1 class="m-0">0</h1>
+                      <p class="m-0 text-muted">
+                        Lỗi được xác nhận
+                      </p>
+                    </div>
+                    <div class="my-auto text-md-right col-md-5">
+                      <a href="#" class="btn btn-rounded-circle btn-lg btn-danger">
+                        <i class="mdi mdi-alert-decagram"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-md-4">
+              <!--widget card begin-->
+              <div class="card m-b-30">
+                <div class="card-body">
+                  <div class="row p-t-20 p-b-20">
+                    <div class="my-auto col-md-7">
+                      <h1 class="m-0">0</h1>
+                      <p class="m-0 text-muted">
+                        Bounty nhận được
+                      </p>
+                    </div>
+                    <div class="my-auto text-md-right col-md-5">
+                      <a href="#" class="btn btn-rounded-circle btn-lg btn-success">
+                        <i class="mdi mdi-credit-card"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-8 m-b-30">
+              <div class="card m-b-30">
+
+                <div class="card-header">
+                  <div class="card-title">Dự án tham gia</div>
+                </div>
+
+                <div class="list-group list-group-flush">
+                  ${joinedProjects.map(project => $h`
+                    <div class="list-group-item d-flex  align-items-center">
+                      <div class="m-r-20">
+                        <div class="avatar avatar-sm">
+                          <img src="assets/img/users/user-5.jpg" class="avatar-img avatar-sm rounded-circle" alt=""/>
+                        </div>
+                      </div>
+                      <div class="">
+                        <div>${project.title}</div>
+                        <div class="text-muted">
+                          ${project.platform}
+                        </div>
+                      </div>
+                      <div class="ml-auto">
+                        <a href="/projects/${project.id}/" class="btn btn-white">Chi tiết</a>
+                      </div>
+                    </div>
+                  `)}
+                </div>
+                ${joinedProjects.length == 0 && $h`
+                <div class="card-body">
+                  <p>Hiện tại bạn chưa tham gia dự án nào!</p>
+                </div>
+                `}
+              </div>
+            </div>
+
+            <div class="col-lg-4 m-b-30">
+              <div class="card m-b-30">
+                <div class="card">
+                  <div class="card-media ">
+                    <div class="card-media ">
+                      <img class="card-img-top rounded" src="assets/img/users/user-5.jpg"
+                           alt="Card image cap"/>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-7 my-auto">
+                        <h4 class="m-0"><span class="js-greeting"></span></h4>
+                      </div>
+                      <div class="col-5 text-right">
+                        <a href="#" class="btn btn-success btn-rounded-circle btn-lg"> <i
+                                class="mdi mdi-pencil"></i> </a>
+                      </div>
+                    </div>
+                    <hr></hr>
+
+                    <div class="">
+                      <p>Today</p>
+                    </div>
+
+                    <div class="timeline timeline-xs ">
+                      <div class="timeline-item">
+                        <div class="timeline-wrapper">
+                          <div class="">
+                            <div class="avatar avatar-xs">
+                              <div class="avatar-title rounded-circle">
+                                <i class="mdi mdi-phone"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <p class="m-0">Call Mathew Peter</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="timeline-item">
+                        <div class="timeline-wrapper">
+                          <div class="">
+                            <div class="avatar avatar-xs">
+                              <div class="avatar-title bg-info rounded-circle">
+                                <i class="mdi mdi-shape-outline"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <p class="m-0">Create new workflow</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="timeline-item">
+                        <div class="timeline-wrapper">
+                          <div class="">
+                            <div class="avatar avatar-xs">
+                              <div class="avatar-title bg-success rounded-circle">
+                                <i class="mdi mdi-eye-outline"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <p class="m-0">Write Blog</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="timeline-item">
+                        <div class="timeline-wrapper">
+                          <div class="">
+                            <div class="avatar avatar-xs">
+                              <div class="avatar-title bg-dark rounded-circle">
+                                <i class="mdi mdi-google"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <p class="m-0">Renew Google Fiber</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="timeline-item ">
+                        <div class="timeline-wrapper">
+                          <div class="">
+                            <div class="avatar avatar-xs">
+                              <div class="avatar-title bg-warning rounded-circle">
+                                <i class="mdi mdi-sleep"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-auto text-muted">
+                            <p class="m-0">Take Powernap</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </div>
+</template>
+
+<script>
+  import Mext from "../../js/mext";
+  import Framework7 from "../../js/framework7-custom";
+  import Utils from "../../js/utils/utils";
+  import CONSTANTS from "../../js/constants";
+  import {t} from "../../js/mext";
+
+  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+    let joinedProjects = Mext.joinedProjects;
+    // Return render function
+    return $render;
+  }
+</script>
