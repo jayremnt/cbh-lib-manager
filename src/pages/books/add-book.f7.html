@@ -1,0 +1,105 @@
+<template>
+    <div class="page">
+        <div class="page-content">
+            <section class="admin-content">
+                <div class="container py-5">
+                    <div class="card m-b-30">
+                        <div class="card-header">
+                            <h5 class="m-b-0">
+                                Thêm sách
+                            </h5>
+                        </div>
+                        <form action="#" method="POST" onsubmit="${submitCreation}">
+                            <div class="card-body">
+                                ${isSubmitSent && $h`
+                                <div class="form-group">
+                                    <div class="alert ${addSuccess?'alert-success':'alert-danger'}" role="alert">
+                                        ${returnMessage}
+                                    </div>
+                                </div>
+                                `}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label for="accountName">Tên sách</label>
+                                            <input type="text" class="form-control" id="accountName" name="account-name"
+                                                   placeholder="Nhập tên sách..."/>
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="accountName">Tác giả</label>
+                                            <input type="text" class="form-control" id="accountName" name="account-name"
+                                                   placeholder="Nhập tác giả..."/>
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="accountName">Mã sách</label>
+                                            <input type="text" class="form-control" id="accountName" name="account-name"
+                                                   placeholder="Nhập mã sách..."/>
+                                        </div>
+                                        <div class="col-1">
+                                            <label for="accountName">_</label>
+                                            <button type="button" class="btn btn-success">
+                                                <i class="mdi mdi-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" name="create-project" value="ok" class="btn btn-primary">
+                                        Thêm
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</template>
+
+<script>
+	import Mext from "../../js/mext";
+	import Utils from "../../js/utils/utils";
+	import CONSTANTS from "../../js/constants";
+	import {t} from "../../js/mext";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		$on('pageBeforeIn', (e, page) => {
+			window.$(".js-select2").select2();
+			window.$('.datedropper').dateDropper();
+		});
+
+		let isSubmitSent = false;
+		let addSuccess = false;
+		let returnMessage = "";
+		let selectDate = "";
+
+		const submitCreation = function (e) {
+			e.preventDefault();
+			isSubmitSent = true;
+			let accountName = document.getElementById("accountName").value;
+			let accountEmail = document.getElementById("accountEmail").value;
+			let role = document.getElementById("role").value;
+			let password = Math.random().toString(36).slice(-8);
+
+			if (!accountName || !accountEmail || !role) {
+				returnMessage = "Chưa điền đủ mục";
+			}
+			else {
+				Mext.api("create_account", {
+					fullname: accountName,
+					email: accountEmail,
+					password: password,
+					role: role
+				}).then(response => {
+					console.log(response);
+					addSuccess = response.status;
+					returnMessage = response.message;
+
+					$update();
+				});
+			}
+		}
+		return $render;
+	}
+</script>

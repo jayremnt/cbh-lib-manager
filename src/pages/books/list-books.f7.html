@@ -1,0 +1,140 @@
+<template>
+    <div class="page">
+        <div class="page-content">
+            <section class="admin-content">
+                <div class="container py-5">
+                    <div class="col-md-15">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                <h5 class="m-b-0">
+                                    Tất cả sách
+                                </h5>
+                                <div class="card-controls">
+                                    <a href="#" class="btn btn-info">Thêm sách</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover ">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Tên sách</th>
+                                            <th>Tác giả</th>
+                                            <th>Mã sách</th>
+                                            <th>Tổng số sách</th>
+                                            <th>Số sách còn</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Còn chút gì để nhớ</td>
+                                            <td>Nguyễn Nhật Ánh</td>
+                                            <td>CBH-206</td>
+                                            <td>3</td>
+                                            <td>0</td>
+                                            <td>Đã hết</td>
+                                            <td>
+                                                <a href="/books/info/1/" class="btn btn-info projects" role="button">
+                                                    <i class="mdi mdi-menu"></i>
+                                                </a>
+                                                <button @click="${deleteProject}" type="button" class="btn btn-danger"
+                                                        data-toggle="modal" data-target="#deleteProject"
+                                                        data-id="1">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Mắt biếc</td>
+                                            <td>Nguyễn Nhật Ánh</td>
+                                            <td>CBH-206</td>
+                                            <td>3</td>
+                                            <td>0</td>
+                                            <td>Đã hết</td>
+                                            <td>
+                                                <a href="/books/info/1/" class="btn btn-info projects" role="button">
+                                                    <i class="mdi mdi-menu"></i>
+                                                </a>
+                                                <button @click="${deleteProject}" type="button" class="btn btn-danger"
+                                                        data-toggle="modal" data-target="#deleteProject"
+                                                        data-id="1">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Ngồi khóc trên cây</td>
+                                            <td>Nguyễn Nhật Ánh</td>
+                                            <td>CBH-206</td>
+                                            <td>3</td>
+                                            <td>1</td>
+                                            <td>Còn sách</td>
+                                            <td>
+                                                <a href="/books/info/1/" class="btn btn-info projects" role="button">
+                                                    <i class="mdi mdi-menu"></i>
+                                                </a>
+                                                <button @click="${deleteProject}" type="button" class="btn btn-danger"
+                                                        data-toggle="modal" data-target="#deleteProject"
+                                                        data-id="1">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</template>
+<script>
+	import Mext from "../../js/mext";
+	import Framework7 from "../../js/framework7-custom";
+	import Utils from "../../js/utils/utils";
+	import CONSTANTS from "../../js/constants";
+	import {t} from "../../js/mext";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		let allProjects = [];
+
+		const resetList = (e) => {
+			Mext.api("get_all_projects").then(response => {
+				allProjects = response.data;
+				$update();
+			});
+		}
+
+		resetList();
+
+		const deleteProject = (e) => {
+			let projectID = e.currentTarget.dataset.id;
+
+			Mext.openConfirmModal('deleteProject').then(isConfirmed => {
+				if (!isConfirmed) return;
+
+				Mext.api("delete_project", {
+					id: projectID
+				}).then(response => {
+					Mext.alert("Tester Portal", response.message);
+
+					resetList();
+				});
+			});
+		}
+		// Return render function
+		return $render;
+	}
+</script>

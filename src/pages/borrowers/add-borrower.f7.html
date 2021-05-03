@@ -26,11 +26,21 @@
                                 <div class="form-group">
                                     <label for="select-class">Lớp</label>
                                     <select class="form-control" name="account-role" id="select-class">
-                                        <option value="" selected>Choose...</option>
+                                        <option value="" selected>Chọn lớp...</option>
                                         <option value="10ti">10 Tin</option>
                                         <option value="11ti">11 Tin</option>
                                         <option value="12ti">12 Tin</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountName">Mã học sinh</label>
+                                    <input type="text" class="form-control" id="accountName" name="account-name"
+                                           placeholder="Nhập mã học sinh..."/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountName">Email</label>
+                                    <input type="text" class="form-control" id="accountName" name="account-name"
+                                           placeholder="Nhập email..."/>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -43,9 +53,16 @@
                                             </select>
                                         </div>
                                         <div class="col-2">
-                                            <label class="font-secondary" for="select-books">Số lượng</label>
-                                            <input type="text" class="form-control" name="book-amount"
-                                                   placeholder="Nhập số lượng"/>
+                                            <label class="font-secondary" for="select-amount-books">Số lượng</label>
+                                            <select class="form-control" id="select-amount-books">
+                                                <option selected value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-1">
+                                            <label for="accountName">_</label>
+                                            <button type="button" class="btn btn-success">Thêm</button>
                                         </div>
                                     </div>
                                 </div>
