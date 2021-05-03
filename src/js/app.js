@@ -19,6 +19,7 @@ import "../assets/vendor/daterangepicker/daterangepicker.css";
 import "../assets/fonts/jost/jost.css";
 import "../assets/fonts/materialdesignicons/materialdesignicons.min.css";
 import "../assets/vendor/summernote/summernote-bs4.css";
+import "../assets/vendor/datedropper/datedropper.min.css";
 
 // Import Routes
 import routes from './routes.js';

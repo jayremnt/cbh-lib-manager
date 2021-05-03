@@ -19,14 +19,14 @@ class Mext {
 		if (this.isLoggedIn) {
 			this.sessKey = await Utils.getData("sess_key", "");
 			this.account = await Utils.getData("account", {});
-			let joinedProjects = await this.api("get_self_projects");
-			if (joinedProjects.status === 200) {
-				this.joinedProjects = joinedProjects.data;
-				this.isBooted = true;
-			} else {
-				await Utils.setData("isLoggedIn", false);
-				// location.reload();
-			}
+			// let joinedProjects = await this.api("get_self_projects");
+			// if (joinedProjects.status === 200) {
+			// 	this.joinedProjects = joinedProjects.data;
+			// 	this.isBooted = true;
+			// } else {
+			// 	await Utils.setData("isLoggedIn", false);
+			// 	// location.reload();
+			// }
 		}
 	}
 
