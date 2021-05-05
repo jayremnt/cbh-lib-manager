@@ -43,31 +43,59 @@
                                            placeholder="Nhập email..." value="jayremntb@gmail.com"/>
                                 </div>
                                 <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <label class="font-secondary" for="select-books">Sách mượn</label>
-                                            <div class="form-control">Còn chút gì để nhớ</div><br/>
-                                            <div class="form-control">Mắt biếc</div><br/>
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="font-secondary" for="select-books">Tác giả</label>
-                                            <div class="form-control">Nguyễn Nhật Ánh</div><br/>
-                                            <div class="form-control">Nguyễn Nhật Ánh</div><br/>
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="font-secondary" for="select-books">Mã sách</label>
-                                            <div class="form-control">CBH-206</div><br/>
-                                            <div class="form-control">CBH-123</div><br/>
-                                        </div>
+                                    <label for="accountName">Số điện thoại</label>
+                                    <input type="text" class="form-control" id="accountName" name="account-name"
+                                           placeholder="Nhập email..." value="0123456789"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountName">Sách mượn</label>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover ">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tên sách</th>
+                                                <th>Tác giả</th>
+                                                <th>Mã sách</th>
+                                                <th>Vị trí</th>
+                                                <th>Ngày mượn</th>
+                                                <th>Hết hạn</th>
+                                                <th>Phụ trách</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Còn chút gì để nhớ</td>
+                                                <td>Nguyễn Nhật Ánh</td>
+                                                <td>CBH-206</td>
+                                                <td>T1-N2</td>
+                                                <td>20/06/2021</td>
+                                                <td>27/06/2021</td>
+                                                <td>Bảo</td>
+                                                <td>
+                                                    <a href="/books/info/1/" class="btn btn- projects"
+                                                       role="button">
+                                                        <i class="mdi mdi-menu"></i>
+                                                    </a>
+                                                    <button @click="${deleteProject}" type="button"
+                                                            class="btn btn-warning"
+                                                            data-toggle="modal" data-target="#deleteProject"
+                                                            data-id="1">
+                                                        <i class="mdi mdi-update"></i>
+                                                    </button>
+                                                    <button @click="${deleteProject}" type="button"
+                                                            class="btn btn-success"
+                                                            data-toggle="modal" data-target="#deleteProject"
+                                                            data-id="1">
+                                                        <i class="mdi mdi-check"></i>
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="borrowed-time">Thời gian mượn</label>
-                                    <input class="form-control datedropper" type="text" id="borrowed-time"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="expired-time">Thời gian hết hạn</label>
-                                    <input class="form-control datedropper" type="text" id="expired-time"/>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" name="create-project" value="ok" class="btn btn-success">

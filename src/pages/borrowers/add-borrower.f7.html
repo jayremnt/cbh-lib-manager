@@ -43,36 +43,47 @@
                                            placeholder="Nhập email..."/>
                                 </div>
                                 <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <label class="font-secondary" for="select-books">Sách mượn</label>
-                                            <select multiple class="form-control js-select2" id="select-books">
-                                                <option value="">Mắt biếc - Nguyễn Nhật Ánh</option>
-                                                <option value="">Còn chút gì để nhớ - Nguyễn Nhật Ánh</option>
-                                                <option value="">Ngồi khóc trên cây - Nguyễn Nhật Ánh</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-2">
-                                            <label class="font-secondary" for="select-amount-books">Số lượng</label>
-                                            <select class="form-control" id="select-amount-books">
-                                                <option selected value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-1">
-                                            <label for="accountName">_</label>
-                                            <button type="button" class="btn btn-success">Thêm</button>
-                                        </div>
+                                    <label class="font-secondary" for="select-books">Sách mượn</label>
+                                    <input type="text" class="form-control" id="accountName" name="account-name"
+                                           placeholder="Nhập mã sách..."/>
+                                </div>
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover ">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tên sách</th>
+                                                <th>Tác giả</th>
+                                                <th>Mã sách</th>
+                                                <th>Vị trí</th>
+                                                <th>Ngày mượn</th>
+                                                <th>Hết hạn</th>
+                                                <th>Phụ trách</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Còn chút gì để nhớ</td>
+                                                <td>Nguyễn Nhật Ánh</td>
+                                                <td>CBH-206</td>
+                                                <td>T1-N2</td>
+                                                <td>20/06/2021</td>
+                                                <td>27/06/2021</td>
+                                                <td>Bảo</td>
+                                                <td>
+                                                    <button @click="${deleteProject}" type="button"
+                                                            class="btn btn-danger"
+                                                            data-toggle="modal" data-target="#deleteProject"
+                                                            data-id="1">
+                                                        <i class="mdi mdi-delete"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="borrowed-time">Thời gian mượn</label>
-                                    <input class="form-control datedropper" type="text" id="borrowed-time"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="expired-time">Thời gian hết hạn</label>
-                                    <input class="form-control datedropper" type="text" id="expired-time"/>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" name="create-project" value="ok" class="btn btn-primary">
