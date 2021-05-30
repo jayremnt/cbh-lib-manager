@@ -48,34 +48,38 @@
                                            placeholder="Nhập email..." value="0123456789"/>
                                 </div>
                                 <div class="form-group">
+                                    <label for="accountName">Thêm sách</label>
+                                    <input type="text" class="form-control" id="accountName" name="account-name"
+                                           placeholder="Nhập mã sách..."/>
+                                </div>
+                                <div class="form-group">
                                     <label for="accountName">Sách mượn</label>
                                     <div class="table-responsive">
                                         <table class="table table-hover ">
                                             <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>Tên sách</th>
                                                 <th>Tác giả</th>
                                                 <th>Mã sách</th>
                                                 <th>Vị trí</th>
                                                 <th>Ngày mượn</th>
                                                 <th>Hết hạn</th>
+                                                <th>Gia hạn</th>
                                                 <th>Phụ trách</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>1</td>
                                                 <td>Còn chút gì để nhớ</td>
                                                 <td>Nguyễn Nhật Ánh</td>
                                                 <td>CBH-206</td>
                                                 <td>T1-N2</td>
                                                 <td>20/06/2021</td>
                                                 <td>27/06/2021</td>
+                                                <td>2</td>
                                                 <td>Bảo</td>
                                                 <td>
-                                                    <a href="/books/info/1/" class="btn btn- projects"
-                                                       role="button">
+                                                    <a href="/books/info/1/" class="btn btn-projects" role="button">
                                                         <i class="mdi mdi-menu"></i>
                                                     </a>
                                                     <button @click="${deleteProject}" type="button"
@@ -113,9 +117,6 @@
 
 <script>
 	import Mext from "../../js/mext";
-	import Utils from "../../js/utils/utils";
-	import CONSTANTS from "../../js/constants";
-	import {t} from "../../js/mext";
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
 		$on('pageBeforeIn', (e, page) => {

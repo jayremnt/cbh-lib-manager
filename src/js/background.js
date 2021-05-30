@@ -1,10 +1,8 @@
 // background
-import Utils from "./utils/utils";
 import Mext from "./mext";
 
 
 if (Mext.isBackground) {
-	Utils.setEnv(Utils.ENVIRONMENTS.CHROME);
 	chrome.browserAction.onClicked.addListener(function(tab) {
 		console.log(document.location.href);
 		chrome.tabs.create({

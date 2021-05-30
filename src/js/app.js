@@ -29,9 +29,6 @@ import store from './store.js';
 // Import main app component
 import App from '../app.f7.html';
 import Mext from "./mext";
-import Utils from "./utils/utils";
-
-Utils.setEnv(Utils.ENVIRONMENTS.WEB);
 
 Mext.app = new Framework7({
   name: 'MonokaiToolkit Extension', // App name

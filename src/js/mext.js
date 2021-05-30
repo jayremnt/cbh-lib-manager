@@ -1,5 +1,3 @@
-import Utils from "./utils/utils";
-import Facebook from "./utils/facebook/facebook";
 import Framework7 from './framework7-custom';
 
 import QRCode from 'qrcode';
