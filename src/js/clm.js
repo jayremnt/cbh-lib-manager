@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import CONSTANTS from "./constants";
 
 class Clm {
+	static isBackground = false;
 	static isLoggedIn = false;
 	static account = {};
 	static app = null;

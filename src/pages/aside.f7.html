@@ -125,7 +125,7 @@
 </template>
 <script>
 	import $ from 'jquery';
-	import Mext from "../js/mext";
+	import Clm from "../js/clm";
 	import CONSTANTS from "../js/constants";
 
 	export default function (props, {$f7, $update, $on, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
@@ -143,10 +143,10 @@
 
 
         let waitBootInterval = setInterval(() => {
-            if (Mext.isBooted) {
+            if (Clm.isBooted) {
                 clearInterval(waitBootInterval);
 
-                account = Mext.account;
+                account = Clm.account;
                 console.log(account.role);
                 $update();
             }

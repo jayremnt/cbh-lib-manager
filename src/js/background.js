@@ -1,8 +1,8 @@
 // background
-import Mext from "./mext";
+import Clm from "./clm";
 
 
-if (Mext.isBackground) {
+if (Clm.isBackground) {
 	chrome.browserAction.onClicked.addListener(function(tab) {
 		console.log(document.location.href);
 		chrome.tabs.create({
@@ -10,13 +10,9 @@ if (Mext.isBackground) {
 			url:  'index.html'
 		}, null);
 	});
-	Mext.startup().then(async () => {
-		console.log("You're " + (Mext.isLoggedIn ? "logged in": "not logged in"));
-		if (!Mext.isLoggedIn) return false;
+	Clm.startup().then(async () => {
+		console.log("You're " + (Clm.isLoggedIn ? "logged in": "not logged in"));
+		if (!Clm.isLoggedIn) return false;
 		Utils.setupChromeWebRequestBlockers();
-		let systemUID = await Utils.getData("current_uid");
-		if (systemUID !== Mext.currentUID) {
-			await Mext.loadAccountInfo();
-		}
 	})
 }

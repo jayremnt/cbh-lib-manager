@@ -28,12 +28,12 @@ import store from './store.js';
 
 // Import main app component
 import App from '../app.f7.html';
-import Mext from "./mext";
+import Clm from "./clm";
 import Utils from "./utils";
 
 Utils.setEnv(Utils.ENVIRONMENTS.WEB);
 
-Mext.app = new Framework7({
+Clm.app = new Framework7({
   name: 'CBH Lib Manager', // App name
   theme: 'auto', // Automatic theme detection
   el: '#app', // App root element
@@ -49,14 +49,14 @@ Mext.app = new Framework7({
 });
 
 
-Mext.startup().then(() => {
-  let mainView = Mext.app.views.create("#view-main", {
+Clm.startup().then(() => {
+  let mainView = Clm.app.views.create("#view-main", {
     url: "/"
   });
-  Mext.app.views.create("#view-aside", {
+  Clm.app.views.create("#view-aside", {
     url: "/aside/"
   });
-  if (!Mext.isLoggedIn) {
-    Mext.createPopup("/login/");
+  if (!Clm.isLoggedIn) {
+    Clm.createPopup("/login/");
   }
 });
