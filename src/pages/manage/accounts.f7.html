@@ -22,6 +22,7 @@
                                             <th>Email</th>
                                             <th>Tên người dùng</th>
                                             <th>Vai trò</th>
+                                            <th>Lớp</th>
                                             <th>Lựa chọn</th>
                                         </tr>
                                         </thead>
@@ -33,7 +34,7 @@
                                             <td>${account.fullname}</td>
                                             <td>${account.role}</td>
                                             <td>
-                                                <a href="" class="btn btn-info projects" role="button">
+                                                <a href="/manage/accounts/add/" class="btn btn-info projects" role="button">
                                                     <i class="mdi mdi-pencil-outline"></i>
                                                 </a>
 
@@ -59,13 +60,13 @@
     </div>
 </template>
 <script>
-	import Mext from "../../js/mext";
+	import Clm from "../../js/clm";
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
 		let accounts = [];
 
 		const resetList = () => {
-			Mext.api("get_all_users").then(response => {
+			Clm.api("get_all_users").then(response => {
 				accounts = response.data;
 				$update();
 			});
@@ -76,13 +77,13 @@
 		const deleteAccount = (e) => {
             let userID = e.currentTarget.dataset.id;
 
-			Mext.openConfirmModal('deleteUser').then(isConfirmed => {
+			Clm.openConfirmModal('deleteUser').then(isConfirmed => {
 				if (!isConfirmed) return;
 
-				Mext.api("delete_account", {
+				Clm.api("delete_account", {
 					id: userID
 				}).then(response => {
-					Mext.alert("Tester Portal", response.message);
+					Clm.alert("Tester Portal", response.message);
 
 					resetList();
 				});

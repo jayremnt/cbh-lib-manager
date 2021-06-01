@@ -48,7 +48,7 @@
     </div>
 </template>
 <script>
-	import Mext from "../js/mext";
+	import Clm from "../js/clm";
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
 	    let isLoginSent = false;
@@ -69,7 +69,7 @@
             e.preventDefault();
             isLoginSent = true;
             $update();
-            Mext.login(email, password).then(response => {
+            Clm.login(email, password).then(response => {
                 if (response.status === 200) {
                     loginSuccess = true;
                     Utils.setData("isLoggedIn", true);

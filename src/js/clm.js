@@ -1,54 +1,29 @@
 import Framework7 from './framework7-custom';
-
+import Utils from "./utils";
 import QRCode from 'qrcode';
+import CONSTANTS from "./constants";
 
-class Mext {
-	static API_URL = "https://tester.northstudio.vn/api/";
+class Clm {
 	static isLoggedIn = false;
 	static account = {};
 	static app = null;
 	static isBooted = false;
 	static eventBus = new Framework7.Events();
 	static sessKey = "";
-	static joinedProjects = [];
 
 	static async startup() {
 		this.isLoggedIn = await Utils.getData("isLoggedIn", false);
 		if (this.isLoggedIn) {
 			this.sessKey = await Utils.getData("sess_key", "");
 			this.account = await Utils.getData("account", {});
-			// let joinedProjects = await this.api("get_self_projects");
-			// if (joinedProjects.status === 200) {
-			// 	this.joinedProjects = joinedProjects.data;
-			// 	this.isBooted = true;
-			// } else {
-			// 	await Utils.setData("isLoggedIn", false);
-			// 	// location.reload();
-			// }
 		}
 	}
 
-	static async validateSessionKey() {
-		if (this.sessKey ===  "" || this.sessKey.indexOf("northstudio") < 0) {
-			await Utils.setData("isLoggedIn", false);
-		} else {
-			await Utils.sendRequest(this.API_URL + "alive", {
-				method: "post"
-			}).then(async response => {
-				if (response.data.status !== 0) {
-					await Utils.setData("isLoggedIn", false);
-				}
-			});
-		}
-	}
-
-	static async login(email = "", password = "") {
-		let response = await Utils.sendRequest(this.API_URL + "login", {
+	static async api(endpoint, data = {}) {
+		if (this.isLoggedIn) data.sess_key = this.sessKey;
+		let response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
 			method: "post",
-			data: {
-				email: email,
-				password: password
-			}
+			data: data
 		});
 		return JSON.parse(response.data);
 	}
@@ -91,20 +66,6 @@ class Mext {
 		});
 	}
 
-	static async api(endpoint, data = {}) {
-		if (this.isLoggedIn) data.sess_key = this.sessKey;
-		let response = await Utils.sendRequest(this.API_URL + endpoint, {
-			method: "post",
-			data: data
-		});
-		return JSON.parse(response.data);
-
-	}
-
-	static translate(text) {
-		return text;
-	}
-
 	static createPopup(url, forceFullscreen = true) {
 		let rootEl = document.getElementById("app");
 		let popupEl = document.createElement("div");
@@ -126,22 +87,6 @@ class Mext {
 		rootEl.appendChild(popupEl);
 	}
 
-	static showQR() {
-		let mainDiv = document.createElement("div");
-		mainDiv.className = "qr-popup";
-		Utils.getCookies("https://www.facebook.com").then(cookies => {
-			QRCode.toDataURL(cookies, {
-				errorCorrectionLevel: 'H'
-			}, function (err, url) {
-				let qrImg = document.createElement("img");
-				qrImg.src = url;
-				mainDiv.appendChild(qrImg);
-			});
-		});
-		mainDiv.onclick = () => mainDiv.remove();
-		document.body.appendChild(mainDiv);
-	}
-
 	static modalDeleteResolver;
 	static openConfirmModal(modelID) {
 		return new Promise(resolve => {
@@ -151,9 +96,4 @@ class Mext {
 	}
 }
 
-const translate = (text) => {
-	return Mext.translate(text);
-};
-
-export default Mext;
-export {translate as t};
+export default Clm;

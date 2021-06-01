@@ -57,7 +57,7 @@
 </template>
 
 <script>
-	import Mext from "../../js/mext";
+	import Clm from "../../js/clm";
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
 		$on('pageBeforeIn', (e, page) => {
@@ -82,7 +82,7 @@
 				returnMessage = "Chưa điền đủ mục";
 			}
 			else {
-				Mext.api("create_account", {
+				Clm.api("create_account", {
 					fullname: accountName,
 					email: accountEmail,
 					password: password,

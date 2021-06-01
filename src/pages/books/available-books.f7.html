@@ -63,13 +63,13 @@
     </div>
 </template>
 <script>
-	import Mext from "../../js/mext";
+	import Clm from "../../js/clm";
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
 		let allProjects = [];
 
 		const resetList = (e) => {
-			Mext.api("get_all_projects").then(response => {
+			Clm.api("get_all_projects").then(response => {
 				allProjects = response.data;
 				$update();
 			});
@@ -80,13 +80,13 @@
 		const deleteProject = (e) => {
 			let projectID = e.currentTarget.dataset.id;
 
-			Mext.openConfirmModal('deleteProject').then(isConfirmed => {
+			Clm.openConfirmModal('deleteProject').then(isConfirmed => {
 				if (!isConfirmed) return;
 
-				Mext.api("delete_project", {
+				Clm.api("delete_project", {
 					id: projectID
 				}).then(response => {
-					Mext.alert("Tester Portal", response.message);
+					Clm.alert("Tester Portal", response.message);
 
 					resetList();
 				});

@@ -29,9 +29,12 @@ import store from './store.js';
 // Import main app component
 import App from '../app.f7.html';
 import Mext from "./mext";
+import Utils from "./utils";
+
+Utils.setEnv(Utils.ENVIRONMENTS.WEB);
 
 Mext.app = new Framework7({
-  name: 'MonokaiToolkit Extension', // App name
+  name: 'CBH Lib Manager', // App name
   theme: 'auto', // Automatic theme detection
   el: '#app', // App root element
   component: App, // App main component
