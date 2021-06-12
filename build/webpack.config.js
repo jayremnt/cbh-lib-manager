@@ -45,7 +45,7 @@ module.exports = {
     hot: true,
     open: true,
     compress: true,
-    // writeToDisk: true,
+    writeToDisk: true,
     contentBase: '/www/',
     disableHostCheck: true,
     historyApiFallback: true,

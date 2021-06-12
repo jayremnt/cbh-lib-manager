@@ -1,7 +1,7 @@
 {
-  "name": "MonokaiToolkit",
-  "version": "5.0",
-  "description": "Full protect your privacy",
+  "name": "CBH Lib Manager",
+  "version": "1.0",
+  "description": "Chrome extension for managing books and borrowers of CBH",
   "permissions": [
     "downloads",
     "cookies",
@@ -9,15 +9,10 @@
     "notifications",
     "webRequest",
     "webRequestBlocking",
-    "https://*.facebook.com/*",
-    "https://*.messenger.com/*",
-    "https://*.monokaitoolkit.com/*",
-    "https://*.gstatic.com/*",
-    "ws://*/*",
-    "wss://*/*"
+    "https://cbh-server.herokuapp.com/*"
   ],
   "browser_action": {
-    "default_title": "MonokaiToolkit Control Panel"
+    "default_title": "CBH Control Panel"
   },
   "background": {
     "scripts": [
@@ -25,6 +20,6 @@
     ],
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://monokaitoolkit.com https://www.youtube.com/ https://apis.google.com/ https://www.gstatic.com/; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "manifest_version": 2
 }

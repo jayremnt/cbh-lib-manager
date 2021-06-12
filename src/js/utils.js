@@ -7,19 +7,23 @@ class Utils {
 		CHROME: "chrome",
 		WEB: "web",
 	};
-	static env = Utils.ENVIRONMENTS.CORDOVA;
+	static env = Utils.ENVIRONMENTS.CHROME;
 
 	static setEnv(env) {
 		this.env = env;
 	}
 
 	static async getData(key, defaultValue = '') {
-		if (this.env === this.ENVIRONMENTS.CHROME) {
-			let result = await chrome.storage.local.get([key]);
-			return typeof result[key] === 'undefined' ? defaultValue : result[key];
-		} else {
-			return (JSON.parse(localStorage.getItem(key)) || defaultValue);
-		}
+		return new Promise(resolve => {
+			if (this.env === this.ENVIRONMENTS.CHROME) {
+				chrome.storage.local.get([key], result => {
+					resolve(typeof result[key] === 'undefined' ? defaultValue : result[key]);
+				});
+			}
+			else {
+				resolve(JSON.parse(localStorage.getItem(key)) || defaultValue);
+			}
+		});
 	}
 
 	static async setData(key, value) {
@@ -34,7 +38,7 @@ class Utils {
 			if (typeof options.data === "undefined") options.data = {};
 			$.ajax(url, {
 				method: options.method.toUpperCase(),
-				data: options.data,
+				data: JSON.stringify(options.data),
 				dataType: 'text',
 				success: (res) => {
 					resolve({
@@ -43,6 +47,21 @@ class Utils {
 				}
 			}).fail(reject);
 		});
+	}
+
+	static setupChromeWebRequestBlockers() {
+		console.log('ok');
+		chrome.webRequest.onBeforeSendHeaders.addListener(details => {
+			console.log(details);
+			let requestHeaders = details.requestHeaders;
+			let headerContentTypeIndex = requestHeaders.findIndex(row => row.name === "Content-Type");
+			if (headerContentTypeIndex >= 0) requestHeaders[headerContentTypeIndex].value = "application/json";
+
+			console.log(details);
+			return {requestHeaders: details.requestHeaders};
+		}, {
+			urls: ["https://cbh-server.herokuapp.com/*"]
+		}, ['blocking', 'requestHeaders']);
 	}
 }
 

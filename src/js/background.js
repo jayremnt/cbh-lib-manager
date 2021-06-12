@@ -1,6 +1,6 @@
 // background
 import Clm from "./clm";
-
+import Utils from "./utils";
 
 if (Clm.isBackground) {
 	chrome.browserAction.onClicked.addListener(function(tab) {
@@ -12,7 +12,7 @@ if (Clm.isBackground) {
 	});
 	Clm.startup().then(async () => {
 		console.log("You're " + (Clm.isLoggedIn ? "logged in": "not logged in"));
-		if (!Clm.isLoggedIn) return false;
 		Utils.setupChromeWebRequestBlockers();
+		if (!Clm.isLoggedIn) return false;
 	})
 }

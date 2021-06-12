@@ -4,20 +4,28 @@ import QRCode from 'qrcode';
 import CONSTANTS from "./constants";
 
 class Clm {
-	static isBackground = false;
 	static isLoggedIn = false;
 	static account = {};
 	static app = null;
 	static isBooted = false;
 	static eventBus = new Framework7.Events();
 	static sessKey = "";
+	static isBackground = window.location.href.includes("generated_background_page.html");
 
 	static async startup() {
-		this.isLoggedIn = await Utils.getData("isLoggedIn", false);
+		this.isLoggedIn = await Utils.getData("is_logged_in", false);
 		if (this.isLoggedIn) {
 			this.sessKey = await Utils.getData("sess_key", "");
 			this.account = await Utils.getData("account", {});
+			this.isLoggedIn = await this.validateSessionKey();
 		}
+	}
+
+	static async validateSessionKey() {
+		let validateData = await this.api('/alive', {
+			token: this.sessKey
+		});
+		return !validateData.data.is_expired;
 	}
 
 	static async api(endpoint, data = {}) {

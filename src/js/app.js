@@ -31,7 +31,7 @@ import App from '../app.f7.html';
 import Clm from "./clm";
 import Utils from "./utils";
 
-Utils.setEnv(Utils.ENVIRONMENTS.WEB);
+Utils.setEnv(Utils.ENVIRONMENTS.CHROME);
 
 Clm.app = new Framework7({
   name: 'CBH Lib Manager', // App name
@@ -49,7 +49,7 @@ Clm.app = new Framework7({
 });
 
 
-Clm.startup().then(() => {
+Clm.startup().then(async () => {
   let mainView = Clm.app.views.create("#view-main", {
     url: "/"
   });
