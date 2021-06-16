@@ -1,78 +1,82 @@
 <template>
-    <div class="page">
-        <div class="page-content">
-            <section class="admin-content">
-                <div class="container py-5">
-                    <div class="col-md-15">
-                        <div class="card m-b-30">
-                            <div class="card-header">
-                                <h5 class="m-b-0">
-                                    Tất cả sách
-                                </h5>
-                                <div class="card-controls">
-                                    <a href="#" class="btn btn-info">Thêm sách</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover ">
-                                        <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Tên sách</th>
-                                            <th>Tác giả</th>
-                                            <th>Mã sách</th>
-                                            <th>Vị trí</th>
-                                            <th>Giá tiền</th>
-                                            <th>Ngày nhập</th>
-                                            <th>Người nhập</th>
-                                            <th>Tình trạng</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Còn chút gì để nhớ</td>
-                                            <td>Nguyễn Nhật Ánh</td>
-                                            <td>CBH-206</td>
-                                            <td>T1-N2</td>
-                                            <td>60000 đ</td>
-                                            <td>20/06/2021</td>
-                                            <td>Bảo</td>
-                                            <td>Đã mượn</td>
-                                            <td>
-                                                <a href="/books/info/1/" class="btn btn-info projects" role="button">
-                                                    <i class="mdi mdi-menu"></i>
-                                                </a>
-                                                <button @click="${deleteProject}" type="button" class="btn btn-danger"
-                                                        data-toggle="modal" data-target="#deleteProject"
-                                                        data-id="1">
-                                                    <i class="mdi mdi-delete"></i>
-                                                </button>
-
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+  <div class="page">
+    <div class="page-content">
+      <section class="admin-content">
+        <div class="container py-5">
+          <div class="col-md-15">
+            <div class="card m-b-30">
+              <div class="card-header">
+                <h5 class="m-b-0">
+                  Tất cả sách
+                </h5>
+                <div class="card-controls">
+                  <a href="#" class="btn btn-info">Thêm sách</a>
                 </div>
-            </section>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover ">
+                    <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Tên sách</th>
+                      <th>Tác giả</th>
+                      <th>Mã sách</th>
+                      <th>Vị trí</th>
+                      <th>Giá tiền</th>
+                      <th>Ngày nhập</th>
+                      <th>Người nhập</th>
+                      <th>Tình trạng</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    ${books.map((book, i) => $h`
+                      <tr>
+                        <td>${i + 1}</td>
+                        <td>${book.name}</td>
+                        <td>${book.author}</td>
+                        <td>${book.code}</td>
+                        <td>${book.location}</td>
+                        <td>${book.cost}</td>
+                        <td>${book.imported_date}</td>
+                        <td>${book.responsible_person}</td>
+                        <td>${book.is_borrowed === true ? "Đã mượn" : "Chưa mượn"}</td>
+                        <td>
+                          <a href="/books/info/${book.code}/" class="btn btn-info projects" role="button">
+                            <i class="mdi mdi-menu"></i>
+                          </a>
+                          <button @click="${deleteProject}" type="button" class="btn btn-danger"
+                                  data-toggle="modal" data-target="#deleteProject"
+                                  data-id="1">
+                            <i class="mdi mdi-delete"></i>
+                          </button>
+
+                        </td>
+                      </tr>
+                    `)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
+      </section>
     </div>
+  </div>
 </template>
 <script>
 	import Clm from "../../js/clm";
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let allProjects = [];
+		let books = [];
 
 		const resetList = (e) => {
-			Clm.api("get_all_projects").then(response => {
-				allProjects = response.data;
+			Clm.api("books/all").then(response => {
+				console.log(response);
+				books = response.data.list_books;
+				console.log(books);
 				$update();
 			});
 		}

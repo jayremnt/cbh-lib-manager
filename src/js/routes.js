@@ -38,7 +38,7 @@ const routes = [
 			path: 'add/',
 			component: AddBorrowerPage,
 		}, {
-			path: 'info/:borrowerId/',
+			path: 'info/:borrowerCode/',
 			component: BorrowerInfoPage,
 		}],
 	}, {
@@ -51,7 +51,7 @@ const routes = [
 			path: 'add/',
 			component: AddBookPage,
 		}, {
-			path: 'info/:bookId/',
+			path: 'info/:bookCode/',
 			component: BookInfoPage,
 		}],
 	}, {

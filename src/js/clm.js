@@ -22,14 +22,14 @@ class Clm {
 	}
 
 	static async validateSessionKey() {
-		let validateData = await this.api('/alive', {
+		let validateData = await this.api('alive', {
 			token: this.sessKey
 		});
 		return !validateData.data.is_expired;
 	}
 
 	static async api(endpoint, data = {}) {
-		if (this.isLoggedIn) data.sess_key = this.sessKey;
+		if (this.isLoggedIn) data.token = this.sessKey;
 		let response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
 			method: "post",
 			data: data
