@@ -1,59 +1,59 @@
 <template>
-    <div class="page">
-        <div class="page-content">
-            <section class="admin-content">
-                <div class="container py-5">
-                    <div class="card m-b-30">
-                        <div class="card-header">
-                            <h5 class="m-b-0">
-                                Thêm sách
-                            </h5>
-                        </div>
-                        <form action="#" method="POST" onsubmit="${submitCreation}">
-                            <div class="card-body">
-                                ${isSubmitSent && $h`
-                                <div class="form-group">
-                                    <div class="alert ${addSuccess?'alert-success':'alert-danger'}" role="alert">
-                                        ${returnMessage}
-                                    </div>
-                                </div>
-                                `}
-                                <div class="form-group">
-                                    <label for="accountName">Tên sách</label>
-                                    <input type="text" class="form-control" id="accountName" name="account-name"
-                                           placeholder="Nhập tên sách..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accountName">Tác giả</label>
-                                    <input type="text" class="form-control" id="accountName" name="account-name"
-                                           placeholder="Nhập tác giả..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accountName">Mã sách</label>
-                                    <input type="text" class="form-control" id="accountName" name="account-name"
-                                           placeholder="Nhập mã sách..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accountName">Giá tiền</label>
-                                    <input type="text" class="form-control" id="accountName" name="account-name"
-                                           placeholder="Nhập giá tiền..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="borrowed-time">Ngày nhập</label>
-                                    <input class="form-control datedropper" type="text" id="borrowed-time"/>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" name="create-project" value="ok" class="btn btn-primary">
-                                        Thêm
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+  <div class="page">
+    <div class="page-content">
+      <section class="admin-content">
+        <div class="container py-5">
+          <div class="card m-b-30">
+            <div class="card-header">
+              <h5 class="m-b-0">
+                Thêm sách
+              </h5>
+            </div>
+            <form action="#" method="POST" onsubmit="${submitCreation}">
+              <div class="card-body">
+                ${isSubmitSent && $h`
+                  <div class="form-group">
+                    <div class="alert ${addSuccess ? 'alert-success' : 'alert-danger'}" role="alert">
+                      ${returnMessage}
                     </div>
+                  </div>
+                `}
+                <div class="form-group">
+                  <label for="book-name">Tên sách</label>
+                  <input type="text" class="form-control" id="book-name" placeholder="Nhập tên sách..."/>
                 </div>
-            </section>
+                <div class="form-group">
+                  <label for="book-author">Tác giả</label>
+                  <input type="text" class="form-control" id="book-author" placeholder="Nhập tác giả..."/>
+                </div>
+                <div class="form-group">
+                  <label for="book-code">Mã sách</label>
+                  <input type="text" class="form-control" id="book-code" placeholder="Nhập mã sách..."/>
+                </div>
+                <div class="form-group">
+                  <label for="book-cost">Giá tiền</label>
+                  <input type="text" class="form-control" id="book-cost" placeholder="Nhập giá tiền..."/>
+                </div>
+                <div class="form-group">
+                  <label for="book-location">Vị trí</label>
+                  <input type="text" class="form-control" id="book-location" placeholder="Nhập vị trí..."/>
+                </div>
+                <div class="form-group">
+                  <label for="book-imported-date">Ngày nhập</label>
+                  <input class="form-control datedropper" type="text" id="book-imported-date"/>
+                </div>
+                <div class="form-group">
+                  <button type="submit" name="create-project" value="ok" class="btn btn-primary">
+                    Thêm
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </section>
     </div>
+  </div>
 </template>
 
 <script>
@@ -68,30 +68,37 @@
 		let isSubmitSent = false;
 		let addSuccess = false;
 		let returnMessage = "";
-		let selectDate = "";
+		const date = new Date();
 
 		const submitCreation = function (e) {
 			e.preventDefault();
 			isSubmitSent = true;
-			let accountName = document.getElementById("accountName").value;
-			let accountEmail = document.getElementById("accountEmail").value;
-			let role = document.getElementById("role").value;
-			let password = Math.random().toString(36).slice(-8);
+			let bookName = document.getElementById("book-name").value;
+			let bookCode = document.getElementById("book-code").value;
+			let bookCost = document.getElementById("book-cost").value;
+			let bookAuthor = document.getElementById("book-author").value;
+			let bookLocation = document.getElementById("book-location").value;
+			let bookImportedDate = document.getElementById("book-imported-date").value;
+			console.log(bookImportedDate);
 
-			if (!accountName || !accountEmail || !role) {
+			if (!bookName || !bookCode || !bookImportedDate) {
 				returnMessage = "Chưa điền đủ mục";
+				$update();
 			}
 			else {
-				Clm.api("create_account", {
-					fullname: accountName,
-					email: accountEmail,
-					password: password,
-					role: role
-				}).then(response => {
+				Clm.api("books/add", {
+					name: bookName,
+          code: bookCode,
+          author: bookAuthor,
+          location: bookLocation,
+          cost: bookCost,
+          imported_date: bookImportedDate,
+          responsible_person: Clm.account.name,
+          is_borrowed: false
+        }).then(response => {
 					console.log(response);
-					addSuccess = response.status;
+					addSuccess = !response.error;
 					returnMessage = response.message;
-
 					$update();
 				});
 			}

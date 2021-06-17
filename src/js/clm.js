@@ -17,6 +17,7 @@ class Clm {
 		if (this.isLoggedIn) {
 			this.sessKey = await Utils.getData("sess_key", "");
 			this.account = await Utils.getData("account", {});
+			console.log(this.account);
 			this.isLoggedIn = await this.validateSessionKey();
 		}
 	}
