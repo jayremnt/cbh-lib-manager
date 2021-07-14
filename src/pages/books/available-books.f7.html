@@ -10,7 +10,7 @@
                   Sách có thể mượn
                 </h5>
                 <div class="card-controls">
-                  <a href="#" class="btn btn-info">Thêm sách</a>
+                  <a href="/books/add/" class="btn btn-info">Thêm sách</a>
                 </div>
               </div>
               <div class="card-body">
@@ -26,6 +26,8 @@
                       <th>Giá tiền</th>
                       <th>Ngày nhập</th>
                       <th>Người nhập</th>
+                      <th>Tình trạng</th>
+                      <th>Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,7 +39,7 @@
                         <td>${book.code}</td>
                         <td>${book.location}</td>
                         <td>${book.cost}</td>
-                        <td>${book.imported_date}</td>
+                        <td>${Clm.timeConverter(book.imported_time)}</td>
                         <td>${book.responsible_person}</td>
                         <td>${book.is_borrowed === true ? "Đã mượn" : "Chưa mượn"}</td>
                         <td>
