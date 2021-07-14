@@ -94,7 +94,8 @@
           cost: bookCost,
           imported_date: bookImportedDate,
           responsible_person: Clm.account.name,
-          is_borrowed: false
+          is_borrowed: false,
+          borrower: ""
         }).then(response => {
 					console.log(response);
 					addSuccess = !response.error;

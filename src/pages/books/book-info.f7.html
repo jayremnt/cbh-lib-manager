@@ -22,6 +22,7 @@
                     <th>Ngày nhập</th>
                     <th>Người nhập</th>
                     <th>Tình trạng</th>
+                    <th>Hành động</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -34,6 +35,14 @@
                     <td>${book.imported_date}</td>
                     <td>${book.responsible_person}</td>
                     <td>${book.is_borrowed === true ? "Đã mượn" : "Chưa mượn"}</td>
+                    <td>
+                      <a href="/borrowers/info/${book.borrower}/" class="btn btn-primary btn-sm" role="button">
+                        <i class="mdi mdi-human-male"></i>
+                      </a>
+                      <a class="btn btn-primary btn-sm" href="#">
+                        <i class="mdi mdi-pencil"></i>
+                      </a>
+                    </td>
                   </tr>
                   </tbody>
                 </table>

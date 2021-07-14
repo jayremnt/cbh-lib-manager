@@ -41,12 +41,12 @@
                         <td>${book.responsible_person}</td>
                         <td>${book.is_borrowed === true ? "Đã mượn" : "Chưa mượn"}</td>
                         <td>
-                          <a href="/books/info/${book.code}/" class="btn btn-info projects" role="button">
+                          <a href="/books/info/${book.code}/" class="btn btn-primary btn-sm" role="button">
                             <i class="mdi mdi-menu"></i>
                           </a>
-                          <button @click="${deleteProject}" type="button" class="btn btn-danger"
+                          <button @click="${deleteBook}" type="button" class="btn btn-danger btn-sm"
                                   data-toggle="modal" data-target="#deleteProject"
-                                  data-id="1">
+                                  data-code="${book.code}">
                             <i class="mdi mdi-delete"></i>
                           </button>
 
@@ -81,21 +81,20 @@
 
 		resetList();
 
-		const deleteProject = (e) => {
-			let projectID = e.currentTarget.dataset.id;
+		const deleteBook = (e) => {
+			let bookCode = e.currentTarget.dataset.code;
 
-			Clm.openConfirmModal('deleteProject').then(isConfirmed => {
+			Clm.openConfirmModal('deleteBook').then(isConfirmed => {
 				if (!isConfirmed) return;
 
-				Clm.api("delete_project", {
-					id: projectID
-				}).then(response => {
+				Clm.api("books/" + bookCode + "/delete").then(response => {
 					Clm.alert("Tester Portal", response.message);
 
 					resetList();
 				});
 			});
 		}
+
 		// Return render function
 		return $render;
 	}
