@@ -79,7 +79,7 @@
 				if (!response.error) {
 					loginSuccess = true;
 					Utils.setData("is_logged_in", true);
-					Utils.setData("account", response['data']['account']);
+					Utils.setData("account", response['data']['account'][0]);
 					Utils.setData("sess_key", response['data']['token']);
 					setTimeout(() => {
 						location.reload();
