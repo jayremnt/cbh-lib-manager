@@ -25,24 +25,27 @@
                       <th>Điện thoại</th>
                       <th>Email</th>
                       <th>Số sách</th>
+                      <th>Phụ trách</th>
                     </tr>
                     </thead>
                     <tbody>
                     ${borrowers.map((borrower, i) => $h`
-                      <tr>
-                        <td>${i + 1}</td>
-                        <td>${borrower.name}</td>
-                        <td>${borrower.class}</td>
-                        <td>${borrower.student_code}</td>
-                        <td>${borrower.phone_number}</td>
-                        <td>${borrower.email}</td>
-                        <td>${borrower.current_borrowed_books.length}</td>
-                        <td>
-                          <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm" role="button">
-                            <i class="mdi mdi-menu"></i>
-                          </a>
-                        </td>
-                      </tr>
+                    <tr>
+                      <td>${i + 1}</td>
+                      <td>${borrower.name}</td>
+                      <td>${borrower.class}</td>
+                      <td>${borrower.student_code}</td>
+                      <td>${borrower.phone_number}</td>
+                      <td>${borrower.email}</td>
+                      <td>${borrower.current_borrowed_books.length}</td>
+                      <td>${borrower.responsible_person.name}</td>
+                      <td>
+                        <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm"
+                           role="button">
+                          <i class="mdi mdi-menu"></i>
+                        </a>
+                      </td>
+                    </tr>
                     `)}
                     </tbody>
                   </table>
