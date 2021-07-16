@@ -112,6 +112,7 @@
                         <th>Hết hạn</th>
                         <th>Gia hạn</th>
                         <th>Phụ trách</th>
+                        <th>Hành động</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -213,7 +214,6 @@
 			const inputEmail = $('#input-email').val();
 
 			if (!inputName || !inputClass || !inputStudentCode || !inputPhoneNumber || !inputEmail || borrowedBooks.length === 0) {
-				alertSubmit = true;
 				returnMessage = "Chưa điền đủ mục";
 				$update();
 			}
@@ -229,7 +229,6 @@
 				}).then(response => {
 					console.log(response);
 					returnMessage = response.message;
-					alertSubmit = true;
           addSuccess = !response.error;
 					$update();
 				})

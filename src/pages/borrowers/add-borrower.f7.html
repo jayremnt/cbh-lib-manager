@@ -159,7 +159,6 @@
 		let isSubmitSent = false;
 		let returnMessage = "";
 		let addSuccess = false;
-		let alertSubmit = false;
 		let alertFindBook = false;
 		let foundBook = null;
 		let pendingBorrowedBooks = [];
@@ -175,7 +174,6 @@
 			const inputEmail = $('#input-email').val();
 
 			if (!inputName || !inputClass || !inputStudentCode || !inputPhoneNumber || !inputEmail || pendingBorrowedBooks.length === 0) {
-				alertSubmit = true;
 				returnMessage = "Chưa điền đủ mục";
 				$update();
 			}
@@ -191,7 +189,6 @@
 				}).then(response => {
 					console.log(response);
 					returnMessage = response.message;
-					alertSubmit = true;
 					addSuccess = !response.error;
 					if (addSuccess) {
 						foundBook = null;
