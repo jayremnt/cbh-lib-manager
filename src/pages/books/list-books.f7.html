@@ -14,6 +14,13 @@
                 </div>
               </div>
               <div class="card-body">
+                ${alert && $h`
+                <div class="form-group">
+                  <div class="alert alert-danger" role="alert">
+                    ${returnMessage}
+                  </div>
+                </div>
+                `}
                 <div class="table-responsive">
                   <table class="table table-hover ">
                     <thead>
@@ -41,7 +48,7 @@
                         <td>${book.cost}</td>
                         <td>${Clm.timeConverter(book.imported_time)}</td>
                         <td>${book.responsible_person.name}</td>
-                        <td>${book.is_borrowed === true ? "Đã mượn" : "Chưa mượn"}</td>
+                        <td>${book.borrowed_info.is_borrowed === true ? "Đã mượn" : "Chưa mượn"}</td>
                         <td>
                           <a href="/books/info/${book.code}/" class="btn btn-primary btn-sm" role="button">
                             <i class="mdi mdi-menu"></i>
@@ -72,12 +79,13 @@
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
 		let books = [];
+    let alert = false;
+    let returnMessage = "";
 
 		const resetList = (e) => {
 			Clm.api("books/all").then(response => {
-				console.log(response);
 				books = response.data.list_books;
-				console.log(books);
+				console.log(response);
 				$update();
 			});
 		}
@@ -87,14 +95,28 @@
 		const deleteBook = (e) => {
 			let bookCode = e.currentTarget.dataset.code;
 
-			Clm.openConfirmModal('deleteBook').then(isConfirmed => {
+			Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
 				if (!isConfirmed) return;
 
-				Clm.api("books/" + bookCode + "/delete").then(response => {
-					Clm.alert("Tester Portal", response.message);
-
-					resetList();
-				});
+				try {
+          let response = await Clm.api("books/" + bookCode + "/returnBook", {
+          	responsiblePerson: Clm.account._id
+          });
+					console.log(response);
+          if (!response.error) {
+            response = await Clm.api("books/" + bookCode + "/delete");
+	          console.log(response);
+            if (response.error) {
+            	alert = true;
+              returnMessage = response.message;
+              $update();
+            }
+            resetList();
+          }
+        }
+        catch (e) {
+	        console.log(e);
+        }
 			});
 		}
 
