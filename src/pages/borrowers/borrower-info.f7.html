@@ -116,18 +116,18 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            ${borrowedBooks.map(book => $h`
+                                            ${borrowedBooks.map(borrowedInfo => $h`
                                             <tr>
-                                                <td>${book.name}</td>
-                                                <td>${book.author}</td>
-                                                <td>${book.code}</td>
-                                                <td>${book.location}</td>
-                                                <td>${Clm.timeConverter(book.borrowed_time)}</td>
-                                                <td>${Clm.timeConverter(book.expired_time)}</td>
-                                                <td>${book.extended_times}</td>
-                                                <td>${book.responsible_person.name}</td>
+                                                <td>${borrowedInfo.book.name}</td>
+                                                <td>${borrowedInfo.book.author}</td>
+                                                <td>${borrowedInfo.book.code}</td>
+                                                <td>${borrowedInfo.book.location}</td>
+                                                <td>${Clm.timeConverter(borrowedInfo.book.borrowed_info.borrowed_time)}</td>
+                                                <td>${Clm.timeConverter(borrowedInfo.book.borrowed_info.expired_time)}</td>
+                                                <td>${borrowedInfo.extended_times}</td>
+                                                <td>${borrowedInfo.responsible_person.name}</td>
                                                 <td>
-                                                    <a href="/books/info/${book.code}/" class="btn btn-projects"
+                                                    <a href="/books/info/${borrowedInfo.book.code}/" class="btn btn-projects"
                                                        role="button">
                                                         <i class="mdi mdi-menu"></i>
                                                     </a>
@@ -196,13 +196,17 @@
         let foundBook = null;
         let findBookMessage = "";
 
-        Clm.api(`borrowers/${props.borrowerCode}/`).then(async response => {
-            console.log(response);
-            borrowerInfo = response.data.borrower_info;
-            borrowedBooks = borrowerInfo.current_borrowed_books[0] ? borrowerInfo.current_borrowed_books : [];
-            console.log(borrowedBooks);
-            $update();
-        });
+        const getBorrowerInfo = function () {
+          Clm.api(`borrowers/${props.borrowerCode}/`).then(async response => {
+              console.log(response);
+              borrowerInfo = response.data.borrower_info;
+              borrowedBooks = borrowerInfo.current_borrowed_books[0] ? borrowerInfo.current_borrowed_books : [];
+              console.log(borrowedBooks);
+              $update();
+          });
+        }
+
+        getBorrowerInfo();
 
         const submitCreation = function (e) {
             e.preventDefault();
@@ -235,27 +239,42 @@
             }
         }
 
-        const findBook = function (e) {
+        const findBook = async function (e) {
+            alertFindBook = true;
             const bookCode = $('#input-book-code').val();
-            Clm.api("books/" + bookCode).then(response => {
-                console.log(response);
+            console.log(borrowedBooks);
+            const isAdded = !(borrowedBooks.findIndex(book => book.book.code === bookCode) === -1);
+            if (isAdded) {
+                findBookMessage = "Sách đã được thêm";
+                $update();
+                return;
+            }
+            try {
+                let response = await Clm.api('books/' + bookCode +'/isBorrowed');
                 if (response.error) {
                     foundBook = null;
-                    alertFindBook = true;
                     findBookMessage = response.message;
-                    $update();
-                    return;
                 }
-                foundBook = response.data['book_details'];
-                alertFindBook = true;
-                $update();
-            }).catch(err => {
-                console.log(err);
+                else if (response.data.is_borrowed) {
+                    foundBook = null;
+                    findBookMessage = "Sách đã được mượn";
+                } else {
+                    response = await Clm.api("books/" + bookCode)
+                    console.log(response);
+                    if (response.error) {
+                        foundBook = null;
+                        findBookMessage = response.message;
+                    } else {
+                        foundBook = response.data['book_details'];
+                    }
+                }
+            }
+            catch (e) {
+                console.log(e);
                 foundBook = null;
-                alertFindBook = true;
-                findBookMessage = err;
-                $update();
-            });
+                findBookMessage = "Có lỗi xảy ra";
+            }
+            $update();
         }
 
         const addBook = function (e) {
@@ -264,7 +283,8 @@
                 bookId: e.currentTarget.dataset.id,
                 borrowerId: borrowerInfo._id,
                 borrowedTime: new Date().getTime(),
-                expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7
+                expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7,
+                responsiblePerson: Clm.account._id
             }).then(response => {
                 console.log(response);
                 if (response.error) {
@@ -273,9 +293,10 @@
                     findBookMessage = response.message;
                     $update();
                 }
-                borrowedBooks.push(response.data.book);
                 foundBook = null;
                 alertFindBook = false;
+                getBorrowerInfo();
+                $update();
             }).catch(err => {
                 console.log(err);
                 foundBook = null;
