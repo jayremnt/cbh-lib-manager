@@ -122,15 +122,11 @@
                                                 <td>${borrowedInfo.book.author}</td>
                                                 <td>${borrowedInfo.book.code}</td>
                                                 <td>${borrowedInfo.book.location}</td>
-                                                <td>${Clm.timeConverter(borrowedInfo.book.borrowed_info.borrowed_time)}</td>
-                                                <td>${Clm.timeConverter(borrowedInfo.book.borrowed_info.expired_time)}</td>
+                                                <td>${Clm.timeConverter(borrowedInfo.borrowed_time)}</td>
+                                                <td>${Clm.timeConverter(borrowedInfo.expired_time)}</td>
                                                 <td>${borrowedInfo.extended_times}</td>
                                                 <td>${borrowedInfo.responsible_person.name}</td>
                                                 <td>
-                                                    <a href="/books/info/${borrowedInfo.book.code}/" class="btn btn-projects"
-                                                       role="button">
-                                                        <i class="mdi mdi-menu"></i>
-                                                    </a>
                                                     <button @click="${deleteProject}" type="button"
                                                             class="btn btn-warning btn-sm"
                                                             data-toggle="modal" data-target="#deleteProject"
