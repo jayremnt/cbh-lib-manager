@@ -14,6 +14,13 @@
                 </div>
               </div>
               <div class="card-body">
+                ${alert && $h`
+                <div class="form-group">
+                  <div class="alert ${alertSuccess ? 'alert-success' : 'alert-danger'}" role="alert">
+                    ${returnMessage}
+                  </div>
+                </div>
+                `}
                 <div class="table-responsive">
                   <table class="table table-hover ">
                     <thead>
@@ -42,6 +49,11 @@
                            role="button">
                           <i class="mdi mdi-menu"></i>
                         </a>
+                        <button @click="${deleteBorrower}" type="button" class="btn btn-danger btn-sm"
+                                data-toggle="modal" data-target="#deleteProject"
+                                data-student-code="${borrower.student_code}">
+                          <i class="mdi mdi-delete"></i>
+                        </button>
                       </td>
                     </tr>
                     `)}
@@ -62,6 +74,9 @@
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
 		let borrowers = [];
+		let alert = false;
+		let alertSuccess = false;
+		let returnMessage = "";
 
 		const resetList = (e) => {
 			Clm.api("borrowers/all").then(response => {
@@ -73,19 +88,44 @@
 
 		resetList();
 
-		const deleteProject = (e) => {
-			let projectID = e.currentTarget.dataset.id;
+		const deleteBorrower = (e) => {
+			let borrowerCode = e.currentTarget.dataset.studentCode;
+			console.log(borrowerCode);
 
-			Clm.openConfirmModal('deleteProject').then(isConfirmed => {
+			Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
 				if (!isConfirmed) return;
+				alert = true;
 
-				Clm.api("delete_project", {
-					id: projectID
-				}).then(response => {
-					Clm.alert("Tester Portal", response.message);
+				try {
+					let response = await Clm.api("borrowers/" + borrowerCode);
+					let borrowerInfo = response.data.borrower_info;
+					console.log(response);
 
-					resetList();
-				});
+					for (const book of borrowerInfo.current_borrowed_books) {
+						console.log(book);
+						response = await Clm.api("books/" + book.book.code + "/returnBook", {
+							responsiblePerson: Clm.account._id
+						});
+						console.log(response);
+						alertSuccess = !response.error;
+						if (response.error) {
+							returnMessage = response.message;
+							break;
+						}
+					}
+					if (!response.error) {
+						response = await Clm.api("borrowers/" + borrowerInfo.student_code + "/delete");
+						console.log(response);
+						returnMessage = response.message;
+						alertSuccess = !response.error;
+					}
+				}
+				catch (e) {
+					console.log(e);
+					returnMessage = "Có lỗi xảy ra";
+					alertSuccess = false;
+				}
+				resetList();
 			});
 		}
 		// Return render function

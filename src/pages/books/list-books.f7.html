@@ -16,7 +16,7 @@
               <div class="card-body">
                 ${alert && $h`
                 <div class="form-group">
-                  <div class="alert alert-danger" role="alert">
+                  <div class="alert ${alertSuccess ? 'alert-success' : 'alert-danger'}" role="alert">
                     ${returnMessage}
                   </div>
                 </div>
@@ -39,28 +39,28 @@
                     </thead>
                     <tbody>
                     ${books.map((book, i) => $h`
-                      <tr>
-                        <td>${i + 1}</td>
-                        <td>${book.name}</td>
-                        <td>${book.author}</td>
-                        <td>${book.code}</td>
-                        <td>${book.location}</td>
-                        <td>${book.cost}</td>
-                        <td>${Clm.timeConverter(book.imported_time)}</td>
-                        <td>${book.responsible_person.name}</td>
-                        <td>${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}</td>
-                        <td>
-                          <a href="/books/info/${book.code}/" class="btn btn-primary btn-sm" role="button">
-                            <i class="mdi mdi-menu"></i>
-                          </a>
-                          <button @click="${deleteBook}" type="button" class="btn btn-danger btn-sm"
-                                  data-toggle="modal" data-target="#deleteProject"
-                                  data-code="${book.code}">
-                            <i class="mdi mdi-delete"></i>
-                          </button>
+                    <tr>
+                      <td>${i + 1}</td>
+                      <td>${book.name}</td>
+                      <td>${book.author}</td>
+                      <td>${book.code}</td>
+                      <td>${book.location}</td>
+                      <td>${book.cost}</td>
+                      <td>${Clm.timeConverter(book.imported_time)}</td>
+                      <td>${book.responsible_person.name}</td>
+                      <td>${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}</td>
+                      <td>
+                        <a href="/books/info/${book.code}/" class="btn btn-primary btn-sm" role="button">
+                          <i class="mdi mdi-menu"></i>
+                        </a>
+                        <button @click="${deleteBook}" type="button" class="btn btn-danger btn-sm"
+                                data-toggle="modal" data-target="#deleteProject"
+                                data-code="${book.code}">
+                          <i class="mdi mdi-delete"></i>
+                        </button>
 
-                        </td>
-                      </tr>
+                      </td>
+                    </tr>
                     `)}
                     </tbody>
                   </table>
@@ -79,8 +79,9 @@
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
 		let books = [];
-    let alert = false;
-    let returnMessage = "";
+		let alert = false;
+		let alertSuccess = false;
+		let returnMessage = "";
 
 		const resetList = (e) => {
 			Clm.api("books/all").then(response => {
@@ -97,26 +98,30 @@
 
 			Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
 				if (!isConfirmed) return;
+				alert = true;
 
 				try {
-          let response = await Clm.api("books/" + bookCode + "/returnBook", {
-          	responsiblePerson: Clm.account._id
-          });
+					let response = await Clm.api("books/" + bookCode + "/returnBook", {
+						responsiblePerson: Clm.account._id
+					});
 					console.log(response);
-          if (!response.error) {
-            response = await Clm.api("books/" + bookCode + "/delete");
-	          console.log(response);
-            if (response.error) {
-            	alert = true;
-              returnMessage = response.message;
-              $update();
-            }
-            resetList();
-          }
-        }
-        catch (e) {
-	        console.log(e);
-        }
+					if (!response.error) {
+						response = await Clm.api("books/" + bookCode + "/delete");
+						console.log(response);
+						returnMessage = response.message;
+						alertSuccess = !response.error;
+					}
+					else {
+						returnMessage = response.message;
+            alertSuccess = false;
+					}
+				}
+				catch (e) {
+					console.log(e);
+					returnMessage = "Có lỗi xảy ra";
+					alertSuccess = false;
+				}
+				resetList();
 			});
 		}
 
