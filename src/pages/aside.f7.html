@@ -1,157 +1,159 @@
 <template>
-    <div class="page js-scrollbar" style="background: #212841">
-        <ul class="menu">
-            <li class="menu-item">
-                <a href="/" data-view="#view-main" class="menu-link">
-                    <span class="menu-label">
-                        <span class="menu-name">Tổng quan</span>
-                    </span>
-                    <span class="menu-icon">
-                        <span class="icon-badge badge-success badge badge-pill">4</span>
-                        <i class="icon-placeholder mdi mdi-shape-outline"></i>
-                    </span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="open-dropdown menu-link">
-                    <span class="menu-label">
-                        <span class="menu-name">
-                            Quản lý người mượn
-                            <span class="menu-arrow"></span>
-                        </span>
-                    </span>
-                    <span class="menu-icon">
-                        <span class="icon-badge badge-success badge badge-pill">4</span>
-                        <i class="icon-placeholder mdi mdi-shape-outline"></i>
-                    </span>
-                </a>
-                <!--submenu-->
-                <ul class="sub-menu">
-                    <li class="menu-item">
-                        <a href="/borrowers/" data-view="#view-main" class="menu-link">
-                            <span class="menu-label">
-                                <span class="menu-name">Tất cả người mượn</span>
-                            </span>
-                            <span class="menu-icon">
-                                <i class="icon-placeholder mdi mdi-shape-circle-plus"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/borrowers/add/" data-view="#view-main" class="menu-link">
-                            <span class="menu-label">
-                                <span class="menu-name">Thêm người mượn</span>
-                            </span>
-                            <span class="menu-icon">
-                                <i class="icon-placeholder mdi mdi-shape-circle-plus"></i>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="open-dropdown menu-link">
-                    <span class="menu-label">
-                        <span class="menu-name">
-                            Quản lý sách
-                            <span class="menu-arrow"></span>
-                        </span>
-                    </span>
-                    <span class="menu-icon">
-                        <i class="icon-placeholder mdi mdi-information-outline"></i>
-                    </span>
-                </a>
-                <!--submenu-->
-                <ul class="sub-menu">
-                    <li class="menu-item">
-                        <a href="/books/" data-view="#view-main" class="menu-link">
-                            <span class="menu-label">
-                                <span class="menu-name">Tất cả sách</span>
-                            </span>
-                            <span class="menu-icon">
-                                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/books/add/" data-view="#view-main" class="menu-link">
-                            <span class="menu-label">
-                                <span class="menu-name">Thêm sách</span>
-                            </span>
-                            <span class="menu-icon">
-                                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/books/available/" data-view="#view-main" class="menu-link">
-                            <span class="menu-label">
-                                <span class="menu-name">Sách có thể mượn</span>
-                            </span>
-                            <span class="menu-icon">
-                                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="menu-item">
-                <a href="/manage/accounts/" data-view="#view-main" class="menu-link">
-                    <span class="menu-label">
-                        <span class="menu-name">Quản lý tài khoản</span>
-                    </span>
-                    <span class="menu-icon">
-                        <i class="icon-placeholder mdi mdi-information-outline"></i>
-                    </span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="/about/" data-view="#view-main" class="menu-link">
-                    <span class="menu-label">
-                        <span class="menu-name">About</span>
-                    </span>
-                    <span class="menu-icon">
-                        <i class="icon-placeholder mdi mdi-information-outline"></i>
-                    </span>
-                </a>
-            </li>
-
+  <div class="page js-scrollbar" style="background: #212841">
+    <ul class="menu">
+      <li class="menu-item">
+        <a href="/" data-view="#view-main" class="menu-link">
+          <span class="menu-label">
+              <span class="menu-name">Tổng quan</span>
+          </span>
+          <span class="menu-icon">
+          <span class="icon-badge badge-success badge badge-pill">4</span>
+            <i class="icon-placeholder mdi mdi-shape-outline"></i>
+          </span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="open-dropdown menu-link">
+          <span class="menu-label">
+            <span class="menu-name">
+              Quản lý người mượn
+              <span class="menu-arrow"></span>
+            </span>
+          </span>
+          <span class="menu-icon">
+            <span class="icon-badge badge-success badge badge-pill">4</span>
+            <i class="icon-placeholder mdi mdi-shape-outline"></i>
+          </span>
+        </a>
+        <!--submenu-->
+        <ul class="sub-menu">
+          <li class="menu-item">
+            <a href="/borrowers/" data-view="#view-main" class="menu-link">
+              <span class="menu-label">
+                <span class="menu-name">Tất cả người mượn</span>
+              </span>
+              <span class="menu-icon">
+                <i class="icon-placeholder mdi mdi-shape-circle-plus"></i>
+              </span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/borrowers/add/" data-view="#view-main" class="menu-link">
+              <span class="menu-label">
+                <span class="menu-name">Thêm người mượn</span>
+              </span>
+              <span class="menu-icon">
+                <i class="icon-placeholder mdi mdi-shape-circle-plus"></i>
+              </span>
+            </a>
+          </li>
         </ul>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="open-dropdown menu-link">
+          <span class="menu-label">
+            <span class="menu-name">
+              Quản lý sách
+              <span class="menu-arrow"></span>
+            </span>
+          </span>
+          <span class="menu-icon">
+            <i class="icon-placeholder mdi mdi-information-outline"></i>
+          </span>
+        </a>
+        <!--submenu-->
+        <ul class="sub-menu">
+          <li class="menu-item">
+            <a href="/books/" data-view="#view-main" class="menu-link">
+              <span class="menu-label">
+                <span class="menu-name">Tất cả sách</span>
+              </span>
+              <span class="menu-icon">
+                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
+              </span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/books/add/" data-view="#view-main" class="menu-link">
+              <span class="menu-label">
+                <span class="menu-name">Thêm sách</span>
+              </span>
+              <span class="menu-icon">
+                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
+              </span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/books/available/" data-view="#view-main" class="menu-link">
+              <span class="menu-label">
+                <span class="menu-name">Sách có thể mượn</span>
+              </span>
+              <span class="menu-icon">
+                <i class="icon-placeholder mdi mdi-toolbox-outline"></i>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      ${account.role === "admin" && $h`
+      <li class="menu-item">
+        <a href="/manage/accounts/" data-view="#view-main" class="menu-link">
+          <span class="menu-label">
+            <span class="menu-name">Quản lý tài khoản</span>
+          </span>
+          <span class="menu-icon">
+            <i class="icon-placeholder mdi mdi-information-outline"></i>
+          </span>
+        </a>
+      </li>
+      `}
+      <li class="menu-item">
+        <a href="/about/" data-view="#view-main" class="menu-link">
+          <span class="menu-label">
+            <span class="menu-name">About</span>
+          </span>
+          <span class="menu-icon">
+            <i class="icon-placeholder mdi mdi-information-outline"></i>
+          </span>
+        </a>
+      </li>
 
-        <div class="popup popup-tablet-fullscreen">
-            <div class="view view-main view-init" data-url="/login/"></div>
-        </div>
+    </ul>
+
+    <div class="popup popup-tablet-fullscreen">
+      <div class="view view-main view-init" data-url="/login/"></div>
     </div>
+  </div>
 </template>
 <script>
-	import $ from 'jquery';
-	import Clm from "../js/clm";
-	import CONSTANTS from "../js/constants";
+  import $ from 'jquery';
+  import Clm from "../js/clm";
+  import CONSTANTS from "../js/constants";
 
-	export default function (props, {$f7, $update, $on, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let account = {};
-		$(document).on('click', '.menu-item', function (e) {
-			$('.menu-item').each((ind, e) => {
-				$(e).removeClass("active");
-			});
-			$(this).addClass("active");
-		});
+  export default function (props, {$f7, $update, $on, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+    let account = {};
+    $(document).on('click', '.menu-item', function (e) {
+      $('.menu-item').each((ind, e) => {
+        $(e).removeClass("active");
+      });
+      $(this).addClass("active");
+    });
 
-		$onMounted(() => {
-			window.jQuery('.js-scrollbar').scrollbar();
-		});
+    $onMounted(() => {
+      window.jQuery('.js-scrollbar').scrollbar();
+    });
 
 
-        let waitBootInterval = setInterval(() => {
-            if (Clm.isBooted) {
-                clearInterval(waitBootInterval);
+    let waitBootInterval = setInterval(() => {
+      if (Clm.isBooted) {
+        clearInterval(waitBootInterval);
 
-                account = Clm.account;
-                console.log(account.role);
-                $update();
-            }
-        }, 100);
+        account = Clm.account;
+        console.log(account.role);
+        $update();
+      }
+    }, 100);
 
-		return $render;
-	};
+    return $render;
+  };
 </script>
