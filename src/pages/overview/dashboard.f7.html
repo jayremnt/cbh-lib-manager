@@ -16,7 +16,7 @@
                 <div class="card-body">
                   <div class="row p-t-20 p-b-20">
                     <div class="my-auto col-md-7">
-                      <h1 class="m-0">26</h1>
+                      <h1 class="m-0">${borrowingBorrowers.length}</h1>
                       <p class="m-0 text-muted">
                         Số người mượn sách
                       </p>
@@ -38,7 +38,7 @@
                 <div class="card-body">
                   <div class="row p-t-20 p-b-20">
                     <div class="my-auto col-md-7">
-                      <h1 class="m-0">102</h1>
+                      <h1 class="m-0">${books.length - availableBooks.length}</h1>
                       <p class="m-0 text-muted">
                         Số sách đã mượn
                       </p>
@@ -60,7 +60,7 @@
                 <div class="card-body">
                   <div class="row p-t-20 p-b-20">
                     <div class="my-auto col-md-7">
-                      <h1 class="m-0">345</h1>
+                      <h1 class="m-0">${books.length}</h1>
                       <p class="m-0 text-muted">
                         Tổng số sách
                       </p>
@@ -86,22 +86,22 @@
 
                 <div class="list-group list-group-flush">
                   ${joinedProjects.map(project => $h`
-                    <div class="list-group-item d-flex  align-items-center">
-                      <div class="m-r-20">
-                        <div class="avatar avatar-sm">
-                          <img src="assets/img/users/user-5.jpg" class="avatar-img avatar-sm rounded-circle" alt=""/>
-                        </div>
-                      </div>
-                      <div class="">
-                        <div>${project.title}</div>
-                        <div class="text-muted">
-                          ${project.platform}
-                        </div>
-                      </div>
-                      <div class="ml-auto">
-                        <a href="/projects/${project.id}/" class="btn btn-white">Chi tiết</a>
+                  <div class="list-group-item d-flex  align-items-center">
+                    <div class="m-r-20">
+                      <div class="avatar avatar-sm">
+                        <img src="assets/img/users/user-5.jpg" class="avatar-img avatar-sm rounded-circle" alt=""/>
                       </div>
                     </div>
+                    <div class="">
+                      <div>${project.title}</div>
+                      <div class="text-muted">
+                        ${project.platform}
+                      </div>
+                    </div>
+                    <div class="ml-auto">
+                      <a href="/projects/${project.id}/" class="btn btn-white">Chi tiết</a>
+                    </div>
+                  </div>
                   `)}
                 </div>
                 ${joinedProjects.length == 0 && $h`
@@ -129,7 +129,7 @@
                       </div>
                       <div class="col-5 text-right">
                         <a href="#" class="btn btn-success btn-rounded-circle btn-lg"> <i
-                                class="mdi mdi-pencil"></i> </a>
+                          class="mdi mdi-pencil"></i> </a>
                       </div>
                     </div>
                     <hr></hr>
@@ -223,11 +223,30 @@
 </template>
 
 <script>
-  import Clm from "../../js/clm";
+	import Clm from "../../js/clm";
 
-  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-    let joinedProjects = [];
-    // Return render function
-    return $render;
-  }
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		let joinedProjects = [];
+		let borrowingBorrowers = [];
+		let books = [];
+		let availableBooks = [];
+
+		const resetList = async function () {
+      let response = await Clm.api("borrowers/borrowing");
+      borrowingBorrowers = response.data.list_borrowers;
+			console.log(borrowingBorrowers);
+			borrowingBorrowers.sort((a, b) => {
+      });
+      response = await Clm.api("books/all");
+      books = response.data.list_books;
+      response = await Clm.api("books/available");
+      availableBooks = response.data.list_available_books;
+      $update();
+		}
+
+		resetList();
+
+		// Return render function
+		return $render;
+	}
 </script>
