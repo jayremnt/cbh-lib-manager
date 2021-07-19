@@ -125,7 +125,7 @@
                         <td>${Clm.timeConverter(borrowedInfo.borrowed_time)}</td>
                         <td>${Clm.timeConverter(borrowedInfo.expired_time)}</td>
                         <td>${borrowedInfo.extended_times}</td>
-                        <td>${borrowedInfo.responsible_person.name}</td>
+                        <td>${borrowedInfo.responsible_person ? borrowedInfo.responsible_person.name : ""}</td>
                         <td>
                           <button @click="${extendBook}" type="button"
                                   class="btn btn-warning btn-sm"
@@ -303,8 +303,8 @@
 		}
 
 		const returnBook = async function (e) {
-      const bookCode = e.currentTarget.dataset.code;
-      alertFindBook = true;
+			const bookCode = e.currentTarget.dataset.code;
+			alertFindBook = true;
 
 			Clm.openConfirmModal('return').then(async isConfirmed => {
 				if (!isConfirmed) return;
@@ -326,8 +326,8 @@
 		}
 
 		const extendBook = async function (e) {
-      const bookCode = e.currentTarget.dataset.code;
-      alertFindBook = true;
+			const bookCode = e.currentTarget.dataset.code;
+			alertFindBook = true;
 
 			Clm.openConfirmModal('extend').then(async isConfirmed => {
 				if (!isConfirmed) return;

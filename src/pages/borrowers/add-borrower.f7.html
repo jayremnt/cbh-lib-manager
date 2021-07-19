@@ -1,274 +1,278 @@
 <template>
-    <div class="page">
-        <div class="page-content">
-            <section class="admin-content">
-                <div class="container py-5">
-                    <div class="card m-b-30">
-                        <div class="card-header">
-                            <h5 class="m-b-0">
-                                Thêm người mượn sách
-                            </h5>
-                        </div>
-                        <form action="#" method="POST" onsubmit="${submitCreation}">
-                            <div class="card-body">
-                                ${isSubmitSent && $h`
-                                <div class="form-group">
-                                    <div class="alert ${addSuccess?'alert-success':'alert-danger'}" role="alert">
-                                        ${returnMessage}
-                                    </div>
-                                </div>
-                                `}
-                                <div class="form-group">
-                                    <label for="input-name">Họ và tên</label>
-                                    <input type="text" class="form-control" id="input-name" name="account-name"
-                                           placeholder="Nhập họ và tên..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="input-class">Lớp</label>
-                                    <input type="text" class="form-control" id="input-class" name="account-name"
-                                           placeholder="Nhập lớp..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="input-student-code">Mã học sinh</label>
-                                    <input type="text" class="form-control" id="input-student-code" name="account-name"
-                                           placeholder="Nhập mã học sinh..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="input-phone-number">Số điện thoại</label>
-                                    <input type="text" class="form-control" id="input-phone-number" name="account-name"
-                                           placeholder="Nhập số điện thoại..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="input-email">Email</label>
-                                    <input type="text" class="form-control" id="input-email" name="account-name"
-                                           placeholder="Nhập email..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label class="font-secondary" for="input-book-code">Sách mượn</label>
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <input type="text" class="form-control" id="input-book-code"
-                                                   name="account-name"
-                                                   placeholder="Nhập mã sách..."/>
-                                        </div>
-                                        <div class="col-1">
-                                            <button @click="${findBook}" type="button"
-                                                    class="btn btn-success"
-                                                    data-id="1">
-                                                <i class="mdi mdi-magnify"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                ${foundBook && alertFindBook && $h`
-                                <div class="form-group">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover ">
-                                            <thead>
-                                            <tr>
-                                                <th>Tên sách</th>
-                                                <th>Tác giả</th>
-                                                <th>Mã sách</th>
-                                                <th>Vị trí</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>${foundBook.name}</td>
-                                                <td>${foundBook.author}</td>
-                                                <td>${foundBook.code}</td>
-                                                <td>${foundBook.location}</td>
-                                                <td>
-                                                    <button @click="${() => {addBook(foundBook)}}" type="button"
-                                                            class="btn btn-success btn-sm"
-                                                            data-code="${foundBook.code}">
-                                                        <i class="mdi mdi-plus"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                `}
-                                ${!foundBook && alertFindBook && $h`
-                                <div class="form-group">
-                                    <div class="alert alert-danger" role="alert">
-                                        ${findBookMessage}
-                                    </div>
-                                </div>
-                                `}
-                                <div class="form-group">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover ">
-                                            <thead>
-                                            <tr>
-                                                <th>Tên sách</th>
-                                                <th>Tác giả</th>
-                                                <th>Mã sách</th>
-                                                <th>Vị trí</th>
-                                                <th>Ngày mượn</th>
-                                                <th>Hết hạn</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            ${pendingBorrowedBooks.map((book, i) => $h`
-                                            <tr>
-                                                <td>${book.name}</td>
-                                                <td>${book.author}</td>
-                                                <td>${book.code}</td>
-                                                <td>${book.location}</td>
-                                                <td>${Clm.timeConverter(book.borrowed_time)}</td>
-                                                <td>${Clm.timeConverter(book.expired_time)}</td>
-                                                <td>
-                                                    <button @click="${deletePendingBook}" type="button"
-                                                            class="btn btn-danger btn-sm"
-                                                            data-id="${i}">
-                                                        <i class="mdi mdi-delete"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            `)}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" name="create-project" value="ok" class="btn btn-primary">
-                                        Thêm
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+  <div class="page">
+    <div class="page-content">
+      <section class="admin-content">
+        <div class="container py-5">
+          <div class="card m-b-30">
+            <div class="card-header">
+              <h5 class="m-b-0">
+                Thêm người mượn sách
+              </h5>
+            </div>
+            <form action="#" method="POST" onsubmit="${submitCreation}">
+              <div class="card-body">
+                ${isSubmitSent && $h`
+                <div class="form-group">
+                  <div class="alert ${addSuccess?'alert-success':'alert-danger'}" role="alert">
+                    ${returnMessage}
+                  </div>
                 </div>
-            </section>
+                `}
+                <div class="form-group">
+                  <label for="input-name">Họ và tên</label>
+                  <input type="text" class="form-control" id="input-name" name="account-name"
+                         placeholder="Nhập họ và tên..."/>
+                </div>
+                <div class="form-group">
+                  <label for="input-class">Lớp</label>
+                  <input type="text" class="form-control" id="input-class" name="account-name"
+                         placeholder="Nhập lớp..."/>
+                </div>
+                <div class="form-group">
+                  <label for="input-student-code">Mã học sinh</label>
+                  <input type="text" class="form-control" id="input-student-code" name="account-name"
+                         placeholder="Nhập mã học sinh..."/>
+                </div>
+                <div class="form-group">
+                  <label for="input-phone-number">Số điện thoại</label>
+                  <input type="text" class="form-control" id="input-phone-number" name="account-name"
+                         placeholder="Nhập số điện thoại..."/>
+                </div>
+                <div class="form-group">
+                  <label for="input-email">Email</label>
+                  <input type="text" class="form-control" id="input-email" name="account-name"
+                         placeholder="Nhập email..."/>
+                </div>
+                <div class="form-group">
+                  <label class="font-secondary" for="input-book-code">Sách mượn</label>
+                  <div class="row">
+                    <div class="col-8">
+                      <input type="text" class="form-control" id="input-book-code"
+                             name="account-name"
+                             placeholder="Nhập mã sách..."/>
+                    </div>
+                    <div class="col-1">
+                      <button @click="${findBook}" type="button"
+                              class="btn btn-success"
+                              data-id="1">
+                        <i class="mdi mdi-magnify"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                ${foundBook && alertFindBook && $h`
+                <div class="form-group">
+                  <div class="table-responsive">
+                    <table class="table table-hover ">
+                      <thead>
+                      <tr>
+                        <th>Tên sách</th>
+                        <th>Tác giả</th>
+                        <th>Mã sách</th>
+                        <th>Vị trí</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>${foundBook.name}</td>
+                        <td>${foundBook.author}</td>
+                        <td>${foundBook.code}</td>
+                        <td>${foundBook.location}</td>
+                        <td>
+                          <button @click="${() => {addBook(foundBook)}}" type="button"
+                                  class="btn btn-success btn-sm"
+                                  data-code="${foundBook.code}">
+                            <i class="mdi mdi-plus"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                `}
+                ${!foundBook && alertFindBook && $h`
+                <div class="form-group">
+                  <div class="alert alert-danger" role="alert">
+                    ${findBookMessage}
+                  </div>
+                </div>
+                `}
+                <div class="form-group">
+                  <div class="table-responsive">
+                    <table class="table table-hover ">
+                      <thead>
+                      <tr>
+                        <th>Tên sách</th>
+                        <th>Tác giả</th>
+                        <th>Mã sách</th>
+                        <th>Vị trí</th>
+                        <th>Ngày mượn</th>
+                        <th>Hết hạn</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      ${pendingBorrowedBooks.map((book, i) => $h`
+                      <tr>
+                        <td>${book.name}</td>
+                        <td>${book.author}</td>
+                        <td>${book.code}</td>
+                        <td>${book.location}</td>
+                        <td>${Clm.timeConverter(book.borrowed_time)}</td>
+                        <td>${Clm.timeConverter(book.expired_time)}</td>
+                        <td>
+                          <button @click="${deletePendingBook}" type="button"
+                                  class="btn btn-danger btn-sm"
+                                  data-id="${i}">
+                            <i class="mdi mdi-delete"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      `)}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" name="create-project" value="ok" class="btn btn-primary">
+                    Thêm
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </section>
     </div>
+  </div>
 </template>
 
 <script>
-    import Clm from "../../js/clm";
+	import Clm from "../../js/clm";
 
-    export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-        $on('pageBeforeIn', (e, page) => {
-            window.$(".js-select2").select2();
-            window.$('.datedropper').dateDropper();
-        });
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		$on('pageBeforeIn', (e, page) => {
+			window.$(".js-select2").select2();
+			window.$('.datedropper').dateDropper();
+		});
 
-        let isSubmitSent = false;
-        let returnMessage = "";
-        let addSuccess = false;
-        let alertFindBook = false;
-        let foundBook = null;
-        let findBookMessage = "";
-        let pendingBorrowedBooks = [];
+		let isSubmitSent = false;
+		let returnMessage = "";
+		let addSuccess = false;
+		let alertFindBook = false;
+		let foundBook = null;
+		let findBookMessage = "";
+		let pendingBorrowedBooks = [];
 
-        const submitCreation = async function (e) {
-            e.preventDefault();
-            isSubmitSent = true;
+		const submitCreation = async function (e) {
+			e.preventDefault();
+			isSubmitSent = true;
 
-            const inputName = $('#input-name').val();
-            const inputClass = $('#input-class').val();
-            const inputStudentCode = $('#input-student-code').val();
-            const inputPhoneNumber = $('#input-phone-number').val();
-            const inputEmail = $('#input-email').val();
+			const inputName = $('#input-name').val();
+			const inputClass = $('#input-class').val();
+			const inputStudentCode = $('#input-student-code').val();
+			const inputPhoneNumber = $('#input-phone-number').val();
+			const inputEmail = $('#input-email').val();
 
-            if (!inputName || !inputClass || !inputStudentCode || !inputPhoneNumber || !inputEmail || pendingBorrowedBooks.length === 0) {
-                returnMessage = "Chưa điền đủ mục";
-                $update();
-            } else {
-                try {
-                    let response = await Clm.api('borrowers/add', {
-                        name: inputName,
-                        class: inputClass,
-                        student_code: inputStudentCode,
-                        phone_number: inputPhoneNumber,
-                        email: inputEmail
-                    });
-                    console.log(response);
-                    returnMessage = response.message;
-                    addSuccess = !response.error;
+			if (!inputName || !inputClass || !inputStudentCode || !inputPhoneNumber || !inputEmail || pendingBorrowedBooks.length === 0) {
+				returnMessage = "Chưa điền đủ mục";
+				$update();
+			}
+			else {
+				try {
+					let response = await Clm.api('borrowers/add', {
+						name: inputName,
+						class: inputClass,
+						student_code: inputStudentCode,
+						phone_number: inputPhoneNumber,
+						email: inputEmail
+					});
+					console.log(response);
+					returnMessage = response.message;
+					addSuccess = !response.error;
 
-                    if (addSuccess) {
-                        const borrowerId = response.data.borrower._id;
+					if (addSuccess) {
+						const borrowerId = response.data.borrower._id;
 
-                        for (let i = 0; i < pendingBorrowedBooks.length; i++) {
-                            console.log(pendingBorrowedBooks[i]);
+						for (let i = 0; i < pendingBorrowedBooks.length; i++) {
+							console.log(pendingBorrowedBooks[i]);
 
-                            response = await Clm.api('books/' + pendingBorrowedBooks[i].code + '/borrowing', {
-                                borrowedTime: new Date().getTime(),
-                                expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7,
-                                borrowerId: borrowerId,
-                                responsiblePerson: Clm.account._id
-                            });
-                        }
-                        console.log(response);
-                    }
+							response = await Clm.api('books/' + pendingBorrowedBooks[i].code + '/borrowing', {
+								borrowedTime: new Date().getTime(),
+								expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7,
+								borrowerId: borrowerId,
+								responsiblePerson: Clm.account._id
+							});
+						}
+						console.log(response);
+					}
 
-                    foundBook = null;
-                    pendingBorrowedBooks = [];
-                } catch (e) {
-                    console.log(e);
-                    returnMessage = "Có lỗi xảy ra";
-                    addSuccess = false;
-                }
-                $update();
-            }
-        }
+					foundBook = null;
+					pendingBorrowedBooks = [];
+				}
+				catch (e) {
+					console.log(e);
+					returnMessage = "Có lỗi xảy ra";
+					addSuccess = false;
+				}
+				$update();
+			}
+		}
 
-        const findBook = async function (e) {
-            alertFindBook = true;
-            const bookCode = $('#input-book-code').val();
-            const isAdded = !(pendingBorrowedBooks.findIndex(book => book.code === bookCode) === -1);
-            if (isAdded) {
-                findBookMessage = "Sách đã được thêm";
-                $update();
-                return;
-            }
-            try {
-                let response = await Clm.api('books/' + bookCode +'/isBorrowed');
-                if (response.error) {
-                    foundBook = null;
-                    findBookMessage = response.message;
-                }
-                else if (response.data.is_borrowed) {
-                    foundBook = null;
-                    findBookMessage = "Sách đã được mượn";
-                } else {
-                    response = await Clm.api("books/" + bookCode)
-                    console.log(response);
-                    if (response.error) {
-                        foundBook = null;
-                        findBookMessage = response.message;
-                    } else {
-                        foundBook = response.data['book_details'];
-                    }
-                }
-            }
-            catch (e) {
-                console.log(e);
-                foundBook = null;
-                findBookMessage = "Có lỗi xảy ra";
-            }
-            $update();
-        }
+		const findBook = async function (e) {
+			alertFindBook = true;
+			const bookCode = $('#input-book-code').val();
+			const isAdded = !(pendingBorrowedBooks.findIndex(book => book.code === bookCode) === -1);
+			if (isAdded) {
+				findBookMessage = "Sách đã được thêm";
+				$update();
+				return;
+			}
+			try {
+				let response = await Clm.api('books/' + bookCode + '/isBorrowed');
+				if (response.error) {
+					foundBook = null;
+					findBookMessage = response.message;
+				}
+				else if (response.data.is_borrowed) {
+					foundBook = null;
+					findBookMessage = "Sách đã được mượn";
+				}
+				else {
+					response = await Clm.api("books/" + bookCode)
+					console.log(response);
+					if (response.error) {
+						foundBook = null;
+						findBookMessage = response.message;
+					}
+					else {
+						foundBook = response.data['book_details'];
+					}
+				}
+			}
+			catch (e) {
+				console.log(e);
+				foundBook = null;
+				findBookMessage = "Có lỗi xảy ra";
+			}
+			$update();
+		}
 
-        const addBook = function (book) {
-            console.log(book);
-            book.borrowed_time = new Date().getTime();
-            book.expired_time = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
-            pendingBorrowedBooks.push(book);
-            foundBook = null;
-            alertFindBook = false;
-            $update();
-        }
+		const addBook = function (book) {
+			console.log(book);
+			book.borrowed_time = new Date().getTime();
+			book.expired_time = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
+			pendingBorrowedBooks.push(book);
+			foundBook = null;
+			alertFindBook = false;
+			$update();
+		}
 
-        const deletePendingBook = function (e) {
-            const bookId = e.currentTarget.dataset.id;
-            pendingBorrowedBooks.splice(bookId, 1);
-            $update();
-        }
-        return $render;
-    }
+		const deletePendingBook = function (e) {
+			const bookId = e.currentTarget.dataset.id;
+			pendingBorrowedBooks.splice(bookId, 1);
+			$update();
+		}
+		return $render;
+	}
 </script>

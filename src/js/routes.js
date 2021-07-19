@@ -12,7 +12,7 @@ import NotFoundPage from '../pages/404.f7.html';
 import AsidePage from '../pages/aside.f7.html';
 
 import AddSystemAccountPage from '../pages/manage/accounts/add.f7.html';
-
+import EditSystemAccountPage from '../pages/manage/accounts/edit.f7.html';
 
 import DashboardPage from '../pages/overview/dashboard.f7.html';
 import ListBorrowersPage from "../pages/borrowers/list-borrowers.f7.html";
@@ -80,6 +80,9 @@ const routes = [
 			routes: [{
 				path: "add/",
 				component: AddSystemAccountPage
+			}, {
+				path: "edit/:accountId/",
+				component: EditSystemAccountPage
 			}]
 		}]
 	},

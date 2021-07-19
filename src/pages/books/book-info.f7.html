@@ -40,7 +40,7 @@
                     <td>${book.location}</td>
                     <td>${book.cost}</td>
                     <td>${Clm.timeConverter(book.imported_time)}</td>
-                    <td>${book.responsible_person.name}</td>
+                    <td>${book.responsible_person ? book.responsible_person.name : ""}</td>
                     <td>${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}</td>
                     <td>
                       <a class="btn btn-primary btn-sm" href="#">
