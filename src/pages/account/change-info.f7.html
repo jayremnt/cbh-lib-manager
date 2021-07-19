@@ -31,7 +31,7 @@
                                         <a href="https://gravatar.com/" target="_blank" class="">
                                             <label class="avatar-input">
                                                 <span class="avatar avatar-xl">
-                                                    <img src="#"
+                                                    <img src="${avatarUrl}"
                                                          alt="..." class="avatar-img rounded-circle"/>
                                                     <span class="avatar-input-icon rounded-circle">
                                                         <i class="mdi mdi-upload mdi-24px"></i>
@@ -84,9 +84,11 @@
 </template>
 <script>
   import Clm from "../../js/clm";
+  const md5 = require("md5");
 
 	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
     let account = Clm.account;
+    let avatarUrl = "http://www.gravatar.com/avatar/" + md5(account['email']) + "?s=64";
 		// Return render function
 		return $render;
 	}

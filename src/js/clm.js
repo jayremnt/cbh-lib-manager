@@ -19,6 +19,7 @@ class Clm {
 			this.account = await Utils.getData("account", {});
 			console.log(this.account);
 			this.isLoggedIn = await this.validateSessionKey();
+			this.isBooted = true;
 		}
 	}
 
