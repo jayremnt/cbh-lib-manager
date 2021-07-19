@@ -20,6 +20,14 @@
     ],
     "persistent": true
   },
+  "icons": {
+    "16": "static/logo-circle.png",
+    "24": "static/logo-circle.png",
+    "32": "static/logo-circle.png",
+    "64": "static/logo-circle.png",
+    "128": "static/logo-circle.png",
+    "512": "static/logo-circle.png"
+  },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "manifest_version": 2
 }
