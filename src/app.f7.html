@@ -143,10 +143,8 @@
 
     const logout = (e) => {
       e.preventDefault();
-      Clm.api('logout').then(response => {
-        localStorage.clear();
-        location.reload();
-      });
+      chrome.storage.local.clear();
+      location.reload();
     }
 
     const confirmDelete = (e) => {

@@ -1,96 +1,114 @@
 <template>
-    <div class="page">
-        <div class="page-content">
-            <section class="admin-content">
-                <div class="container py-5">
-                    <div class="col-md-15">
-                        <div class="card m-b-30">
-                            <div class="card-header">
-                                <h5 class="m-b-15">
-                                    Quản lí người dùng
-                                </h5>
-                                <div class="card-controls">
-                                    <a href="/manage/accounts/add/" class="btn btn-info">Thêm người dùng</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover ">
-                                        <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Email</th>
-                                            <th>Tên người dùng</th>
-                                            <th>Vai trò</th>
-                                            <th>Lớp</th>
-                                            <th>Lựa chọn</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        ${accounts.map(account => $h`
-                                        <tr>
-                                            <td>${account.id}</td>
-                                            <td>${account.email}</td>
-                                            <td>${account.fullname}</td>
-                                            <td>${account.role}</td>
-                                            <td>
-                                                <a href="/manage/accounts/add/" class="btn btn-info projects" role="button">
-                                                    <i class="mdi mdi-pencil-outline"></i>
-                                                </a>
-
-                                                <button @click="${deleteAccount}" type="button" class="btn btn-danger"
-                                                        data-id="${account.id}">
-                                                    <i class="mdi mdi-delete"></i>
-                                                </button>
-
-                                            </td>
-                                        </tr>
-                                        `)}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+  <div class="page">
+    <div class="page-content">
+      <section class="admin-content">
+        <div class="container py-5">
+          <div class="col-md-15">
+            <div class="card m-b-30">
+              <div class="card-header">
+                <h5 class="m-b-15">
+                  Quản lí người dùng
+                </h5>
+                <div class="card-controls">
+                  <a href="/manage/accounts/add/" class="btn btn-info">Thêm người dùng</a>
                 </div>
+              </div>
+              <div class="card-body">
+                ${alert && $h`
+                <div class="form-group">
+                  <div class="alert ${alertSuccess ? 'alert-success' : 'alert-danger'}" role="alert">
+                    ${returnMessage}
+                  </div>
+                </div>
+                `}
+                <div class="table-responsive">
+                  <table class="table table-hover ">
+                    <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Email</th>
+                      <th>Tên người dùng</th>
+                      <th>Vai trò</th>
+                      <th>Lựa chọn</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    ${accounts.map((account, i) => $h`
+                    <tr>
+                      <td>${i + 1}</td>
+                      <td>${account.email}</td>
+                      <td>${account.name}</td>
+                      <td>${account.role}</td>
+                      <td>
+                        <a href="/manage/accounts/add/" class="btn btn-info projects" role="button">
+                          <i class="mdi mdi-pencil-outline"></i>
+                        </a>
 
-            </section>
+                        <button @click="${deleteAccount}" type="button" class="btn btn-danger"
+                                data-id="${account._id}">
+                          <i class="mdi mdi-delete"></i>
+                        </button>
+
+                      </td>
+                    </tr>
+                    `)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
+
+      </section>
     </div>
+  </div>
 </template>
 <script>
-	import Clm from "../../js/clm";
+  import Clm from "../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let accounts = [];
+  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+    let accounts = [];
+		let alert = false;
+		let alertSuccess = false;
+		let returnMessage = "";
 
-		const resetList = () => {
-			Clm.api("get_all_users").then(response => {
-				accounts = response.data;
-				$update();
-			});
-		}
+    const resetList = async () => {
+      try {
+        let response = await Clm.api("users/all");
+        console.log(response);
+        accounts = response.data.users;
+      } catch (e) {
+        console.log(e);
+        alert = true;
+        alertSuccess = false;
+        returnMessage = "Có lỗi xảy ra";
+      }
+      $update();
+    }
 
-		resetList();
+    resetList();
 
-		const deleteAccount = (e) => {
-            let userID = e.currentTarget.dataset.id;
+    const deleteAccount = (e) => {
+      let userID = e.currentTarget.dataset.id;
 
-			Clm.openConfirmModal('deleteUser').then(isConfirmed => {
-				if (!isConfirmed) return;
+      Clm.openConfirmModal('deleteUser').then(isConfirmed => {
+        if (!isConfirmed) return;
 
-				Clm.api("delete_account", {
-					id: userID
-				}).then(response => {
-					Clm.alert("Tester Portal", response.message);
+        Clm.api("users/delete", {
+          userId: userID
+        }).then(response => {
+          alert = true;
+          alertSuccess = !response.error;
+          returnMessage = response.message;
 
-					resetList();
-				});
-			});
-		}
+          resetList();
+        });
+      });
+    }
 
-		// Return render function
-		return $render;
-	}
+    // Return render function
+    return $render;
+  }
 </script>

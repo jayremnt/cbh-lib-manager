@@ -11,8 +11,8 @@
                   <img src="assets/img/users/user-5.jpg" class="rounded-circle" alt=""/>
                 </div>
                 <div class="media-body">
-                  <h1>Nguyễn Anh Nhân </h1>
-                  <div class="text-overline opacity-75">Public Tester</div>
+                  <h1>${account.name}</h1>
+                  <div class="text-overline opacity-75">${account.role}</div>
                   <p class="opacity-75" style="font-size: 12px; margin-top: 10px;">
                     <a href="/account/change-info/">[Sửa thông tin của bạn]</a>
                   </p>
@@ -123,12 +123,16 @@
   </div>
 </template>
 <script>
+  import Clm from "../../js/clm";
+
   export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
     $on("pageBeforeIn", (e, page) => {
       window.$("#summernote").summernote({
         height: 100
       });
     });
+
+    let account = Clm.account;
 
     // Return render function
     return $render;

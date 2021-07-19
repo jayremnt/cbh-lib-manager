@@ -32,22 +32,18 @@
                                     <label for="role">Vai trò</label>
                                     <select class="form-control" name="account-role" id="role">
                                         <option value="" selected>Choose...</option>
-                                        <option value="tester">Tester</option>
                                         <option value="manager">Manager</option>
                                         <option value="admin">Admin</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="font-secondary">Dự Án</label>
-                                    <select multiple class="form-control js-select2">
-                                        <option selected>MonokaiToolkit Android</option>
-                                        <option value="">MonokaiToolkit IOS</option>
-                                        <option value="">MonokaiToolkit Extension</option>
-                                    </select>
+                                    <label for="accountPassword">Mật khẩu</label>
+                                    <input type="password" class="form-control" id="accountPassword" name="account-password"
+                                           placeholder="Nhập mật khẩu..."/>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" name="create-project" value="ok" class="btn btn-primary">Hoàn
-                                        tất
+                                    <button type="submit" name="create-project" value="ok" class="btn btn-primary">
+                                      Thêm
                                     </button>
                                 </div>
                             </div>
@@ -77,20 +73,20 @@
 			let accountName = document.getElementById("accountName").value;
 			let accountEmail = document.getElementById("accountEmail").value;
 			let role = document.getElementById("role").value;
-			let password = Math.random().toString(36).slice(-8);
+			let password = document.getElementById("accountPassword").value;;
 
-			if (!accountName || !accountEmail || !role) {
+			if (!accountName || !accountEmail || !role || !password) {
 				returnMessage = "Chưa điền đủ mục";
 			}
 			else {
-				Clm.api("create_account", {
-					fullname: accountName,
+				Clm.api("users/register", {
+					name: accountName,
 					email: accountEmail,
 					password: password,
 					role: role
 				}).then(response => {
 					console.log(response);
-					addSuccess = response.status;
+					addSuccess = !response.error;
 					returnMessage = response.message;
 
 					$update();
