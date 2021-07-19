@@ -1,155 +1,160 @@
 <template>
-	<div id="app">
-		<aside class="admin-sidebar">
-			<div class="admin-sidebar-brand">
-				<!-- begin sidebar branding-->
-				<img class="admin-brand-logo" src="assets/img/logo.png" width="40" alt="atmos Logo"/>
-				<span class="admin-brand-content font-secondary">
+  <div id="app">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-brand">
+        <!-- begin sidebar branding-->
+        <img class="admin-brand-logo" src="assets/img/logo.png" width="40" alt="atmos Logo"/>
+        <span class="admin-brand-content font-secondary">
 					<a href="/" data-view="#view-main" style="color: white">CBH Lib Manager</a>
 				</span>
-				<!-- end sidebar branding-->
-				<div class="ml-auto">
-					<!-- sidebar pin-->
-					<a href="#" class="admin-pin-sidebar btn-ghost btn btn-rounded-circle"></a>
-					<!-- sidebar close for mobile device-->
-					<a href="#" class="admin-close-sidebar"></a>
-				</div>
-			</div>
-			<div class="admin-sidebar-wrapper view" id="view-aside">
-			</div>
-		</aside>
+        <!-- end sidebar branding-->
+        <div class="ml-auto">
+          <!-- sidebar pin-->
+          <a href="#" class="admin-pin-sidebar btn-ghost btn btn-rounded-circle"></a>
+          <!-- sidebar close for mobile device-->
+          <a href="#" class="admin-close-sidebar"></a>
+        </div>
+      </div>
+      <div class="admin-sidebar-wrapper view" id="view-aside">
+      </div>
+    </aside>
 
-		<main class="admin-main" style="height: 100%;">
-			<!--site header begins-->
-			<header class="admin-header">
-				<a href="#" class="sidebar-toggle" data-toggleclass="sidebar-open" data-target="body"> </a>
+    <main class="admin-main" style="height: 100%;">
+      <!--site header begins-->
+      <header class="admin-header">
+        <a href="#" class="sidebar-toggle" data-toggleclass="sidebar-open" data-target="body"> </a>
 
-				<nav class=" mr-auto my-auto">
-					<ul class="nav align-items-center">
+        <nav class=" mr-auto my-auto">
+          <ul class="nav align-items-center">
 
-						<li class="nav-item">
-							<a class="nav-link" data-target="#siteSearchModal" data-toggle="modal" href="#">
-								<i class=" mdi mdi-magnify mdi-24px align-middle"></i>
-							</a>
-						</li>
-					</ul>
-				</nav>
+            <li class="nav-item">
+              <a class="nav-link" data-target="#siteSearchModal" data-toggle="modal" href="#">
+                <i class=" mdi mdi-magnify mdi-24px align-middle"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
 
-				<nav class="ml-auto">
-					<ul class="nav align-items-center">
-						<li class="nav-item dropdown ">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-							   aria-haspopup="true" aria-expanded="false">
-								<div class="avatar avatar-sm avatar-online">
-									<img src="${Clm.isBooted ? avatarUrl : avatarSample}" class="avatar-img rounded-circle bg-dark"/>
-								</div>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" data-view="#view-main" href="/account/">Tài khoản</a>
-								<a class="dropdown-item" data-view="#view-main" href="/account/change-password/">Đổi mật khẩu</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" @click="${logout}">Đăng xuất</a>
-							</div>
-						</li>
+        <nav class="ml-auto">
+          <ul class="nav align-items-center">
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                 aria-haspopup="true" aria-expanded="false">
+                <div class="avatar avatar-sm avatar-online">
+                  <img src="${Clm.isBooted ? avatarUrl : avatarSample}" class="avatar-img rounded-circle bg-dark"/>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" data-view="#view-main" href="/account/">Tài khoản</a>
+                <a class="dropdown-item" data-view="#view-main" href="/account/change-password/">Đổi mật khẩu</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" @click="${logout}">Đăng xuất</a>
+              </div>
+            </li>
 
-					</ul>
+          </ul>
 
-				</nav>
-			</header>
-			<!--site header ends -->
-			<section class="admin-content" style="height: 100%;">
-				<div class="views">
-					<div class="view" id="view-main">
-					</div>
-				</div>
-			</section>
-		</main>
+        </nav>
+      </header>
+      <!--site header ends -->
+      <section class="admin-content" style="height: 100%;">
+        <div class="views">
+          <div class="view" id="view-main">
+          </div>
+        </div>
+      </section>
+    </main>
 
-<!--		Modal confirm delete User-->
+    <!--		Modal confirm delete User-->
 
-		<div class="modal fade " id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" style="display: none;" aria-hidden="true">
-			<div class="modal-dialog  modal-dialog-align-top-left" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="deleteUserLabel">Xóa người dùng</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						Hành động này không thể khôi phục lại. Bạn chắc chắn muốn xóa người dùng này không?
-					</div>
-					<div class="modal-footer">
-						<button @click="${confirmDelete}" type="button" class="btn btn-danger" data-modal-id="deleteUser">Xóa</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">
-							Đóng
-						</button>
+    <div class="modal fade " id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel"
+         style="display: none;" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteUserLabel">Xóa người dùng</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Hành động này không thể khôi phục lại. Bạn chắc chắn muốn xóa người dùng này không?
+          </div>
+          <div class="modal-footer">
+            <button @click="${confirmDelete}" type="button" class="btn btn-danger" data-modal-id="deleteUser">Xóa
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Đóng
+            </button>
 
-					</div>
-				</div>
-			</div>
-		</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-		<!--		Modal confirm delete project-->
+    <!--		Modal confirm delete project-->
 
-		<div class="modal fade " id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProjectLabel" style="display: none;" aria-hidden="true">
-			<div class="modal-dialog  modal-dialog-align-top-left" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="deleteProjectLabel">Xóa dự án</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						Hành động này không thể khôi phục lại. Bạn chắc chắn muốn xóa dự án này không?
-					</div>
-					<div class="modal-footer">
-						<button @click="${confirmDelete}" type="button" class="btn btn-danger" data-modal-id="deleteProject">Xóa</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">
-							Đóng
-						</button>
+    <div class="modal fade " id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProjectLabel"
+         style="display: none;" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteProjectLabel">Xóa dự án</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Hành động này không thể khôi phục lại. Bạn chắc chắn muốn xóa dự án này không?
+          </div>
+          <div class="modal-footer">
+            <button @click="${confirmDelete}" type="button" class="btn btn-danger" data-modal-id="deleteProject">Xóa
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Đóng
+            </button>
 
-					</div>
-				</div>
-			</div>
-		</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
-	</div>
+  </div>
 </template>
 <script>
-	import Clm from "./js/clm";
-	const md5 = require("md5");
+  import Clm from "./js/clm";
 
-	export default (props, {$f7, $update}) => {
-		let avatarSample = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
-		let account = {};
-		let avatarUrl = "";
+  const md5 = require("md5");
 
-		let waitBootInterval = setInterval(() => {
-			if (Clm.isBooted) {
-				clearInterval(waitBootInterval);
-				account = Clm.account;
-				avatarUrl = "http://www.gravatar.com/avatar/" + md5(account['email']) + "?s=64";
-				$update();
-			}
-		}, 100);
+  export default (props, {$f7, $update}) => {
+    let avatarSample = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
+    let account = {};
+    let avatarUrl = "";
 
-		const logout = (e) => {
-			e.preventDefault();
-			Clm.api('logout').then(response => {
-				localStorage.clear();
-				location.reload();
-			});
-		}
+    let waitBootInterval = setInterval(() => {
+      if (Clm.isBooted) {
+        clearInterval(waitBootInterval);
+        account = Clm.account;
+        avatarUrl = "http://www.gravatar.com/avatar/" + md5(account['email']) + "?s=64";
+        $update();
+      }
+    }, 100);
 
-		const confirmDelete = (e) => {
-			let modalID = e.currentTarget.dataset.modalId;
-			Clm.modalDeleteResolver(true);
-			$(`#${modalID}`).modal('hide');
-		}
+    const logout = (e) => {
+      e.preventDefault();
+      Clm.api('logout').then(response => {
+        localStorage.clear();
+        location.reload();
+      });
+    }
 
-		return $render;
-	}
+    const confirmDelete = (e) => {
+      let modalID = e.currentTarget.dataset.modalId;
+      Clm.modalDeleteResolver(true);
+      $(`#${modalID}`).modal('hide');
+    }
+
+    return $render;
+  }
 </script>
