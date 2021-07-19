@@ -25,7 +25,8 @@ import BookInfoPage from "../pages/books/book-info.f7.html";
 import AccountPage from "../pages/account/account.f7.html";
 import ChangeInfoPage from "../pages/account/change-info.f7.html";
 import ChangePasswordPage from "../pages/account/change-password.f7.html";
-
+import BorrowerTracePage from "../pages/borrowers/borrower-trace.f7.html";
+import BookTracePage from "../pages/books/book-trace.f7.html";
 
 const routes = [
 	{
@@ -40,6 +41,9 @@ const routes = [
 		}, {
 			path: 'info/:borrowerCode/',
 			component: BorrowerInfoPage,
+		}, {
+			path: 'trace/:borrowerCode/',
+			component: BorrowerTracePage,
 		}],
 	}, {
 		path: '/books/',
@@ -53,6 +57,9 @@ const routes = [
 		}, {
 			path: 'info/:bookCode/',
 			component: BookInfoPage,
+		}, {
+			path: 'trace/:bookCode/',
+			component: BookTracePage,
 		}],
 	}, {
 		path: '/account/',

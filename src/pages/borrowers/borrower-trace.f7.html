@@ -1,0 +1,99 @@
+<template>
+  <div class="page">
+    <div class="page-content">
+      <section class="admin-content">
+        <div class="container py-5">
+          <div class="col-md-15">
+            <div class="card m-b-30">
+              <div class="card-header">
+                <h5 class="m-b-0">
+                  Lịch sử mượn sách
+                </h5>
+              </div>
+              <div class="card-body">
+                ${alert && $h`
+                <div class="form-group">
+                  <div class="alert ${alertSuccess ? 'alert-success' : 'alert-danger'}" role="alert">
+                    ${returnMessage}
+                  </div>
+                </div>
+                `}
+                <div class="table-responsive">
+                  <table class="table table-hover ">
+                    <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Sách</th>
+                      <th>Ngày mượn</th>
+                      <th>Hết hạn</th>
+                      <th>Hành động</th>
+                      <th>Lần gia hạn</th>
+                      <th>Phụ trách</th>
+                      <th>Ngày tạo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    ${traces.map((trace, i) => $h`
+                    <tr>
+                      <td>${i + 1}</td>
+                      <td>${trace.book.name}</td>
+                      <td>${Clm.timeConverter(trace.borrowed_time)}</td>
+                      <td>${Clm.timeConverter(trace.expired_time)}</td>
+                      <td>${(trace.is_borrowing) ? "Mượn sách" : (trace.is_return) ? "Trả sách" : "Gia hạn"}</td>
+                      <td>${trace.extended_times}</td>
+                      <td>${trace.responsible_person.name}</td>
+                      <td>${Clm.timeConverter(trace.created_time)}</td>
+                    </tr>
+                    `)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</template>
+<script>
+	import Clm from "../../js/clm";
+
+	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+		const borrowerCode = props.borrowerCode;
+		let traces = [];
+		let alert = false;
+		let alertSuccess = false;
+		let returnMessage = "";
+
+		const resetList = async (e) => {
+		  try {
+        let response = await Clm.api("borrowers/" + borrowerCode + "/trace");
+        console.log(response);
+        traces = response.data.trace;
+        if (traces.length) {
+          traces.sort((a, b) => {
+            if (a.created_time < b.created_time) return 1;
+            else if (a.created_time > b.created_time) return -1;
+            else return 0;
+          });
+        }
+        alert = response.error && traces.length;
+        alertSuccess = !response.error;
+        returnMessage = response.message;
+      }
+      catch (e) {
+        console.log(e);
+        alert = true;
+        alertSuccess = false;
+        returnMessage = "Có lỗi xảy ra";
+      }
+      $update();
+		}
+
+		resetList();
+		// Return render function
+		return $render;
+	}
+</script>

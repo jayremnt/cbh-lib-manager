@@ -303,7 +303,9 @@
 			const bookCode = e.currentTarget.dataset.code;
 			alertFindBook = true;
 			try {
-				let response = await Clm.api("books/" + bookCode + "/returnBook");
+				let response = await Clm.api("books/" + bookCode + "/returnBook", {
+				  responsiblePerson: Clm.account._id
+        });
 				findBookMessage = response.message;
 				subActionSuccess = !response.error;
 			}
