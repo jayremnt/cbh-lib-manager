@@ -75,57 +75,54 @@
   </div>
 </template>
 <script>
-	import Clm from "../../js/clm";
+  import Clm from "../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let books = [];
-		let alert = false;
-		let alertSuccess = false;
-		let returnMessage = "";
+  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+    let books = [];
+    let alert = false;
+    let alertSuccess = false;
+    let returnMessage = "";
 
-		const resetList = (e) => {
-			Clm.api("books/all").then(response => {
-				books = response.data.list_books;
-				console.log(response);
-				$update();
-			});
-		}
+    const resetList = (e) => {
+      Clm.api("books/all").then(response => {
+        books = response.data.list_books;
+        console.log(response);
+        $update();
+      });
+    }
 
-		resetList();
+    resetList();
 
-		const deleteBook = (e) => {
-			let bookCode = e.currentTarget.dataset.code;
+    const deleteBook = (e) => {
+      let bookCode = e.currentTarget.dataset.code;
 
-			Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
-				if (!isConfirmed) return;
-				alert = true;
+      Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
+        if (!isConfirmed) return;
+        alert = true;
 
-				try {
-					let response = await Clm.api("books/" + bookCode + "/returnBook", {
-						responsiblePerson: Clm.account._id
-					});
-					console.log(response);
-					if (!response.error) {
-						response = await Clm.api("books/" + bookCode + "/delete");
-						console.log(response);
-						returnMessage = response.message;
-						alertSuccess = !response.error;
-					}
-					else {
-						returnMessage = response.message;
-            alertSuccess = false;
-					}
-				}
-				catch (e) {
-					console.log(e);
-					returnMessage = "Có lỗi xảy ra";
-					alertSuccess = false;
-				}
-				resetList();
-			});
-		}
+        try {
+          let response = await Clm.api("books/" + bookCode + "/isBorrowed");
+          console.log(response);
+          if (!response.error && response.data.is_borrowed) {
+            response = await Clm.api("books/" + bookCode + "/returnBook", {
+              responsiblePerson: Clm.account._id
+            });
+            console.log(response);
+          }
+          response = await Clm.api("books/" + bookCode + "/delete");
+          console.log(response);
+          returnMessage = response.message;
+          alertSuccess = !response.error;
+        } catch (e) {
+          console.log(e);
+          returnMessage = "Có lỗi xảy ra";
+          alertSuccess = false;
+        }
+        resetList();
+      });
+    }
 
-		// Return render function
-		return $render;
-	}
+    // Return render function
+    return $render;
+  }
 </script>
