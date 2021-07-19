@@ -93,7 +93,7 @@
     const deleteAccount = (e) => {
       let userID = e.currentTarget.dataset.id;
 
-      Clm.openConfirmModal('deleteUser').then(isConfirmed => {
+      Clm.openConfirmModal('delete').then(isConfirmed => {
         if (!isConfirmed) return;
 
         Clm.api("users/delete", {

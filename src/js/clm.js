@@ -110,14 +110,14 @@ class Clm {
 		rootEl.appendChild(popupEl);
 	}
 
-	static modalDeleteResolver = function(_) {
+	static modalResolver = function(_) {
 		console.log(_);
 		return _;
 	};
 
 	static openConfirmModal(modelID) {
 		return new Promise(resolve => {
-			this.modalDeleteResolver = resolve;
+			this.modalResolver = resolve;
 			$(`#${modelID}`).modal('show');
 		});
 	}

@@ -100,7 +100,7 @@
     const deleteBook = (e) => {
       let bookCode = e.currentTarget.dataset.code;
 
-      Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
+      Clm.openConfirmModal('delete').then(async isConfirmed => {
         if (!isConfirmed) return;
         alert = true;
 

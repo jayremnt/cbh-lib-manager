@@ -13,7 +13,7 @@
               <div class="card-body">
                 ${isSubmitSent && $h`
                 <div class="form-group">
-                  <div class="alert ${addSuccess?'alert-success':'alert-danger'}" role="alert">
+                  <div class="alert ${addSuccess ? 'alert-success' : 'alert-danger'}" role="alert">
                     ${returnMessage}
                   </div>
                 </div>
@@ -21,27 +21,27 @@
                 <div class="form-group">
                   <label for="input-name">Họ và tên</label>
                   <input type="text" class="form-control" id="input-name" name="account-name"
-                         placeholder="Nhập họ và tên..." value="${borrowerInfo.name}"/>
+                         placeholder="Nhập họ và tên..." value="${borrowerInfo.name}" disabled/>
                 </div>
                 <div class="form-group">
                   <label for="input-class">Lớp</label>
                   <input type="text" class="form-control" id="input-class" name="account-name"
-                         placeholder="Chọn lớp" value="${borrowerInfo.class}"/>
+                         placeholder="Chọn lớp" value="${borrowerInfo.class}" disabled/>
                 </div>
                 <div class="form-group">
                   <label for="input-student-code">Mã học sinh</label>
                   <input type="text" class="form-control" id="input-student-code" name="account-name"
-                         placeholder="Nhập mã học sinh..." value="${borrowerInfo.student_code}"/>
+                         placeholder="Nhập mã học sinh..." value="${borrowerInfo.student_code}" disabled/>
                 </div>
                 <div class="form-group">
                   <label for="input-email">Email</label>
                   <input type="text" class="form-control" id="input-email" name="account-name"
-                         placeholder="Nhập email..." value="${borrowerInfo.email}"/>
+                         placeholder="Nhập email..." value="${borrowerInfo.email}" disabled/>
                 </div>
                 <div class="form-group">
                   <label for="input-phone-number">Số điện thoại</label>
                   <input type="text" class="form-control" id="input-phone-number" name="account-name"
-                         placeholder="Nhập số điện thoại..." value="${borrowerInfo.phone_number}"/>
+                         placeholder="Nhập số điện thoại..." value="${borrowerInfo.phone_number}" disabled/>
                 </div>
                 <div class="form-group">
                   <label class="font-secondary" for="input-book-code">Thêm sách</label>
@@ -145,11 +145,11 @@
                     </table>
                   </div>
                 </div>
-                <div class="form-group">
-                  <button type="submit" name="create-project" value="ok" class="btn btn-success">
-                    Trả sách
-                  </button>
-                </div>
+                <!--                <div class="form-group">-->
+                <!--                  <button type="submit" name="create-project" value="ok" class="btn btn-success">-->
+                <!--                    Trả sách-->
+                <!--                  </button>-->
+                <!--                </div>-->
               </div>
             </form>
           </div>
@@ -186,7 +186,7 @@
 		let findBookMessage = "";
 		let subActionSuccess = false;
 
-		const getBorrowerInfo = function () {
+		const resetBorrowerInfo = function () {
 			Clm.api(`borrowers/${props.borrowerCode}/`).then(async response => {
 				console.log(response);
 				borrowerInfo = response.data.borrower_info;
@@ -196,38 +196,38 @@
 			});
 		}
 
-		getBorrowerInfo();
+		resetBorrowerInfo();
 
 		const submitCreation = function (e) {
 			e.preventDefault();
 			isSubmitSent = true;
 
-			const inputName = $('#input-name').val();
-			const inputClass = $('#input-class').val();
-			const inputStudentCode = $('#input-student-code').val();
-			const inputPhoneNumber = $('#input-phone-number').val();
-			const inputEmail = $('#input-email').val();
-
-			if (!inputName || !inputClass || !inputStudentCode || !inputPhoneNumber || !inputEmail || borrowedBooks.length === 0) {
-				returnMessage = "Chưa điền đủ mục";
-				$update();
-			}
-			else {
-				Clm.api('borrowers/add', {
-					name: inputName,
-					class: inputClass,
-					student_code: inputStudentCode,
-					phone_number: inputPhoneNumber,
-					email: inputEmail,
-					current_borrowed_books: borrowedBooks,
-					responsible_person: Clm.account._id
-				}).then(response => {
-					console.log(response);
-					returnMessage = response.message;
-					addSuccess = !response.error;
-					$update();
-				})
-			}
+			// Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
+			// 	if (!isConfirmed) return;
+			//
+			// 	try {
+			// 		let response = "";
+			//
+			// 		for (const book of borrowedBooks) {
+			// 			console.log(book);
+			// 			response = await Clm.api("books/" + book.code + "/returnBook", {
+			// 				responsiblePerson: Clm.account._id
+			// 			});
+			// 			console.log(response);
+			// 			addSuccess = !response.error;
+			//       returnMessage = response.message;
+			// 			if (response.error) {
+			// 				break;
+			// 			}
+			// 		}
+			// 	}
+			// 	catch (e) {
+			// 		console.log(e);
+			// 		addSuccess = false;
+			// 		returnMessage = "Có lỗi xảy ra";
+			// 	}
+			// 	resetList();
+			// });
 		}
 
 		const findBook = async function (e) {
@@ -271,70 +271,83 @@
 		}
 
 		const addBook = function (e) {
-			console.log("ok");
-			Clm.api('books/' + e.currentTarget.dataset.code + '/borrowing', {
-				bookId: e.currentTarget.dataset.id,
-				borrowerId: borrowerInfo._id,
-				borrowedTime: new Date().getTime(),
-				expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7,
-				responsiblePerson: Clm.account._id
-			}).then(response => {
-				console.log(response);
-				if (response.error) {
+			Clm.openConfirmModal('add').then(async isConfirmed => {
+				if (!isConfirmed) return;
+
+				Clm.api('books/' + e.currentTarget.dataset.code + '/borrowing', {
+					bookId: e.currentTarget.dataset.id,
+					borrowerId: borrowerInfo._id,
+					borrowedTime: new Date().getTime(),
+					expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7,
+					responsiblePerson: Clm.account._id
+				}).then(response => {
+					console.log(response);
+					if (response.error) {
+						foundBook = null;
+						alertFindBook = true;
+						findBookMessage = response.message;
+						$update();
+					}
+					foundBook = null;
+					alertFindBook = false;
+					resetBorrowerInfo();
+					$update();
+				}).catch(err => {
+					console.log(err);
 					foundBook = null;
 					alertFindBook = true;
-					findBookMessage = response.message;
+					findBookMessage = "Có lỗi xảy ra";
 					$update();
-				}
-				foundBook = null;
-				alertFindBook = false;
-				getBorrowerInfo();
-				$update();
-			}).catch(err => {
-				console.log(err);
-				foundBook = null;
-				alertFindBook = true;
-				findBookMessage = "Có lỗi xảy ra";
-				$update();
+				});
 			});
 		}
 
 		const returnBook = async function (e) {
-			const bookCode = e.currentTarget.dataset.code;
-			alertFindBook = true;
-			try {
-				let response = await Clm.api("books/" + bookCode + "/returnBook", {
-				  responsiblePerson: Clm.account._id
-        });
-				findBookMessage = response.message;
-				subActionSuccess = !response.error;
-			}
-			catch (e) {
-				console.log(e);
-				alertFindBook = true;
-				findBookMessage = "Có lỗi xảy ra";
-			}
-			getBorrowerInfo();
+      const bookCode = e.currentTarget.dataset.code;
+      alertFindBook = true;
+
+			Clm.openConfirmModal('return').then(async isConfirmed => {
+				if (!isConfirmed) return;
+
+				try {
+					let response = await Clm.api("books/" + bookCode + "/returnBook", {
+						responsiblePerson: Clm.account._id
+					});
+					findBookMessage = response.message;
+					subActionSuccess = !response.error;
+				}
+				catch (e) {
+					console.log(e);
+					alertFindBook = true;
+					findBookMessage = "Có lỗi xảy ra";
+				}
+				resetBorrowerInfo();
+			});
 		}
 
 		const extendBook = async function (e) {
-			const bookCode = e.currentTarget.dataset.code;
-			alertFindBook = true;
-			try {
-				let response = await Clm.api("books/" + bookCode + "/extendBook", {
-					borrowedTime: new Date().getTime(),
-					expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7,
-					responsiblePerson: Clm.account._id
-				});
-				findBookMessage = response.message;
-				subActionSuccess = !response.error;
-			}
-			catch (e) {
-				console.log(e);
-				alertFindBook = true;
-				findBookMessage = "Có lỗi xảy ra";
-			}
-			getBorrowerInfo();
+      const bookCode = e.currentTarget.dataset.code;
+      alertFindBook = true;
+
+			Clm.openConfirmModal('extend').then(async isConfirmed => {
+				if (!isConfirmed) return;
+
+				try {
+					let response = await Clm.api("books/" + bookCode + "/extendBook", {
+						borrowedTime: new Date().getTime(),
+						expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7,
+						responsiblePerson: Clm.account._id
+					});
+					findBookMessage = response.message;
+					subActionSuccess = !response.error;
+				}
+				catch (e) {
+					console.log(e);
+					alertFindBook = true;
+					findBookMessage = "Có lỗi xảy ra";
+				}
+				resetBorrowerInfo();
+			});
 		}
 
 		return $render;

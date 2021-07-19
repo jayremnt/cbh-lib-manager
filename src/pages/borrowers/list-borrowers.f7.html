@@ -55,7 +55,7 @@
                           <i class="mdi mdi-history"></i>
                         </a>
                         <button @click="${deleteBorrower}" type="button" class="btn btn-danger btn-sm"
-                                data-toggle="modal" data-target="#deleteProject"
+                                data-toggle="modal" data-target="#delete"
                                 data-student-code="${borrower.student_code}">
                           <i class="mdi mdi-delete"></i>
                         </button>
@@ -97,7 +97,7 @@
 			let borrowerCode = e.currentTarget.dataset.studentCode;
 			console.log(borrowerCode);
 
-			Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
+			Clm.openConfirmModal('delete').then(async isConfirmed => {
 				if (!isConfirmed) return;
 				alert = true;
 

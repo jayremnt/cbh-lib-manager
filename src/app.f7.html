@@ -65,23 +65,23 @@
       </section>
     </main>
 
-    <!--		Modal confirm delete User-->
+    <!--		Modal confirm delete-->
 
-    <div class="modal fade " id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel"
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel"
          style="display: none;" aria-hidden="true">
       <div class="modal-dialog  modal-dialog-align-top-left" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteUserLabel">Xóa người dùng</h5>
+            <h5 class="modal-title" id="deleteLabel">Xóa</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
-            Hành động này không thể khôi phục lại. Bạn chắc chắn muốn xóa người dùng này không?
+            Hành động này không thể khôi phục lại. Bạn chắc chắn muốn xóa không?
           </div>
           <div class="modal-footer">
-            <button @click="${confirmDelete}" type="button" class="btn btn-danger" data-modal-id="deleteUser">Xóa
+            <button @click="${confirmModal}" type="button" class="btn btn-danger" data-modal-id="delete">Xóa
             </button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
               Đóng
@@ -92,23 +92,77 @@
       </div>
     </div>
 
-    <!--		Modal confirm delete project-->
+    <!--		Modal confirm extend book-->
 
-    <div class="modal fade " id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProjectLabel"
+    <div class="modal fade" id="extend" tabindex="-1" role="dialog" aria-labelledby="extendLabel"
          style="display: none;" aria-hidden="true">
       <div class="modal-dialog  modal-dialog-align-top-left" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteProjectLabel">Xóa dự án</h5>
+            <h5 class="modal-title" id="extendLabel">Gia hạn sách</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
-            Hành động này không thể khôi phục lại. Bạn chắc chắn muốn xóa dự án này không?
+            Xác nhận gia hạn sách này?
           </div>
           <div class="modal-footer">
-            <button @click="${confirmDelete}" type="button" class="btn btn-danger" data-modal-id="deleteProject">Xóa
+            <button @click="${confirmModal}" type="button" class="btn btn-success" data-modal-id="extend">Gia hạn
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Đóng
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--		Modal confirm return book-->
+
+    <div class="modal fade" id="return" tabindex="-1" role="dialog" aria-labelledby="returnLabel"
+         style="display: none;" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="returnLabel">Trả sách</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Xác nhận trả lại sách này?
+          </div>
+          <div class="modal-footer">
+            <button @click="${confirmModal}" type="button" class="btn btn-success" data-modal-id="return">Trả sách
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Đóng
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--		Modal add-->
+
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel"
+         style="display: none;" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addLabel">Trả sách</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Xác nhận thêm?
+          </div>
+          <div class="modal-footer">
+            <button @click="${confirmModal}" type="button" class="btn btn-success" data-modal-id="add">Thêm
             </button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
               Đóng
@@ -148,10 +202,10 @@
       location.reload();
     }
 
-    const confirmDelete = (e) => {
-      let modalID = e.currentTarget.dataset.modalId;
-      Clm.modalDeleteResolver(true);
-      $(`#${modalID}`).modal('hide');
+    const confirmModal = (e) => {
+      let modalId = e.currentTarget.dataset.modalId;
+      Clm.modalResolver(true);
+      $(`#${modalId}`).modal('hide');
     }
 
     return $render;
