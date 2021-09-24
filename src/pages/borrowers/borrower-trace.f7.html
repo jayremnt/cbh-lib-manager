@@ -36,12 +36,12 @@
                     ${traces.map((trace, i) => $h`
                     <tr>
                       <td>${i + 1}</td>
-                      <td>${trace.book.name}</td>
+                      <td>${trace.book?.name}</td>
                       <td>${Clm.timeConverter(trace.borrowed_time)}</td>
                       <td>${Clm.timeConverter(trace.expired_time)}</td>
                       <td>${(trace.is_borrowing) ? "Mượn sách" : (trace.is_return) ? "Trả sách" : "Gia hạn"}</td>
                       <td>${trace.extended_times}</td>
-                      <td>${trace.responsible_person ? trace.responsible_person.name : ""}</td>
+                      <td>${trace.responsible_person ? trace.responsible_person?.name : ""}</td>
                       <td>${Clm.timeConverter(trace.created_time)}</td>
                     </tr>
                     `)}

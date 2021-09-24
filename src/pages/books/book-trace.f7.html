@@ -37,15 +37,15 @@
                     ${traces.map((trace, i) => $h`
                     <tr>
                       <td>${i + 1}</td>
-                      <td>${trace.borrower.name}</td>
+                      <td>${trace.borrower?.name}</td>
                       <td>${Clm.timeConverter(trace.borrowed_time)}</td>
                       <td>${Clm.timeConverter(trace.expired_time)}</td>
                       <td>${(trace.is_borrowing) ? "Mượn sách" : (trace.is_return) ? "Trả sách" : "Gia hạn"}</td>
                       <td>${trace.extended_times}</td>
-                      <td>${trace.responsible_person ? trace.responsible_person.name : ""}</td>
+                      <td>${trace.responsible_person ? trace?.responsible_person?.name : ""}</td>
                       <td>${Clm.timeConverter(trace.created_time)}</td>
                       <td>
-                        <a href="/borrowers/info/${trace.borrower.student_code}/"
+                        <a href="/borrowers/info/${trace.borrower?.student_code}/"
                            class="btn btn-primary btn-sm"
                            role="button">
                           <i class="mdi mdi-human-male"></i>

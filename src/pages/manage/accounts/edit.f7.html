@@ -114,6 +114,7 @@
 					console.log(response);
 					addSuccess = !response.error;
 					returnMessage = response.message;
+					$update();
 				});
 			}
 			$update();
