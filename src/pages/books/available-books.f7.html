@@ -10,6 +10,8 @@
                   Sách có thể mượn
                 </h5>
                 <div class="card-controls">
+                  <input class="btn" id="availableBooksSearch" type="text"
+                         placeholder="Tìm kiếm" style="margin-right: 10px;"/>
                   <a href="/books/add/" class="btn btn-info">Thêm sách</a>
                 </div>
               </div>
@@ -21,7 +23,7 @@
                   </div>
                 </div>
                 `}
-                <div class="table-responsive">
+                <div class="table-responsive" style="margin-top: 20px;">
                   <table class="table table-hover ">
                     <thead>
                     <tr>
@@ -37,7 +39,7 @@
                       <th>Hành động</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="listAvailableBooks">
                     ${availableBooks.map((book, i) => $h`
                     <tr>
                       <td>${i + 1}</td>
@@ -91,6 +93,12 @@
 				console.log(response);
 				availableBooks = response.data.list_available_books;
 				$update();
+				$("#availableBooksSearch").on("keyup", function () {
+					let value = $(this).val().toLowerCase();
+					$("#listAvailableBooks tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
 			});
 		}
 
