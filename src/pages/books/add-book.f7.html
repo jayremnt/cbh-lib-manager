@@ -86,6 +86,7 @@
             let bookImportedDate = document.getElementById("book-imported-date").value;
 
             if (!bookName || !bookCode || !bookImportedDate) {
+                addSuccess = false;
                 returnMessage = "Chưa điền đủ mục";
                 $update();
             } else {

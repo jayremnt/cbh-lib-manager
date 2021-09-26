@@ -271,11 +271,14 @@
 		}
 
 		const addBook = function (e) {
+			const bookCode = e.currentTarget.dataset.code;
+			const bookId = e.currentTarget.dataset.id;
+
 			Clm.openConfirmModal('add').then(async isConfirmed => {
 				if (!isConfirmed) return;
 
-				Clm.api('books/' + e.currentTarget.dataset.code + '/borrowing', {
-					bookId: e.currentTarget.dataset.id,
+				Clm.api('books/' + bookCode + '/borrowing', {
+					bookId: bookId,
 					borrowerId: borrowerInfo._id,
 					borrowedTime: new Date().getTime(),
 					expiredTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 7,
