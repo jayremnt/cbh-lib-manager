@@ -75,9 +75,11 @@
 					userId: accountId
 				});
 				account = response.data.user;
-				isSubmitSent = response.error;
-				addSuccess = !response.error;
-				returnMessage = response.message;
+				if (response.error) {
+					isSubmitSent = true;
+          addSuccess = false;
+          returnMessage = response.message;
+        }
 			}
 			catch (e) {
 				isSubmitSent = true;
@@ -89,7 +91,7 @@
 
 		resetInfo();
 
-		const submitCreation = function (e) {
+		const submitCreation = async function (e) {
 			e.preventDefault();
 			isSubmitSent = true;
 			let accountName = document.getElementById("accountName").value;
@@ -97,12 +99,12 @@
 			let role = document.getElementById("role").value;
 			let password = document.getElementById("accountPassword").value;
 
-			if (!accountName || !accountEmail || !role || !password) {
+			if (!accountName || !accountEmail || !role) {
 				addSuccess = false;
 				returnMessage = "Chưa điền đủ mục";
 			}
 			else {
-				Clm.api("users/edit", {
+				let response = password ? await Clm.api("users/edit", {
 					userId: accountId,
 					updateData: {
 						name: accountName,
@@ -110,14 +112,22 @@
 						role: role,
 						password: password
 					}
-				}).then(response => {
-					console.log(response);
-					addSuccess = !response.error;
-					returnMessage = response.message;
-					$update();
+				}) : await Clm.api("users/edit", {
+					userId: accountId,
+					updateData: {
+						name: accountName,
+						email: accountEmail,
+						role: role
+					}
 				});
+				console.log(response);
+				addSuccess = !response.error;
+				returnMessage = response.message;
+				$update();
 			}
 			$update();
+
+			await resetInfo();
 		}
 		return $render;
 	}
