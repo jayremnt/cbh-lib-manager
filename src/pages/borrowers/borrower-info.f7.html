@@ -19,29 +19,29 @@
                 </div>
                 `}
                 <div class="form-group">
-                  <label for="input-name">Họ và tên</label>
-                  <input type="text" class="form-control" id="input-name" name="account-name"
-                         placeholder="Nhập họ và tên..." value="${borrowerInfo.name}" disabled/>
+                  <label for="input-borrower-name">Họ và tên</label>
+                  <input type="text" class="form-control" id="input-borrower-name" name="account-name"
+                         placeholder="Nhập họ và tên..." value="${borrowerInfo.name}"/>
                 </div>
                 <div class="form-group">
-                  <label for="input-class">Lớp</label>
-                  <input type="text" class="form-control" id="input-class" name="account-name"
-                         placeholder="Chọn lớp" value="${borrowerInfo.class}" disabled/>
+                  <label for="input-borrower-class">Lớp</label>
+                  <input type="text" class="form-control" id="input-borrower-class" name="account-name"
+                         placeholder="Chọn lớp" value="${borrowerInfo.class}"/>
                 </div>
                 <div class="form-group">
-                  <label for="input-student-code">Mã học sinh</label>
-                  <input type="text" class="form-control" id="input-student-code" name="account-name"
-                         placeholder="Nhập mã học sinh..." value="${borrowerInfo.student_code}" disabled/>
+                  <label for="input-borrower-student-code">Mã học sinh</label>
+                  <input type="text" class="form-control" id="input-borrower-student-code" name="account-name"
+                         placeholder="Nhập mã học sinh..." value="${borrowerInfo.student_code}"/>
                 </div>
                 <div class="form-group">
-                  <label for="input-email">Email</label>
-                  <input type="text" class="form-control" id="input-email" name="account-name"
-                         placeholder="Nhập email..." value="${borrowerInfo.email}" disabled/>
+                  <label for="input-borrower-email">Email</label>
+                  <input type="text" class="form-control" id="input-borrower-email" name="account-name"
+                         placeholder="Nhập email..." value="${borrowerInfo.email}"/>
                 </div>
                 <div class="form-group">
-                  <label for="input-phone-number">Số điện thoại</label>
-                  <input type="text" class="form-control" id="input-phone-number" name="account-name"
-                         placeholder="Nhập số điện thoại..." value="${borrowerInfo.phone_number}" disabled/>
+                  <label for="input-borrower-phone-number">Số điện thoại</label>
+                  <input type="text" class="form-control" id="input-borrower-phone-number" name="account-name"
+                         placeholder="Nhập số điện thoại..." value="${borrowerInfo.phone_number}"/>
                 </div>
                 <div class="form-group">
                   <label class="font-secondary" for="input-book-code">Thêm sách</label>
@@ -145,11 +145,12 @@
                     </table>
                   </div>
                 </div>
-                <!--                <div class="form-group">-->
-                <!--                  <button type="submit" name="create-project" value="ok" class="btn btn-success">-->
-                <!--                    Trả sách-->
-                <!--                  </button>-->
-                <!--                </div>-->
+                <div class="form-group">
+                  <button type="submit" name="create-project" value="ok" class="btn btn-success"
+                          @click="${updateBorrower}">
+                    Cập nhật
+                  </button>
+                </div>
               </div>
             </form>
           </div>
@@ -201,33 +202,6 @@
 		const submitCreation = function (e) {
 			e.preventDefault();
 			isSubmitSent = true;
-
-			// Clm.openConfirmModal('deleteBook').then(async isConfirmed => {
-			// 	if (!isConfirmed) return;
-			//
-			// 	try {
-			// 		let response = "";
-			//
-			// 		for (const book of borrowedBooks) {
-			// 			console.log(book);
-			// 			response = await Clm.api("books/" + book.code + "/returnBook", {
-			// 				responsiblePerson: Clm.account._id
-			// 			});
-			// 			console.log(response);
-			// 			addSuccess = !response.error;
-			//       returnMessage = response.message;
-			// 			if (response.error) {
-			// 				break;
-			// 			}
-			// 		}
-			// 	}
-			// 	catch (e) {
-			// 		console.log(e);
-			// 		addSuccess = false;
-			// 		returnMessage = "Có lỗi xảy ra";
-			// 	}
-			// 	resetList();
-			// });
 		}
 
 		const findBook = async function (e) {
@@ -351,6 +325,43 @@
 				}
 				resetBorrowerInfo();
 			});
+		}
+
+		const updateBorrower = async function (e) {
+			const borrowerName = $('#input-borrower-name').val();
+			const borrowerClass = $('#input-borrower-class').val();
+			const borrowerStudentCode = $('#input-borrower-student-code').val();
+			const borrowerEmail = $('#input-borrower-email').val();
+			const borrowerPhoneNumber = $('#input-borrower-phone-number').val();
+
+			console.log(borrowerName);
+			console.log(borrowerClass);
+			console.log(borrowerStudentCode);
+			console.log(borrowerEmail);
+			console.log(borrowerPhoneNumber);
+
+			try {
+				let response = await Clm.api("borrowers/" + props.borrowerCode + "/edit", {
+					update_data: {
+						name: borrowerName,
+						class: borrowerClass,
+						student_code: borrowerStudentCode,
+						email: borrowerEmail,
+						phone_number: borrowerPhoneNumber
+					}
+				});
+
+				console.log(response);
+				addSuccess = !response.error;
+				returnMessage = response.message;
+			}
+			catch (e) {
+				console.log(e);
+				addSuccess = false;
+				returnMessage = "Có lỗi xảy ra";
+			}
+
+			$update();
 		}
 
 		return $render;
