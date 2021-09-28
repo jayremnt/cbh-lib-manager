@@ -27,12 +27,23 @@ import ChangeInfoPage from "../pages/account/change-info.f7.html";
 import ChangePasswordPage from "../pages/account/change-password.f7.html";
 import BorrowerTracePage from "../pages/borrowers/borrower-trace.f7.html";
 import BookTracePage from "../pages/books/book-trace.f7.html";
+import TopBookInfoPage from "../pages/overview/top/top-book-info.f7.html";
+import TopBorrowerInfoPage from "../pages/overview/top/top-borrower-info.f7.html";
 
 const routes = [
 	{
 		path: '/',
 		component: DashboardPage,
 	}, {
+		path: '/top/',
+		routes: [{
+			path: 'books/:bookCode/',
+			component: TopBookInfoPage,
+		}, {
+			path: 'borrowers/:borrowerCode/',
+			component: TopBorrowerInfoPage,
+		}]
+	},{
 		path: '/borrowers/',
 		component: ListBorrowersPage,
 		routes: [{
