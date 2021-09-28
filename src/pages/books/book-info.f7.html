@@ -10,18 +10,12 @@
               </h5>
             </div>
             <div class="card-body">
-              ${alert && $h`
-              <div class="form-group">
-                <div class="alert alert-danger" role="alert">
-                  ${returnMessage}
-                </div>
-              </div>
-              `}
               <form action="#" method="POST" onsubmit="${submitCreation}">
                 <div class="card-body">
                   ${isSubmitSent && $h`
                   <div class="form-group">
-                    <div class="alert ${addSuccess ? 'alert-success' : 'alert-danger'}" role="alert">
+                    <div class="alert ${addSuccess ? 'alert-success' : 'alert-danger'}"
+                         role="alert">
                       ${returnMessage}
                     </div>
                   </div>
@@ -59,12 +53,15 @@
                   <div class="form-group">
                     <label for="input-book-responsible-person">Người nhập</label>
                     <input type="text" class="form-control" id="input-book-responsible-person" name="account-name"
-                           placeholder="Nhập người nhập..." value="${book.responsible_person ? book.responsible_person.name : ''}" disabled/>
+                           placeholder="Nhập người nhập..."
+                           value="${book.responsible_person ? book.responsible_person.name : ''}" disabled/>
                   </div>
                   <div class="form-group">
                     <label for="input-book-status">Tình trạng</label>
                     <input type="text" class="form-control" id="input-book-status" name="account-name"
-                           placeholder="Nhập tình trạng..." value='${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}' disabled/>
+                           placeholder="Nhập tình trạng..."
+                           value='${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}'
+                           disabled/>
                   </div>
                   <div class="form-group">
                     <button type="submit" name="create-project" value="ok" class="btn btn-success"
@@ -99,7 +96,6 @@
 				borrower: {}
 			}
 		};
-		let alert = false;
 		let isSubmitSent = false;
 		let addSuccess = false;
 		let returnMessage = "";
@@ -109,17 +105,19 @@
 				let response = await Clm.api("books/" + props.bookCode);
 				console.log(response);
 				if (!response.error) {
-					alert = false;
+					addSuccess = true;
 					book = response.data.book_details;
 				}
 				else {
-					alert = true;
+					isSubmitSent = true;
+					addSuccess = false;
 					returnMessage = response.message;
 				}
 			}
 			catch (e) {
 				console.log(e);
-				alert = true;
+				isSubmitSent = true;
+				addSuccess = false;
 				returnMessage = "Có lỗi xảy ra";
 			}
 			$update();
@@ -172,7 +170,9 @@
 				returnMessage = "Có lỗi xảy ra";
 			}
 
+			props.bookCode = bookCode;
 			$update();
+			resetInfo();
 		}
 
 		return $render;

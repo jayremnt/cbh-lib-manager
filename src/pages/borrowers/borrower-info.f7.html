@@ -187,14 +187,20 @@
 		let findBookMessage = "";
 		let subActionSuccess = false;
 
-		const resetBorrowerInfo = function () {
-			Clm.api(`borrowers/${props.borrowerCode}/`).then(async response => {
+		const resetBorrowerInfo = async function () {
+			try {
+				let response = await Clm.api(`borrowers/${props.borrowerCode}/`);
 				console.log(response);
 				borrowerInfo = response.data.borrower_info;
 				borrowedBooks = borrowerInfo.current_borrowed_books[0] ? borrowerInfo.current_borrowed_books : [];
 				console.log(borrowedBooks);
-				$update();
-			});
+			}
+			catch (e) {
+				console.log(e);
+				addSuccess = false;
+				returnMessage = "Có lỗi xảy ra";
+			}
+			$update();
 		}
 
 		resetBorrowerInfo();
@@ -361,7 +367,9 @@
 				returnMessage = "Có lỗi xảy ra";
 			}
 
-			$update();
+			props.borrowerCode = borrowerStudentCode;
+      $update();
+			resetBorrowerInfo();
 		}
 
 		return $render;
