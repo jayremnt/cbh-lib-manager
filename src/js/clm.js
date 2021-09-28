@@ -32,9 +32,19 @@ class Clm {
 
 	static async api(endpoint, data = {}) {
 		if (this.isLoggedIn) data.token = this.sessKey;
+		let loader = $('#loader');
+		console.log("loading...");
+		loader.modal('show');
 		let response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
 			method: "post",
 			data: data
+		});
+		console.log("loaded");
+		await new Promise(_ => {
+			setTimeout(() => {
+				loader.modal('hide');
+				_();
+			}, 500);
 		});
 		return JSON.parse(response.data);
 	}

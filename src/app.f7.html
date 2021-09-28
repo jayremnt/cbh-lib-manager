@@ -173,41 +173,52 @@
       </div>
     </div>
 
+    <div class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" id="loader">
+      <div class="modal-dialog modal-sm"
+           style="display: table; position: relative; margin: 0 auto; top: calc(50% - 24px);">
+        <div class="modal-content" style="width: 48px; background-color: transparent; border: none;">
+          <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 </template>
 <script>
-  import Clm from "./js/clm";
-  import Utils from "./js/utils";
+	import Clm from "./js/clm";
+	import Utils from "./js/utils";
 
-  const md5 = require("md5");
+	const md5 = require("md5");
 
-  export default (props, {$f7, $update}) => {
-    let avatarSample = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
-    let account = {};
-    let avatarUrl = "";
+	export default (props, {$f7, $update}) => {
+		let avatarSample = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
+		let account = {};
+		let avatarUrl = "";
 
-    let waitBootInterval = setInterval(() => {
-      if (Clm.isBooted) {
-        clearInterval(waitBootInterval);
-        account = Clm.account;
-        avatarUrl = "http://www.gravatar.com/avatar/" + md5(account['email']) + "?s=64";
-        $update();
-      }
-    }, 100);
+		let waitBootInterval = setInterval(() => {
+			if (Clm.isBooted) {
+				clearInterval(waitBootInterval);
+				account = Clm.account;
+				avatarUrl = "http://www.gravatar.com/avatar/" + md5(account['email']) + "?s=64";
+				$update();
+			}
+		}, 100);
 
-    const logout = (e) => {
-      e.preventDefault();
-      chrome.storage.local.clear();
-      location.reload();
-    }
+		const logout = (e) => {
+			e.preventDefault();
+			chrome.storage.local.clear();
+			location.reload();
+		}
 
-    const confirmModal = (e) => {
-      let modalId = e.currentTarget.dataset.modalId;
-      Clm.modalResolver(true);
-      $(`#${modalId}`).modal('hide');
-    }
+		const confirmModal = (e) => {
+			let modalId = e.currentTarget.dataset.modalId;
+			Clm.modalResolver(true);
+			$(`#${modalId}`).modal('hide');
+		}
 
-    return $render;
-  }
+		return $render;
+	}
 </script>
