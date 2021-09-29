@@ -38,7 +38,7 @@ class Utils {
 			if (typeof options.data === "undefined") options.data = {};
 			$.ajax(url, {
 				method: options.method.toUpperCase(),
-				data: JSON.stringify(options.data),
+				data: options.data,
 				dataType: 'text',
 				success: (res) => {
 					resolve({
