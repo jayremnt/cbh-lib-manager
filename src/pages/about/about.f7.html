@@ -103,7 +103,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <p class="m-0">Cựu học sinh Trường THPT chuyên Bắc Ninh</p>
+                        <p class="m-0">Trường THPT chuyên Bắc Ninh</p>
                       </div>
                     </div>
                   </div>
@@ -164,21 +164,21 @@
                   </div>
                   <div class="">
                     <div class="name"><span>Facebook</span></div>
-                    <div class="text-muted"><a href="https://www.facebook.com/jayremnt/">Nguyễn Duy Bảo</a></div>
+                    <div class="text-muted"><a href="#" @click="${() => {openLink('https://www.facebook.com/jayremnt/')}}">Nguyễn Duy Bảo</a></div>
                   </div>
                 </div>
 
                 <div class="list-group-item d-flex  align-items-center">
                   <div class="m-r-20">
                     <div class="avatar avatar-sm ">
-                      <div class="avatar-title rounded-circle bg-danger">
+                      <div class="avatar-title rounded-circle bg-primary">
                         <i class="mdi mdi-instagram mdi-18px"></i>
                       </div>
                     </div>
                   </div>
                   <div class="">
                     <div class="name"><span>Instagram</span></div>
-                    <div class="text-muted"><a href="https://www.instagram.com/jayremnt/">Nguyễn Duy Bảo</a></div>
+                    <div class="text-muted"><a href="#" @click="${() => {openLink('https://www.instagram.com/jayremnt/')}}">Nguyễn Duy Bảo</a></div>
                   </div>
                 </div>
               </div>
@@ -208,6 +208,10 @@
         state = !state;
       });
     });
+
+    const openLink = (url) => {
+    	window.open(url, '_blank');
+    }
     return $render;
   };
 </script>

@@ -32,7 +32,6 @@ class Clm {
 
 	static async api(endpoint, data = {}) {
 		if (this.isLoggedIn) data.token = this.sessKey;
-		console.log(data);
 		let loader = $('#loader');
 		console.log("loading...");
 		loader.modal('show');
