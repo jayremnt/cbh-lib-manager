@@ -42,9 +42,10 @@ class Clm {
 		});
 		let response = {};
 		try {
+			console.log(data);
 			response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
 				method: "post",
-				data: JSON.stringify(data)
+				data: data
 			});
 		}
 		catch (e) {
@@ -63,7 +64,7 @@ class Clm {
 				_();
 			}, 500);
 		});
-		return JSON.parse(response.data);
+		return response.data;
 	}
 
 	static async alert(title, message, timer = 500, type = "info", icon = "mdi mdi-information-outline") {

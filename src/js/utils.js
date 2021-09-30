@@ -1,4 +1,6 @@
 import $ from 'jquery';
+import axios from "axios";
+const qs = require('qs');
 
 class Utils {
 
@@ -32,22 +34,23 @@ class Utils {
 		return await chrome.storage.local.set(data);
 	}
 
-	static sendRequest(url, options) {
-		return new Promise((resolve, reject) => {
-			if (typeof options.method === "undefined") console.error('options.method must be defined');
-			if (typeof options.data === "undefined") options.data = {};
-			$.ajax(url, {
+	static sendRequest = (url, options) => {
+		return new Promise(async (resolve, reject) => {
+			const reqOption = {
+				url: url,
 				method: options.method.toUpperCase(),
-				data: options.data,
-				dataType: 'text',
-				success: (res) => {
-					resolve({
-						data: res
-					});
-				}
-			}).fail(reject);
+				headers: {
+					'accept': '*/*',
+				},
+			};
+			if (options.method.toUpperCase() !== 'GET') {
+				reqOption.data = qs.stringify(options.data);
+			}
+			axios(reqOption).then(function(response) {
+				resolve(response);
+			}).catch(reject);
 		});
-	}
+	};
 
 	static setupChromeWebRequestBlockers() {
 		console.log('ok');
