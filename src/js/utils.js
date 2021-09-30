@@ -57,9 +57,6 @@ class Utils {
 		chrome.webRequest.onBeforeSendHeaders.addListener(details => {
 			console.log(details);
 			let requestHeaders = details.requestHeaders;
-			let headerContentTypeIndex = requestHeaders.findIndex(row => row.name === "Content-Type");
-			if (headerContentTypeIndex >= 0) requestHeaders[headerContentTypeIndex].value = "application/json";
-
 			console.log(details);
 			return {requestHeaders: details.requestHeaders};
 		}, {
