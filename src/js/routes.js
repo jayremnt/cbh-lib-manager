@@ -29,6 +29,8 @@ import BorrowerTracePage from "../pages/borrowers/borrower-trace.f7.html";
 import BookTracePage from "../pages/books/book-trace.f7.html";
 import TopBookInfoPage from "../pages/overview/top/top-book-info.f7.html";
 import TopBorrowerInfoPage from "../pages/overview/top/top-borrower-info.f7.html";
+import BorrowingBooksPage from "../pages/books/list-borrowing-books.f7.html";
+import BorrowingBorrowersPage from "../pages/borrowers/list-borrowing-borrowers.f7.html";
 
 const routes = [
 	{
@@ -55,6 +57,9 @@ const routes = [
 		}, {
 			path: 'trace/:borrowerCode/',
 			component: BorrowerTracePage,
+		}, {
+			path: 'borrowing/',
+			component: BorrowingBorrowersPage,
 		}],
 	}, {
 		path: '/books/',
@@ -71,6 +76,9 @@ const routes = [
 		}, {
 			path: 'trace/:bookCode/',
 			component: BookTracePage,
+		}, {
+			path: 'borrowing/',
+			component: BorrowingBooksPage,
 		}],
 	}, {
 		path: '/account/',

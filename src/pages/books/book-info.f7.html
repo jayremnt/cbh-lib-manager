@@ -64,6 +64,13 @@
                            disabled/>
                   </div>
                   <div class="form-group">
+                    <label for="input-book-borrowed-times">Số lần được mượn</label>
+                    <input type="text" class="form-control" id="input-book-borrowed-times" name="account-name"
+                           placeholder="Số lần được mượn..."
+                           value='${book.borrowed_times}'
+                           disabled/>
+                  </div>
+                  <div class="form-group">
                     <button type="submit" name="create-project" value="ok" class="btn btn-success"
                             @click="${updateBook}">
                       Cập nhật

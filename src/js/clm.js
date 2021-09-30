@@ -42,7 +42,6 @@ class Clm {
 		});
 		let response = {};
 		try {
-			console.log(data);
 			response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
 				method: "post",
 				data: data
