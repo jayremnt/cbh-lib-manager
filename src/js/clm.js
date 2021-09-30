@@ -42,10 +42,22 @@ class Clm {
 				_();
 			}, 100);
 		});
-		let response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
-			method: "post",
-			data: data
-		});
+		let response = {};
+		try {
+			response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
+				method: "post",
+				data: data
+			});
+		}
+		catch (e) {
+			console.log(e);
+			response = {
+				data: JSON.stringify({
+					error: true,
+					message: "Error occurred"
+				})
+			};
+		}
 		console.log("loaded");
 		await new Promise(_ => {
 			setTimeout(() => {
