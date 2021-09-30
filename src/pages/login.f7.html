@@ -67,27 +67,27 @@
 			password = e.target.value;
 		};
 
-		const submitLogin = (e) => {
+		const submitLogin = async (e) => {
 			e.preventDefault();
 			isLoginSent = true;
 			$update();
-			Clm.api('users/login', {
+			let response = await Clm.api('users/login', {
 				email: email,
 				password: password
-			}).then(response => {
-				console.log(response);
-				if (!response.error) {
-					loginSuccess = true;
-					Utils.setData("is_logged_in", true);
-					Utils.setData("account", response['data']['account'][0]);
-					Utils.setData("sess_key", response['data']['token']);
-					setTimeout(() => {
-						location.reload();
-					}, 3000);
-				}
-				returnMessage = response.message;
-				$update();
 			});
+
+			console.log(response);
+			if (!response.error) {
+				loginSuccess = true;
+				Utils.setData("is_logged_in", true);
+				Utils.setData("account", response['data']['account'][0]);
+				Utils.setData("sess_key", response['data']['token']);
+				setTimeout(() => {
+					location.reload();
+				}, 3000);
+			}
+			returnMessage = response.message;
+			$update();
 
 			return false;
 		}

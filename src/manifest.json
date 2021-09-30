@@ -1,7 +1,7 @@
 {
   "name": "CBH Lib Manager",
   "version": "1.0",
-  "description": "Chrome extension for managing books and borrowers of CBH",
+  "description": "Tiện ích nho nhỏ giúp câu lạc bộ CBH quản lý sách và việc mượn sách dễ dàng hơn ^^",
   "permissions": [
     "downloads",
     "cookies",

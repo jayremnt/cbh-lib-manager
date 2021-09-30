@@ -189,7 +189,7 @@
       $update();
     }
 
-    resetList();
+    if (Clm.isLoggedIn) resetList();
 
     // Return render function
     return $render;

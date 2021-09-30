@@ -31,10 +31,17 @@ class Clm {
 	}
 
 	static async api(endpoint, data = {}) {
+		console.log(data);
 		if (this.isLoggedIn) data.token = this.sessKey;
 		let loader = $('#loader');
+		console.log(loader);
 		console.log("loading...");
-		loader.modal('show');
+		await new Promise(_ => {
+			setTimeout(() => {
+				loader.modal('show');
+				_();
+			}, 100);
+		});
 		let response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
 			method: "post",
 			data: data
@@ -108,7 +115,7 @@ class Clm {
 		popupEl.style.right = "0";
 		popupEl.style.bottom = "0";
 		popupEl.style.backgroundColor = "white";
-		popupEl.style.zIndex = "9999999999";
+		popupEl.style.zIndex = "9999";
 
 		let viewEl = document.createElement("div");
 		viewEl.className = "view";
@@ -120,7 +127,7 @@ class Clm {
 		rootEl.appendChild(popupEl);
 	}
 
-	static modalResolver = function(_) {
+	static modalResolver = function (_) {
 		console.log(_);
 		return _;
 	};
