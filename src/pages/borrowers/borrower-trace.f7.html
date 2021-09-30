@@ -24,6 +24,7 @@
                     <tr>
                       <th>ID</th>
                       <th>Sách</th>
+                      <th>Mã sách</th>
                       <th>Ngày mượn</th>
                       <th>Hết hạn</th>
                       <th>Hành động</th>
@@ -37,6 +38,7 @@
                     <tr>
                       <td>${i + 1}</td>
                       <td>${trace.book?.name}</td>
+                      <td>${trace.book?.code}</td>
                       <td>${Clm.timeConverter(trace.borrowed_time)}</td>
                       <td>${Clm.timeConverter(trace.expired_time)}</td>
                       <td>${(trace.is_borrowing) ? "Mượn sách" : (trace.is_return) ? "Trả sách" : "Gia hạn"}</td>
