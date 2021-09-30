@@ -31,7 +31,6 @@ class Clm {
 	}
 
 	static async api(endpoint, data = {}) {
-		console.log(data);
 		if (this.isLoggedIn) data.token = this.sessKey;
 		let loader = $('#loader');
 		console.log(loader);
@@ -44,9 +43,10 @@ class Clm {
 		});
 		let response = {};
 		try {
+			console.log(data);
 			response = await Utils.sendRequest(CONSTANTS.API_URL + endpoint, {
 				method: "post",
-				data: data
+				data: JSON.stringify(data)
 			});
 		}
 		catch (e) {
