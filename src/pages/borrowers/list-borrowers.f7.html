@@ -90,8 +90,8 @@
 				console.log(response);
 				borrowers = response.data.list_borrowers;
 				borrowers.sort((a, b) => {
-					if (a.current_borrowed_books.length < b.current_borrowed_books.length) return 1;
-					else if (a.current_borrowed_books.length > b.current_borrowed_books.length) return -1;
+					if (a.name > b.name) return 1;
+					else if (a.name < b.name) return -1;
 					else return 0;
 				});
 				$update();

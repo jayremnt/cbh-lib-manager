@@ -93,8 +93,9 @@
         books = response.data.list_books;
         books = books.filter(book => book.borrowed_info.length > 0 && book.borrowed_info[0].is_borrowed);
 				books.sort((a, b) => {
-					if (!a?.borrowed_info?.length) return 1;
-					else if (a?.borrowed_info?.length) return 0;
+					if (a.name > b.name) return 1;
+					else if (a.name < b.name) return -1;
+					else return 0;
 				});
         console.log(response);
         $update();
