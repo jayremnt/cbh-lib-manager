@@ -348,13 +348,13 @@
 
 			try {
 				let response = await Clm.api("borrowers/" + props.borrowerCode + "/edit", {
-					update_data: {
+					update_data: JSON.stringify({
 						name: borrowerName,
 						class: borrowerClass,
 						student_code: borrowerStudentCode,
 						email: borrowerEmail,
 						phone_number: borrowerPhoneNumber
-					}
+					})
 				});
 
 				console.log(response);

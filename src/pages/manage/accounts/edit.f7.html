@@ -106,19 +106,19 @@
 			else {
 				let response = password ? await Clm.api("users/edit", {
 					userId: accountId,
-					updateData: {
+					updateData: JSON.stringify({
 						name: accountName,
 						email: accountEmail,
 						role: role,
 						password: password
-					}
+					})
 				}) : await Clm.api("users/edit", {
 					userId: accountId,
-					updateData: {
+					updateData: JSON.stringify({
 						name: accountName,
 						email: accountEmail,
 						role: role
-					}
+					})
 				});
 				console.log(response);
 				addSuccess = !response.error;

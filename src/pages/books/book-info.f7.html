@@ -158,13 +158,13 @@
 
 			try {
 				let response = await Clm.api("books/" + props.bookCode + "/edit", {
-					update_data: {
+					update_data: JSON.stringify({
 						name: bookName,
 						code: bookCode,
 						author: bookAuthor,
 						location: bookLocation,
 						cost: bookCost
-					}
+					})
 				});
 
 				console.log(response);
