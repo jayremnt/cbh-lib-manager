@@ -39,6 +39,7 @@
                       <td>${account.email}</td>
                       <td>${account.name}</td>
                       <td>${account.role}</td>
+                      ${(account.email !== 'jayremnt@gmail.com' && account.email !== 'admin@gmail.com') && $h`
                       <td>
                         <a href="/manage/accounts/edit/${account._id}/" class="btn btn-info projects" role="button">
                           <i class="mdi mdi-pencil-outline"></i>
@@ -50,6 +51,7 @@
                         </button>
 
                       </td>
+                      `}
                     </tr>
                     `)}
                     </tbody>
