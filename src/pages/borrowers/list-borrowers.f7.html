@@ -34,6 +34,7 @@
                       <th>Điện thoại</th>
                       <th>Email</th>
                       <th>Số sách</th>
+                      <th>Ngày hết hạn gần nhất</th>
                       <th>Hành động</th>
                     </tr>
                     </thead>
@@ -47,6 +48,9 @@
                       <td>${borrower.phone_number}</td>
                       <td>${borrower.email}</td>
                       <td>${borrower.current_borrowed_books.length}</td>
+                      <td>${Math.floor((borrower.min_expired_time - new Date().getTime()) / (24 * 60 * 60 * 1000))
+                        + 1} ngày
+                      </td>
                       <td>
                         <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm"
                            role="button">
