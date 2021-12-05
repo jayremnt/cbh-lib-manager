@@ -178,8 +178,14 @@
                         <td>${borrower.student_code}</td>
                         <td>${borrower.phone_number}</td>
                         <td>${borrower.email}</td>
-                        <td>${Math.floor((borrower.min_expired_time - new Date().getTime()) / (24 * 60 * 60 * 1000))
-                          + 1} ngày
+                        <td>${borrower.min_expired_time ? borrower.min_expired_time >= new
+                        Date().getTime() ? `${Math.floor((borrower.min_expired_time - new
+                        Date().getTime()) /
+                        (24 * 60 * 60 * 1000))
+                        + 1} ngày` : `${Math.floor((new
+                        Date().getTime() - borrower.min_expired_time ) /
+                        (24 * 60 * 60 * 1000))
+                        + 1} ngày trước` : `Không`}
                         </td>
                         <td>
                           <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm"
@@ -235,8 +241,7 @@
 
       nearlyExpiredBorrowers = borrowers.filter(borrower =>
         borrower.min_expired_time &&
-        borrower.min_expired_time - new Date().getTime() <= 3 * 24 * 60 * 60 * 1000 &&
-        borrower.min_expired_time - new Date().getTime() >= 0
+        borrower.min_expired_time - new Date().getTime() <= 3 * 24 * 60 * 60 * 1000
       );
       console.log('nearlyExpiredBorrowers', nearlyExpiredBorrowers);
 

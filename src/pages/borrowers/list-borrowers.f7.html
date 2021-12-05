@@ -48,8 +48,14 @@
                       <td>${borrower.phone_number}</td>
                       <td>${borrower.email}</td>
                       <td>${borrower.current_borrowed_books.length}</td>
-                      <td>${Math.floor((borrower.min_expired_time - new Date().getTime()) / (24 * 60 * 60 * 1000))
-                        + 1} ngày
+                      <td>${borrower.min_expired_time ? borrower.min_expired_time >= new
+                        Date().getTime() ? `${Math.floor((borrower.min_expired_time - new
+                        Date().getTime()) /
+                        (24 * 60 * 60 * 1000))
+                        + 1} ngày` : `${Math.floor((new
+                        Date().getTime() - borrower.min_expired_time ) /
+                        (24 * 60 * 60 * 1000))
+                        + 1} ngày trước` : `Không`}
                       </td>
                       <td>
                         <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm"
@@ -81,89 +87,88 @@
   </div>
 </template>
 <script>
-	import Clm from "../../js/clm";
+  import Clm from "../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let borrowers = [];
-		let alert = false;
-		let alertSuccess = false;
-		let returnMessage = "";
+  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+    let borrowers = [];
+    let alert = false;
+    let alertSuccess = false;
+    let returnMessage = "";
 
-		const resetList = (e) => {
-			Clm.api("borrowers/all").then(response => {
-				console.log(response);
-				borrowers = response.data.list_borrowers;
-				borrowers.sort((a, b) => {
-					if (a.name > b.name) return 1;
-					else if (a.name < b.name) return -1;
-					else return 0;
-				});
-				$update();
-				$("#borrowerSearch").on("keyup", function () {
-					let value = $(this).val().toLowerCase();
-					$("#listBorrowers tr").filter(function () {
-						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-					});
-				});
-			});
-		}
+    const resetList = (e) => {
+      Clm.api("borrowers/all").then(response => {
+        console.log(response);
+        borrowers = response.data.list_borrowers;
+        borrowers.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          else if (a.name < b.name) return -1;
+          else return 0;
+        });
+        $update();
+        $("#borrowerSearch").on("keyup", function () {
+          let value = $(this).val().toLowerCase();
+          $("#listBorrowers tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+    }
 
-		resetList();
+    resetList();
 
-		const deleteBorrower = (e) => {
-			let borrowerCode = e.currentTarget.dataset.studentCode;
-			console.log(borrowerCode);
+    const deleteBorrower = (e) => {
+      let borrowerCode = e.currentTarget.dataset.studentCode;
+      console.log(borrowerCode);
 
-			Clm.openConfirmModal('delete').then(async isConfirmed => {
-				if (!isConfirmed) return;
-				alert = true;
+      Clm.openConfirmModal('delete').then(async isConfirmed => {
+        if (!isConfirmed) return;
+        alert = true;
 
-				try {
-					let response = await Clm.api("borrowers/" + borrowerCode);
-					let borrowerInfo = response.data.borrower_info;
-					console.log(response);
+        try {
+          let response = await Clm.api("borrowers/" + borrowerCode);
+          let borrowerInfo = response.data.borrower_info;
+          console.log(response);
 
-					for (const book of borrowerInfo.current_borrowed_books) {
-						console.log(book);
-						response = await Clm.api("books/" + book.book.code + "/returnBook", {
-							responsiblePerson: Clm.account._id
-						});
-						console.log(response);
-						alertSuccess = !response.error;
-						if (response.error) {
-							returnMessage = response.message;
-							break;
-						}
-					}
-					if (!response.error) {
-						response = await Clm.api("borrowers/" + borrowerInfo.student_code + "/delete");
-						console.log(response);
-						returnMessage = response.message;
-						alertSuccess = !response.error;
-					}
-				}
-				catch (e) {
-					console.log(e);
-					returnMessage = "Có lỗi xảy ra";
-					alertSuccess = false;
-				}
-				resetList();
-			});
-		}
+          for (const book of borrowerInfo.current_borrowed_books) {
+            console.log(book);
+            response = await Clm.api("books/" + book.book.code + "/returnBook", {
+              responsiblePerson: Clm.account._id
+            });
+            console.log(response);
+            alertSuccess = !response.error;
+            if (response.error) {
+              returnMessage = response.message;
+              break;
+            }
+          }
+          if (!response.error) {
+            response = await Clm.api("borrowers/" + borrowerInfo.student_code + "/delete");
+            console.log(response);
+            returnMessage = response.message;
+            alertSuccess = !response.error;
+          }
+        } catch (e) {
+          console.log(e);
+          returnMessage = "Có lỗi xảy ra";
+          alertSuccess = false;
+        }
+        resetList();
+      });
+    }
 
-		const findBorrower = (e) => {
-			let borrowerCode = $('#inputBorrowerCode').val();
-			console.log(borrowerCode);
-			console.log(borrowers);
-			const borrowerIndex = borrowers.findIndex(borrower => borrower.student_code.toLowerCase() === String(borrowerCode).toLowerCase());
-			console.log(borrowerIndex);
-			if (borrowerIndex >= 0) {
-				console.log(Clm.app);
-				Clm.app.router.navigate('/borrowers/info/' + borrowerCode + '/');
-			}
-		}
+    const findBorrower = (e) => {
+      let borrowerCode = $('#inputBorrowerCode').val();
+      console.log(borrowerCode);
+      console.log(borrowers);
+      const borrowerIndex = borrowers.findIndex(borrower => borrower.student_code.toLowerCase() === String(borrowerCode).toLowerCase());
+      console.log(borrowerIndex);
+      if (borrowerIndex >= 0) {
+        console.log(Clm.app);
+        Clm.app.router.navigate('/borrowers/info/' + borrowerCode + '/');
+      }
+    }
 
-		// Return render function
-		return $render;
-	}
+    // Return render function
+    return $render;
+  }
 </script>
