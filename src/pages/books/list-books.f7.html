@@ -10,8 +10,8 @@
                   Tất cả sách
                 </h5>
                 <div class="card-controls">
-                  <input class="btn" id="allBooksSearch" type="text"
-                         placeholder="Tìm kiếm..." style="margin-right: 10px;"/>
+                  <input class="btn" id="allBooksSearch" type="text" placeholder="Tìm kiếm..."
+                    style="margin-right: 10px;" />
                   <a href="/books/add/" class="btn btn-info">Thêm sách</a>
                 </div>
               </div>
@@ -26,48 +26,47 @@
                 <div class="table-responsive" style="margin-top: 20px;">
                   <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Tên sách</th>
-                      <th>Tác giả</th>
-                      <th>Mã sách</th>
-                      <th>Vị trí</th>
-                      <th>Giá tiền</th>
-                      <th>Ngày nhập</th>
-                      <th>Người nhập</th>
-                      <th>Tình trạng</th>
-                      <th>Hành động</th>
-                    </tr>
+                      <tr>
+                        <th>ID</th>
+                        <th>Tên sách</th>
+                        <th>Tác giả</th>
+                        <th>Mã sách</th>
+                        <th>Vị trí</th>
+                        <th>Giá tiền</th>
+                        <th>Ngày nhập</th>
+                        <th>Người nhập</th>
+                        <th>Tình trạng</th>
+                        <th>Hành động</th>
+                      </tr>
                     </thead>
                     <tbody id="listAllBooks">
-                    ${books.map((book, i) => $h`
-                    <tr>
-                      <td>${i + 1}</td>
-                      <td>${book.name}</td>
-                      <td>${book.author}</td>
-                      <td>${book.code}</td>
-                      <td>${book.location}</td>
-                      <td>${book.cost}</td>
-                      <td>${Clm.timeConverter(book.imported_time)}</td>
-                      <td>${book.responsible_person ? book.responsible_person.name : ""}</td>
-                      <td>${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}</td>
-                      <td>
-                        <a href="/books/info/${book.code}/" class="btn btn-primary btn-sm" role="button">
-                          <i class="mdi mdi-menu"></i>
-                        </a>
-                        <a href="/books/trace/${book.code}/" class="btn btn-dark btn-sm"
-                           role="button">
-                          <i class="mdi mdi-history"></i>
-                        </a>
-                        <button @click="${deleteBook}" type="button" class="btn btn-danger btn-sm"
-                                data-toggle="modal" data-target="#deleteProject"
-                                data-code="${book.code}">
-                          <i class="mdi mdi-delete"></i>
-                        </button>
+                      ${books.map((book, i) => $h`
+                      <tr>
+                        <td>${i + 1}</td>
+                        <td>${book.name}</td>
+                        <td>${book.author}</td>
+                        <td>${book.code}</td>
+                        <td>${book.location}</td>
+                        <td>${book.cost}</td>
+                        <td>${Clm.timeConverter(book.imported_time)}</td>
+                        <td>${book.responsible_person ? book.responsible_person.name : ""}</td>
+                        <td>${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}
+                        </td>
+                        <td>
+                          <a href="/books/info/${book.code}/" class="btn btn-primary btn-sm" role="button">
+                            <i class="mdi mdi-menu"></i>
+                          </a>
+                          <a href="/books/trace/${book.code}/" class="btn btn-dark btn-sm" role="button">
+                            <i class="mdi mdi-history"></i>
+                          </a>
+                          <button @click="${deleteBook}" type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                            data-target="#deleteProject" data-code="${book.code}">
+                            <i class="mdi mdi-delete"></i>
+                          </button>
 
-                      </td>
-                    </tr>
-                    `)}
+                        </td>
+                      </tr>
+                      `)}
                     </tbody>
                   </table>
                 </div>
@@ -83,7 +82,7 @@
 <script>
   import Clm from "../../js/clm";
 
-  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
     let books = [];
     let alert = false;
     let alertSuccess = false;
@@ -92,19 +91,19 @@
     const resetList = (e) => {
       Clm.api("books/all").then(response => {
         books = response.data.list_books;
-				books.sort((a, b) => {
-					if (a.name > b.name) return 1;
-					else if (a.name < b.name) return -1;
-					else return 0;
-				});
+        books.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          else if (a.name < b.name) return -1;
+          else return 0;
+        });
         console.log(response);
         $update();
-				$("#allBooksSearch").on("keyup", function () {
-					let value = $(this).val().toLowerCase();
-					$("#listAllBooks tr").filter(function () {
-						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-					});
-				});
+        $("#allBooksSearch").on("keyup", function () {
+          let value = $(this).val().toLowerCase();
+          $("#listAllBooks tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
       });
     }
 

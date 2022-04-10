@@ -89,7 +89,7 @@
                   <div class="list-group-item d-flex  align-items-center">
                     <div class="m-r-20">
                       <div class="avatar avatar-sm">
-                        <img src="assets/img/users/user-5.jpg" class="avatar-img avatar-sm rounded-circle" alt=""/>
+                        <img src="assets/img/users/user-5.jpg" class="avatar-img avatar-sm rounded-circle" alt="" />
                       </div>
                     </div>
                     <div class="">
@@ -124,7 +124,7 @@
                   <div class="list-group-item d-flex  align-items-center">
                     <div class="m-r-20">
                       <div class="avatar avatar-sm">
-                        <img src="assets/img/users/user-5.jpg" class="avatar-img avatar-sm rounded-circle" alt=""/>
+                        <img src="assets/img/users/user-5.jpg" class="avatar-img avatar-sm rounded-circle" alt="" />
                       </div>
                     </div>
                     <div class="">
@@ -158,43 +158,43 @@
                   <div class="table-responsive" style="margin-top: 20px;">
                     <table class="table table-hover">
                       <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Tên</th>
-                        <th>Lớp</th>
-                        <th>Mã học sinh</th>
-                        <th>Điện thoại</th>
-                        <th>Email</th>
-                        <th>Ngày hết hạn gần nhất</th>
-                        <th>Hành động</th>
-                      </tr>
+                        <tr>
+                          <th>ID</th>
+                          <th>Tên</th>
+                          <th>Lớp</th>
+                          <th>Mã học sinh</th>
+                          <th>Điện thoại</th>
+                          <th>Email</th>
+                          <th>Ngày hết hạn gần nhất</th>
+                          <th>Hành động</th>
+                        </tr>
                       </thead>
                       <tbody id="listBorrowers">
-                      ${nearlyExpiredBorrowers.map((borrower, i) => $h`
-                      <tr>
-                        <td>${i + 1}</td>
-                        <td>${borrower.name}</td>
-                        <td>${borrower.class}</td>
-                        <td>${borrower.student_code}</td>
-                        <td>${borrower.phone_number}</td>
-                        <td>${borrower.email}</td>
-                        <td>${borrower.min_expired_time ? borrower.min_expired_time >= new
-                        Date().getTime() ? `${Math.floor((borrower.min_expired_time - new
-                        Date().getTime()) /
-                        (24 * 60 * 60 * 1000))
-                        + 1} ngày` : `${Math.floor((new
-                        Date().getTime() - borrower.min_expired_time ) /
-                        (24 * 60 * 60 * 1000))
-                        + 1} ngày trước` : `Không`}
-                        </td>
-                        <td>
-                          <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm"
-                             role="button">
-                            <i class="mdi mdi-menu"></i>
-                          </a>
-                        </td>
-                      </tr>
-                      `)}
+                        ${nearlyExpiredBorrowers.map((borrower, i) => $h`
+                        <tr>
+                          <td>${i + 1}</td>
+                          <td>${borrower.name}</td>
+                          <td>${borrower.class}</td>
+                          <td>${borrower.student_code}</td>
+                          <td>${borrower.phone_number}</td>
+                          <td>${borrower.email}</td>
+                          <td>${borrower.min_expired_time ? borrower.min_expired_time >= new
+                            Date().getTime() ? `${Math.floor((borrower.min_expired_time - new
+                            Date().getTime()) /
+                            (24 * 60 * 60 * 1000))
+                            + 1} ngày` : `${Math.floor((new
+                            Date().getTime() - borrower.min_expired_time ) /
+                            (24 * 60 * 60 * 1000))
+                            + 1} ngày trước` : `Không`}
+                          </td>
+                          <td>
+                            <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm"
+                              role="button">
+                              <i class="mdi mdi-menu"></i>
+                            </a>
+                          </td>
+                        </tr>
+                        `)}
                       </tbody>
                     </table>
                   </div>
@@ -218,7 +218,7 @@
 <script>
   import Clm from "../../js/clm";
 
-  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
     let borrowers = [];
     let borrowingBorrowers = [];
     let books = [];

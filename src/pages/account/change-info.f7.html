@@ -1,95 +1,93 @@
 <template>
-    <div class="page">
-        <div class="page-content">
-            <div class="bg-dark bg-dots m-b-30">
-                <div class="container">
-                    <div class="row p-b-60 p-t-60">
+  <div class="page">
+    <div class="page-content">
+      <div class="bg-dark bg-dots m-b-30">
+        <div class="container">
+          <div class="row p-b-60 p-t-60">
 
-                        <div class="col-lg-8 text-center mx-auto text-white p-b-30">
-                            <div class="m-b-10">
-                                <div class="avatar avatar-lg ">
-                                    <div class="avatar-title bg-info rounded-circle mdi mdi-settings "></div>
-                                </div>
-                            </div>
-                            <h3>Thiết lập tài khoản</h3>
-                        </div>
-                    </div>
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+              <div class="m-b-10">
+                <div class="avatar avatar-lg ">
+                  <div class="avatar-title bg-info rounded-circle mdi mdi-settings "></div>
                 </div>
+              </div>
+              <h3>Thiết lập tài khoản</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="pull-up">
+        <div class="container">
+          <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+              <div class="card py-3 m-b-30">
+                <div class="card-body">
+                  <form action="#" method="POST">
+                    <h3 class="">Thay đổi thông tin</h3>
+                    <p class="text-muted">
+                      Chỉnh sửa các thông tin cá nhân của bạn ở bên dưới
+                    </p>
+                    <a href="https://gravatar.com/" target="_blank" class="">
+                      <label class="avatar-input">
+                        <span class="avatar avatar-xl">
+                          <img src="${avatarUrl}" alt="..." class="avatar-img rounded-circle" />
+                          <span class="avatar-input-icon rounded-circle">
+                            <i class="mdi mdi-upload mdi-24px"></i>
+                          </span>
+                        </span>
+                      </label>
+                    </a>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputEmail6">Họ và tên</label>
+                        <input type="text" value="${account.name}" class="form-control" id="inputEmail6"
+                          placeholder="Name" disabled />
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
+                          value="${account.email}" disabled />
+                      </div>
+
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="asd">Vai trò</label>
+                        <input type="text" class="form-control" id="asd" placeholder="username" value="${account.role}"
+                          disabled />
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputPassword">Mật khẩu</label>
+                        <div class="row">
+                          <div class="col-12">
+                            <a href='/account/change-password/' class="btn btn-outline-primary">Đổi mật khẩu</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-cta">Lưu lại</button>
+                  </form>
+                </div>
+              </div>
+
             </div>
 
-            <section class="pull-up">
-                <div class="container">
-                    <div class="row ">
-                        <div class="col-lg-8 mx-auto  mt-2">
-                            <div class="card py-3 m-b-30">
-                                <div class="card-body">
-                                    <form action="#" method="POST">
-                                        <h3 class="">Thay đổi thông tin</h3>
-                                        <p class="text-muted">
-                                            Chỉnh sửa các thông tin cá nhân của bạn ở bên dưới
-                                        </p>
-                                        <a href="https://gravatar.com/" target="_blank" class="">
-                                            <label class="avatar-input">
-                                                <span class="avatar avatar-xl">
-                                                    <img src="${avatarUrl}"
-                                                         alt="..." class="avatar-img rounded-circle"/>
-                                                    <span class="avatar-input-icon rounded-circle">
-                                                        <i class="mdi mdi-upload mdi-24px"></i>
-                                                    </span>
-                                                </span>
-                                            </label>
-                                        </a>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail6">Họ và tên</label>
-                                                <input type="text" value="${account.name}" class="form-control"
-                                                       id="inputEmail6" placeholder="Name" disabled/>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Email</label>
-                                                <input type="email" class="form-control" id="inputEmail4"
-                                                       placeholder="Email" value="${account.email}" disabled/>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="asd">Vai trò</label>
-                                                <input type="text" class="form-control" id="asd" placeholder="username"
-                                                       value="${account.role}" disabled/>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputPassword">Mật khẩu</label>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <a href='/account/change-password/'
-                                                           class="btn btn-outline-primary">Đổi mật khẩu</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-cta">Lưu lại</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-            </section>
+          </div>
         </div>
+
+      </section>
     </div>
+  </div>
 </template>
 <script>
   import Clm from "../../js/clm";
   const md5 = require("md5");
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
     let account = Clm.account;
     let avatarUrl = "http://www.gravatar.com/avatar/" + md5(account['email']) + "?s=64";
-		// Return render function
-		return $render;
-	}
+    // Return render function
+    return $render;
+  }
 </script>

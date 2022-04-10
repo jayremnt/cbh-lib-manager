@@ -1,98 +1,98 @@
 <template>
-    <div class="page">
-        <div class="page-content">
-            <section class="admin-content">
-                <div class="container py-5">
-                    <div class="card m-b-30">
-                        <div class="card-header">
-                            <h5 class="m-b-0">
-                                Thêm người dùng vào dự án
-                            </h5>
-                        </div>
-                        <form action="#" method="POST" onsubmit="${submitCreation}">
-                            <div class="card-body">
-                                ${isSubmitSent && $h`
-                                <div class="form-group">
-                                    <div class="alert ${addSuccess?'alert-success':'alert-danger'}" role="alert">
-                                        ${returnMessage}
-                                    </div>
-                                </div>
-                                `}
-                                <div class="form-group">
-                                    <label for="accountName">Họ và tên</label>
-                                    <input type="text" class="form-control" id="accountName" name="account-name"
-                                           placeholder="Nhập họ và tên..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accountEmail">Email</label>
-                                    <input type="text" class="form-control" id="accountEmail" name="account-email"
-                                           placeholder="Nhập địa chỉ email..."/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="role">Vai trò</label>
-                                    <select class="form-control" name="account-role" id="role">
-                                        <option value="" selected>Choose...</option>
-                                        <option value="manager">Manager</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accountPassword">Mật khẩu</label>
-                                    <input type="password" class="form-control" id="accountPassword" name="account-password"
-                                           placeholder="Nhập mật khẩu..."/>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" name="create-project" value="ok" class="btn btn-primary">
-                                      Thêm
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+  <div class="page">
+    <div class="page-content">
+      <section class="admin-content">
+        <div class="container py-5">
+          <div class="card m-b-30">
+            <div class="card-header">
+              <h5 class="m-b-0">
+                Thêm người dùng vào dự án
+              </h5>
+            </div>
+            <form action="#" method="POST" onsubmit="${submitCreation}">
+              <div class="card-body">
+                ${isSubmitSent && $h`
+                <div class="form-group">
+                  <div class="alert ${addSuccess?'alert-success':'alert-danger'}" role="alert">
+                    ${returnMessage}
+                  </div>
                 </div>
-            </section>
+                `}
+                <div class="form-group">
+                  <label for="accountName">Họ và tên</label>
+                  <input type="text" class="form-control" id="accountName" name="account-name"
+                    placeholder="Nhập họ và tên..." />
+                </div>
+                <div class="form-group">
+                  <label for="accountEmail">Email</label>
+                  <input type="text" class="form-control" id="accountEmail" name="account-email"
+                    placeholder="Nhập địa chỉ email..." />
+                </div>
+                <div class="form-group">
+                  <label for="role">Vai trò</label>
+                  <select class="form-control" name="account-role" id="role">
+                    <option value="" selected>Choose...</option>
+                    <option value="manager">Manager</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="accountPassword">Mật khẩu</label>
+                  <input type="password" class="form-control" id="accountPassword" name="account-password"
+                    placeholder="Nhập mật khẩu..." />
+                </div>
+                <div class="form-group">
+                  <button type="submit" name="create-project" value="ok" class="btn btn-primary">
+                    Thêm
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </section>
     </div>
+  </div>
 </template>
 
 <script>
-	import Clm from "../../../js/clm";
+  import Clm from "../../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		$on('pageBeforeIn', (e, page) => {
-			window.$(".js-select2").select2();
-		});
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    $on('pageBeforeIn', (e, page) => {
+      window.$(".js-select2").select2();
+    });
 
-		let isSubmitSent = false;
-		let addSuccess = false;
-		let returnMessage = "";
+    let isSubmitSent = false;
+    let addSuccess = false;
+    let returnMessage = "";
 
-		const submitCreation = function (e) {
-			e.preventDefault();
-			isSubmitSent = true;
-			let accountName = document.getElementById("accountName").value;
-			let accountEmail = document.getElementById("accountEmail").value;
-			let role = document.getElementById("role").value;
-			let password = document.getElementById("accountPassword").value;;
+    const submitCreation = function (e) {
+      e.preventDefault();
+      isSubmitSent = true;
+      let accountName = document.getElementById("accountName").value;
+      let accountEmail = document.getElementById("accountEmail").value;
+      let role = document.getElementById("role").value;
+      let password = document.getElementById("accountPassword").value;;
 
-			if (!accountName || !accountEmail || !role || !password) {
-				returnMessage = "Chưa điền đủ mục";
-			}
-			else {
-				Clm.api("users/register", {
-					name: accountName,
-					email: accountEmail,
-					password: password,
-					role: role
-				}).then(response => {
-					console.log(response);
-					addSuccess = !response.error;
-					returnMessage = response.message;
+      if (!accountName || !accountEmail || !role || !password) {
+        returnMessage = "Chưa điền đủ mục";
+      }
+      else {
+        Clm.api("users/register", {
+          name: accountName,
+          email: accountEmail,
+          password: password,
+          role: role
+        }).then(response => {
+          console.log(response);
+          addSuccess = !response.error;
+          returnMessage = response.message;
 
-					$update();
-				});
-			}
-		}
-		return $render;
-	}
+          $update();
+        });
+      }
+    }
+    return $render;
+  }
 </script>

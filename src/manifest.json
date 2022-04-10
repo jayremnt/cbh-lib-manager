@@ -1,33 +1,31 @@
 {
-  "name": "CBH Library Manager",
-  "version": "1.0",
-  "description": "Tiện ích nho nhỏ giúp câu lạc bộ CBH quản lý sách và việc mượn sách dễ dàng hơn ^^",
-  "permissions": [
-    "downloads",
-    "cookies",
-    "storage",
-    "notifications",
-    "webRequest",
-    "webRequestBlocking",
-    "https://cbh-server.herokuapp.com/*"
-  ],
-  "browser_action": {
-    "default_title": "CBH Control Panel"
-  },
-  "background": {
-    "scripts": [
-      "js/background.js"
-    ],
-    "persistent": true
-  },
-  "icons": {
-    "16": "static/logo-circle.png",
-    "24": "static/logo-circle.png",
-    "32": "static/logo-circle.png",
-    "64": "static/logo-circle.png",
-    "128": "static/logo-circle.png",
-    "512": "static/logo-circle.png"
-  },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "manifest_version": 2
+	"name": "CBH Library Manager",
+	"version": "1.0",
+	"description": "Tiện ích nho nhỏ giúp câu lạc bộ CBH quản lý sách và việc mượn sách dễ dàng hơn ^^",
+	"permissions": [
+		"downloads",
+		"cookies",
+		"storage",
+		"notifications",
+		"webRequest",
+		"webRequestBlocking",
+		"https://cbh-server.herokuapp.com/*"
+	],
+	"browser_action": {
+		"default_title": "CBH Control Panel"
+	},
+	"background": {
+		"scripts": ["js/background.js"],
+		"persistent": true
+	},
+	"icons": {
+		"16": "static/logo-circle.png",
+		"24": "static/logo-circle.png",
+		"32": "static/logo-circle.png",
+		"64": "static/logo-circle.png",
+		"128": "static/logo-circle.png",
+		"512": "static/logo-circle.png"
+	},
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"manifest_version": 2
 }

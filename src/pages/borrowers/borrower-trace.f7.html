@@ -21,32 +21,32 @@
                 <div class="table-responsive">
                   <table class="table table-hover ">
                     <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Sách</th>
-                      <th>Mã sách</th>
-                      <th>Ngày mượn</th>
-                      <th>Hết hạn</th>
-                      <th>Hành động</th>
-                      <th>Lần gia hạn</th>
-                      <th>Phụ trách</th>
-                      <th>Ngày tạo</th>
-                    </tr>
+                      <tr>
+                        <th>ID</th>
+                        <th>Sách</th>
+                        <th>Mã sách</th>
+                        <th>Ngày mượn</th>
+                        <th>Hết hạn</th>
+                        <th>Hành động</th>
+                        <th>Lần gia hạn</th>
+                        <th>Phụ trách</th>
+                        <th>Ngày tạo</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    ${traces.map((trace, i) => $h`
-                    <tr>
-                      <td>${i + 1}</td>
-                      <td>${trace.book?.name}</td>
-                      <td>${trace.book?.code}</td>
-                      <td>${Clm.timeConverter(trace.borrowed_time)}</td>
-                      <td>${Clm.timeConverter(trace.expired_time)}</td>
-                      <td>${(trace.is_borrowing) ? "Mượn sách" : (trace.is_return) ? "Trả sách" : "Gia hạn"}</td>
-                      <td>${trace.extended_times}</td>
-                      <td>${trace.responsible_person ? trace.responsible_person?.name : ""}</td>
-                      <td>${Clm.timeConverter(trace.created_time)}</td>
-                    </tr>
-                    `)}
+                      ${traces.map((trace, i) => $h`
+                      <tr>
+                        <td>${i + 1}</td>
+                        <td>${trace.book?.name}</td>
+                        <td>${trace.book?.code}</td>
+                        <td>${Clm.timeConverter(trace.borrowed_time)}</td>
+                        <td>${Clm.timeConverter(trace.expired_time)}</td>
+                        <td>${(trace.is_borrowing) ? "Mượn sách" : (trace.is_return) ? "Trả sách" : "Gia hạn"}</td>
+                        <td>${trace.extended_times}</td>
+                        <td>${trace.responsible_person ? trace.responsible_person?.name : ""}</td>
+                        <td>${Clm.timeConverter(trace.created_time)}</td>
+                      </tr>
+                      `)}
                     </tbody>
                   </table>
                 </div>
@@ -60,17 +60,17 @@
   </div>
 </template>
 <script>
-	import Clm from "../../js/clm";
+  import Clm from "../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		const borrowerCode = props.borrowerCode;
-		let traces = [];
-		let alert = false;
-		let alertSuccess = false;
-		let returnMessage = "";
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    const borrowerCode = props.borrowerCode;
+    let traces = [];
+    let alert = false;
+    let alertSuccess = false;
+    let returnMessage = "";
 
-		const resetList = async (e) => {
-		  try {
+    const resetList = async (e) => {
+      try {
         let response = await Clm.api("borrowers/" + borrowerCode + "/trace");
         console.log(response);
         traces = response.data.trace;
@@ -92,10 +92,10 @@
         returnMessage = "Có lỗi xảy ra";
       }
       $update();
-		}
+    }
 
-		resetList();
-		// Return render function
-		return $render;
-	}
+    resetList();
+    // Return render function
+    return $render;
+  }
 </script>

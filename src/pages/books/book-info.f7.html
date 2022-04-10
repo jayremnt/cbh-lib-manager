@@ -14,8 +14,7 @@
                 <div class="card-body">
                   ${isSubmitSent && $h`
                   <div class="form-group">
-                    <div class="alert ${addSuccess ? 'alert-success' : 'alert-danger'}"
-                         role="alert">
+                    <div class="alert ${addSuccess ? 'alert-success' : 'alert-danger'}" role="alert">
                       ${returnMessage}
                     </div>
                   </div>
@@ -23,63 +22,60 @@
                   <div class="form-group">
                     <label for="input-book-name">Tên sách</label>
                     <input type="text" class="form-control" id="input-book-name" name="account-name"
-                           placeholder="Nhập tên sách..." value="${book.name}"/>
+                      placeholder="Nhập tên sách..." value="${book.name}" />
                   </div>
                   <div class="form-group">
                     <label for="input-book-author">Tác giả</label>
                     <input type="text" class="form-control" id="input-book-author" name="account-name"
-                           placeholder="Nhập tác giả" value="${book.author}"/>
+                      placeholder="Nhập tác giả" value="${book.author}" />
                   </div>
                   <div class="form-group">
                     <label for="input-book-code">Mã sách</label>
                     <input type="text" class="form-control" id="input-book-code" name="account-name"
-                           placeholder="Nhập mã sách..." value="${book.code}"/>
+                      placeholder="Nhập mã sách..." value="${book.code}" />
                   </div>
                   <div class="form-group">
                     <label for="input-book-location">Vị trí</label>
                     <input type="text" class="form-control" id="input-book-location" name="account-name"
-                           placeholder="Nhập vị trí sách..." value="${book.location}"/>
+                      placeholder="Nhập vị trí sách..." value="${book.location}" />
                   </div>
                   <div class="form-group">
                     <label for="input-book-cost">Giá tiền</label>
                     <input type="text" class="form-control" id="input-book-cost" name="account-name"
-                           placeholder="Nhập giá sách..." value="${book.cost}"/>
+                      placeholder="Nhập giá sách..." value="${book.cost}" />
                   </div>
                   <div class="form-group">
                     <label for="input-book-imported-time">Ngày nhập</label>
                     <input type="text" class="form-control" id="input-book-imported-time" name="account-name"
-                           placeholder="Nhập ngày nhập..." value="${Clm.timeConverter(book.imported_time)}" disabled/>
+                      placeholder="Nhập ngày nhập..." value="${Clm.timeConverter(book.imported_time)}" disabled />
                   </div>
                   <div class="form-group">
                     <label for="input-book-responsible-person">Người nhập</label>
                     <input type="text" class="form-control" id="input-book-responsible-person" name="account-name"
-                           placeholder="Nhập người nhập..."
-                           value="${book.responsible_person ? book.responsible_person.name : ''}" disabled/>
+                      placeholder="Nhập người nhập..."
+                      value="${book.responsible_person ? book.responsible_person.name : ''}" disabled />
                   </div>
                   <div class="form-group">
                     <label for="input-book-status">Tình trạng</label>
                     <input type="text" class="form-control" id="input-book-status" name="account-name"
-                           placeholder="Nhập tình trạng..."
-                           value='${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}'
-                           disabled/>
+                      placeholder="Nhập tình trạng..."
+                      value='${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) ? "Đã mượn" : "Chưa mượn"}'
+                      disabled />
                   </div>
                   <div class="form-group">
                     <label for="input-book-borrowed-times">Số lần được mượn</label>
                     <input type="text" class="form-control" id="input-book-borrowed-times" name="account-name"
-                           placeholder="Số lần được mượn..."
-                           value='${book.borrowed_times}'
-                           disabled/>
+                      placeholder="Số lần được mượn..." value='${book.borrowed_times}' disabled />
                   </div>
                   <div class="form-group">
                     <button type="submit" name="create-project" value="ok" class="btn btn-success"
-                            @click="${updateBook}">
+                      @click="${updateBook}">
                       Cập nhật
                     </button>
                   </div>
                   ${(book.borrowed_info[0] && book.borrowed_info[0].is_borrowed) && $h`
-                  <a href="/borrowers/info/${book.borrowed_info[0].borrower.student_code}/"
-                     class="btn btn-success"
-                     role="button" style="float: right">
+                  <a href="/borrowers/info/${book.borrowed_info[0].borrower.student_code}/" class="btn btn-success"
+                    role="button" style="float: right">
                     Đi đến người mượn <i class="mdi mdi-arrow-right"></i>
                   </a>
                   `}
@@ -94,94 +90,94 @@
 </template>
 
 <script>
-	import Clm from "../../js/clm";
+  import Clm from "../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let book = {
-			responsible_person: {},
-			borrowed_info: {
-				borrower: {}
-			}
-		};
-		let isSubmitSent = false;
-		let addSuccess = false;
-		let returnMessage = "";
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    let book = {
+      responsible_person: {},
+      borrowed_info: {
+        borrower: {}
+      }
+    };
+    let isSubmitSent = false;
+    let addSuccess = false;
+    let returnMessage = "";
 
-		const resetInfo = async function () {
-			try {
-				let response = await Clm.api("books/" + props.bookCode);
-				console.log(response);
-				if (!response.error) {
-					addSuccess = true;
-					book = response.data.book_details;
-				}
-				else {
-					isSubmitSent = true;
-					addSuccess = false;
-					returnMessage = response.message;
-				}
-			}
-			catch (e) {
-				console.log(e);
-				isSubmitSent = true;
-				addSuccess = false;
-				returnMessage = "Có lỗi xảy ra";
-			}
-			$update();
-		}
+    const resetInfo = async function () {
+      try {
+        let response = await Clm.api("books/" + props.bookCode);
+        console.log(response);
+        if (!response.error) {
+          addSuccess = true;
+          book = response.data.book_details;
+        }
+        else {
+          isSubmitSent = true;
+          addSuccess = false;
+          returnMessage = response.message;
+        }
+      }
+      catch (e) {
+        console.log(e);
+        isSubmitSent = true;
+        addSuccess = false;
+        returnMessage = "Có lỗi xảy ra";
+      }
+      $update();
+    }
 
-		resetInfo();
+    resetInfo();
 
-		const submitCreation = function (e) {
-			e.preventDefault();
-			isSubmitSent = true;
-		}
+    const submitCreation = function (e) {
+      e.preventDefault();
+      isSubmitSent = true;
+    }
 
-		const updateBook = async function (e) {
-			const bookName = $('#input-book-name').val();
-			const bookAuthor = $('#input-book-author').val();
-			const bookCode = $('#input-book-code').val();
-			const bookLocation = $('#input-book-location').val();
-			const bookCost = $('#input-book-cost').val();
-			const bookImportedTime = $('#input-book-imported-time').val();
-			const bookResponsiblePerson = $('#input-book-responsible-person').val();
-			const bookStatus = $('#input-book-status').val();
+    const updateBook = async function (e) {
+      const bookName = $('#input-book-name').val();
+      const bookAuthor = $('#input-book-author').val();
+      const bookCode = $('#input-book-code').val();
+      const bookLocation = $('#input-book-location').val();
+      const bookCost = $('#input-book-cost').val();
+      const bookImportedTime = $('#input-book-imported-time').val();
+      const bookResponsiblePerson = $('#input-book-responsible-person').val();
+      const bookStatus = $('#input-book-status').val();
 
-			console.log(bookName);
-			console.log(bookAuthor);
-			console.log(bookCode);
-			console.log(bookLocation);
-			console.log(bookCost);
-			console.log(bookImportedTime);
-			console.log(bookResponsiblePerson);
-			console.log(bookStatus);
+      console.log(bookName);
+      console.log(bookAuthor);
+      console.log(bookCode);
+      console.log(bookLocation);
+      console.log(bookCost);
+      console.log(bookImportedTime);
+      console.log(bookResponsiblePerson);
+      console.log(bookStatus);
 
-			try {
-				let response = await Clm.api("books/" + props.bookCode + "/edit", {
-					update_data: JSON.stringify({
-						name: bookName,
-						code: bookCode,
-						author: bookAuthor,
-						location: bookLocation,
-						cost: bookCost
-					})
-				});
+      try {
+        let response = await Clm.api("books/" + props.bookCode + "/edit", {
+          update_data: JSON.stringify({
+            name: bookName,
+            code: bookCode,
+            author: bookAuthor,
+            location: bookLocation,
+            cost: bookCost
+          })
+        });
 
-				console.log(response);
-				addSuccess = !response.error;
-				returnMessage = response.message;
-			}
-			catch (e) {
-				console.log(e);
-				addSuccess = false;
-				returnMessage = "Có lỗi xảy ra";
-			}
+        console.log(response);
+        addSuccess = !response.error;
+        returnMessage = response.message;
+      }
+      catch (e) {
+        console.log(e);
+        addSuccess = false;
+        returnMessage = "Có lỗi xảy ra";
+      }
 
-			props.bookCode = bookCode;
-			$update();
-			resetInfo();
-		}
+      props.bookCode = bookCode;
+      $update();
+      resetInfo();
+    }
 
-		return $render;
-	}
+    return $render;
+  }
 </script>

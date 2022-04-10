@@ -1,5 +1,5 @@
 const CONSTANTS = {
-	"API_URL": "https://cbh-server.herokuapp.com/"
+  "API_URL": "https://cbh-server.herokuapp.com/"
 };
 
 export default CONSTANTS;

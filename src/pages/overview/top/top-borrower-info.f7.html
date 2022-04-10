@@ -21,35 +21,35 @@
                 <div class="table-responsive" style="margin-top: 20px;">
                   <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>Tên</th>
-                      <th>Lớp</th>
-                      <th>Mã học sinh</th>
-                      <th>Điện thoại</th>
-                      <th>Email</th>
-                      <th>Số sách đã mượn</th>
-                      <th>Hành động</th>
-                    </tr>
+                      <tr>
+                        <th>Tên</th>
+                        <th>Lớp</th>
+                        <th>Mã học sinh</th>
+                        <th>Điện thoại</th>
+                        <th>Email</th>
+                        <th>Số sách đã mượn</th>
+                        <th>Hành động</th>
+                      </tr>
                     </thead>
                     <tbody id="listBorrowers">
-                    <tr>
-                      <td>${borrower.name}</td>
-                      <td>${borrower.class}</td>
-                      <td>${borrower.student_code}</td>
-                      <td>${borrower.phone_number}</td>
-                      <td>${borrower.email}</td>
-                      <td>${borrower.borrowed_books_amount}</td>
-                      <td>
-                        <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm"
-                           role="button">
-                          <i class="mdi mdi-menu"></i>
-                        </a>
-                        <a href="/borrowers/trace/${borrower.student_code}/" class="btn btn-dark btn-sm"
-                           role="button">
-                          <i class="mdi mdi-history"></i>
-                        </a>
-                      </td>
-                    </tr>
+                      <tr>
+                        <td>${borrower.name}</td>
+                        <td>${borrower.class}</td>
+                        <td>${borrower.student_code}</td>
+                        <td>${borrower.phone_number}</td>
+                        <td>${borrower.email}</td>
+                        <td>${borrower.borrowed_books_amount}</td>
+                        <td>
+                          <a href="/borrowers/info/${borrower.student_code}/" class="btn btn-primary btn-sm"
+                            role="button">
+                            <i class="mdi mdi-menu"></i>
+                          </a>
+                          <a href="/borrowers/trace/${borrower.student_code}/" class="btn btn-dark btn-sm"
+                            role="button">
+                            <i class="mdi mdi-history"></i>
+                          </a>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -63,33 +63,33 @@
   </div>
 </template>
 <script>
-	import Clm from "../../../js/clm";
+  import Clm from "../../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let borrower = {};
-		let alert = false;
-		let alertSuccess = false;
-		let returnMessage = "";
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    let borrower = {};
+    let alert = false;
+    let alertSuccess = false;
+    let returnMessage = "";
 
-		const resetBorrowerInfo = async function () {
-			try {
-				let response = await Clm.api(`borrowers/${props.borrowerCode}/`);
-				console.log(response);
-				borrower = response.data.borrower_info;
-				alert = false;
-			}
-			catch (e) {
-				console.log(e);
-				alert = true;
-				alertSuccess = false;
-				returnMessage = "Có lỗi xảy ra";
-			}
-			$update();
-		}
+    const resetBorrowerInfo = async function () {
+      try {
+        let response = await Clm.api(`borrowers/${props.borrowerCode}/`);
+        console.log(response);
+        borrower = response.data.borrower_info;
+        alert = false;
+      }
+      catch (e) {
+        console.log(e);
+        alert = true;
+        alertSuccess = false;
+        returnMessage = "Có lỗi xảy ra";
+      }
+      $update();
+    }
 
-		resetBorrowerInfo();
+    resetBorrowerInfo();
 
-		// Return render function
-		return $render;
-	}
+    // Return render function
+    return $render;
+  }
 </script>

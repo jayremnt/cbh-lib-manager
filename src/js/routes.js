@@ -33,102 +33,102 @@ import BorrowingBooksPage from "../pages/books/list-borrowing-books.f7.html";
 import BorrowingBorrowersPage from "../pages/borrowers/list-borrowing-borrowers.f7.html";
 
 const routes = [
-	{
-		path: '/',
-		component: DashboardPage,
-	}, {
-		path: '/top/',
-		routes: [{
-			path: 'books/:bookCode/',
-			component: TopBookInfoPage,
-		}, {
-			path: 'borrowers/:borrowerCode/',
-			component: TopBorrowerInfoPage,
-		}]
-	},{
-		path: '/borrowers/',
-		component: ListBorrowersPage,
-		routes: [{
-			path: 'add/',
-			component: AddBorrowerPage,
-		}, {
-			path: 'info/:borrowerCode/',
-			component: BorrowerInfoPage,
-		}, {
-			path: 'trace/:borrowerCode/',
-			component: BorrowerTracePage,
-		}, {
-			path: 'borrowing/',
-			component: BorrowingBorrowersPage,
-		}],
-	}, {
-		path: '/books/',
-		component: ListBooksPage,
-		routes: [{
-			path: 'available/',
-			component: AvailableBooksPage,
-		}, {
-			path: 'add/',
-			component: AddBookPage,
-		}, {
-			path: 'info/:bookCode/',
-			component: BookInfoPage,
-		}, {
-			path: 'trace/:bookCode/',
-			component: BookTracePage,
-		}, {
-			path: 'borrowing/',
-			component: BorrowingBooksPage,
-		}],
-	}, {
-		path: '/account/',
-		component: AccountPage,
-		routes: [{
-			path: 'change-info/',
-			component: ChangeInfoPage,
-		}, {
-			path: 'change-password/',
-			component: ChangePasswordPage,
-		}],
-	},
-	{
-		path: '/manage/',
-		routes: [{
-			path: 'accounts/',
-			component: AccountsManagePage,
-			routes: [{
-				path: "add/",
-				component: AddSystemAccountPage
-			}, {
-				path: "edit/:accountId/",
-				component: EditSystemAccountPage
-			}]
-		}]
-	},
-	{
-		path: '/report/',
-		component: ReportPage,
-	},
-	{
-		path: '/about/',
-		component: AboutPage,
-	},
-	{
-		path: '/form/',
-		component: FormPage,
-	},
-	{
-		path: '/aside/',
-		component: AsidePage
-	},
-	{
-		path: '/login/',
-		component: LoginPage,
-	},
-	{
-		path: '(.*)',
-		component: NotFoundPage,
-	},
+  {
+    path: '/',
+    component: DashboardPage,
+  }, {
+    path: '/top/',
+    routes: [{
+      path: 'books/:bookCode/',
+      component: TopBookInfoPage,
+    }, {
+      path: 'borrowers/:borrowerCode/',
+      component: TopBorrowerInfoPage,
+    }]
+  }, {
+    path: '/borrowers/',
+    component: ListBorrowersPage,
+    routes: [{
+      path: 'add/',
+      component: AddBorrowerPage,
+    }, {
+      path: 'info/:borrowerCode/',
+      component: BorrowerInfoPage,
+    }, {
+      path: 'trace/:borrowerCode/',
+      component: BorrowerTracePage,
+    }, {
+      path: 'borrowing/',
+      component: BorrowingBorrowersPage,
+    }],
+  }, {
+    path: '/books/',
+    component: ListBooksPage,
+    routes: [{
+      path: 'available/',
+      component: AvailableBooksPage,
+    }, {
+      path: 'add/',
+      component: AddBookPage,
+    }, {
+      path: 'info/:bookCode/',
+      component: BookInfoPage,
+    }, {
+      path: 'trace/:bookCode/',
+      component: BookTracePage,
+    }, {
+      path: 'borrowing/',
+      component: BorrowingBooksPage,
+    }],
+  }, {
+    path: '/account/',
+    component: AccountPage,
+    routes: [{
+      path: 'change-info/',
+      component: ChangeInfoPage,
+    }, {
+      path: 'change-password/',
+      component: ChangePasswordPage,
+    }],
+  },
+  {
+    path: '/manage/',
+    routes: [{
+      path: 'accounts/',
+      component: AccountsManagePage,
+      routes: [{
+        path: "add/",
+        component: AddSystemAccountPage
+      }, {
+        path: "edit/:accountId/",
+        component: EditSystemAccountPage
+      }]
+    }]
+  },
+  {
+    path: '/report/',
+    component: ReportPage,
+  },
+  {
+    path: '/about/',
+    component: AboutPage,
+  },
+  {
+    path: '/form/',
+    component: FormPage,
+  },
+  {
+    path: '/aside/',
+    component: AsidePage
+  },
+  {
+    path: '/login/',
+    component: LoginPage,
+  },
+  {
+    path: '(.*)',
+    component: NotFoundPage,
+  },
 ];
 
 export default routes;

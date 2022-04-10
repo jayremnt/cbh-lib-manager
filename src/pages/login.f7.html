@@ -6,7 +6,7 @@
           <div class="mx-auto col-md-8">
             <div class="p-b-20 text-center">
               <p>
-                <img src="/static/logo-circle.png" width="80" alt=""/>
+                <img src="/static/logo-circle.png" width="80" alt="" />
               </p>
               <p class="admin-brand-content">
                 CBH Lib Manager
@@ -24,18 +24,16 @@
               <div class="form-row">
                 <div class="form-group floating-label col-md-12">
                   <label>Email</label>
-                  <input @change="${updateEmail}" name="email" type="email" required
-                         class="form-control" placeholder="Email"/>
+                  <input @change="${updateEmail}" name="email" type="email" required class="form-control"
+                    placeholder="Email" />
                 </div>
                 <div class="form-group floating-label col-md-12">
                   <label>Password</label>
-                  <input @change="${updatePassword}" name="password" type="password" required
-                         class="form-control"
-                         placeholder="Mật khẩu"/>
+                  <input @change="${updatePassword}" name="password" type="password" required class="form-control"
+                    placeholder="Mật khẩu" />
                 </div>
               </div>
-              <button value="msc" type="submit" name="login-submit"
-                      class="btn btn-primary btn-block btn-lg">
+              <button value="msc" type="submit" name="login-submit" class="btn btn-primary btn-block btn-lg">
                 Đăng nhập
               </button>
             </form>
@@ -49,49 +47,49 @@
   </div>
 </template>
 <script>
-	import Clm from "../js/clm";
-	import Utils from "../js/utils";
+  import Clm from "../js/clm";
+  import Utils from "../js/utils";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let isLoginSent = false;
-		let loginSuccess = false;
-		let returnMessage = "";
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    let isLoginSent = false;
+    let loginSuccess = false;
+    let returnMessage = "";
 
-		let email = "";
-		let password = "";
+    let email = "";
+    let password = "";
 
-		const updateEmail = (e) => {
-			email = e.target.value;
-		};
-		const updatePassword = (e) => {
-			password = e.target.value;
-		};
+    const updateEmail = (e) => {
+      email = e.target.value;
+    };
+    const updatePassword = (e) => {
+      password = e.target.value;
+    };
 
-		const submitLogin = async (e) => {
-			e.preventDefault();
-			isLoginSent = true;
-			$update();
-			let response = await Clm.api('users/login', {
-				email: email,
-				password: password
-			});
+    const submitLogin = async (e) => {
+      e.preventDefault();
+      isLoginSent = true;
+      $update();
+      let response = await Clm.api('users/login', {
+        email: email,
+        password: password
+      });
 
-			console.log(response);
-			if (!response.error) {
-				loginSuccess = true;
-				Utils.setData("is_logged_in", true);
-				Utils.setData("account", response['data']['account'][0]);
-				Utils.setData("sess_key", response['data']['token']);
-				setTimeout(() => {
-					location.reload();
-				}, 3000);
-			}
-			returnMessage = response.message;
-			$update();
+      console.log(response);
+      if (!response.error) {
+        loginSuccess = true;
+        Utils.setData("is_logged_in", true);
+        Utils.setData("account", response['data']['account'][0]);
+        Utils.setData("sess_key", response['data']['token']);
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
+      }
+      returnMessage = response.message;
+      $update();
 
-			return false;
-		}
+      return false;
+    }
 
-		return $render;
-	}
+    return $render;
+  }
 </script>

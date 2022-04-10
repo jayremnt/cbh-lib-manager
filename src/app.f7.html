@@ -3,10 +3,10 @@
     <aside class="admin-sidebar">
       <div class="admin-sidebar-brand">
         <!-- begin sidebar branding-->
-        <img class="admin-brand-logo" src="static/logo-circle.png" width="40" alt="atmos Logo"/>
+        <img class="admin-brand-logo" src="static/logo-circle.png" width="40" alt="atmos Logo" />
         <span class="admin-brand-content font-secondary">
-					<a href="/" data-view="#view-main" style="color: white;">CBH Lib Manager</a>
-				</span>
+          <a href="/" data-view="#view-main" style="color: white;">CBH Lib Manager</a>
+        </span>
         <!-- end sidebar branding-->
         <div class="ml-auto">
           <!-- sidebar pin-->
@@ -38,10 +38,10 @@
         <nav class="ml-auto">
           <ul class="nav align-items-center">
             <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                 aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
                 <div class="avatar avatar-sm avatar-online">
-                  <img src="${Clm.isBooted ? avatarUrl : avatarSample}" class="avatar-img rounded-circle bg-dark"/>
+                  <img src="${Clm.isBooted ? avatarUrl : avatarSample}" class="avatar-img rounded-circle bg-dark" />
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
@@ -67,8 +67,8 @@
 
     <!--		Modal confirm delete-->
 
-    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel"
-         style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" style="display: none;"
+      aria-hidden="true">
       <div class="modal-dialog  modal-dialog-align-top-left" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -94,8 +94,8 @@
 
     <!--		Modal confirm extend book-->
 
-    <div class="modal fade" id="extend" tabindex="-1" role="dialog" aria-labelledby="extendLabel"
-         style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="extend" tabindex="-1" role="dialog" aria-labelledby="extendLabel" style="display: none;"
+      aria-hidden="true">
       <div class="modal-dialog  modal-dialog-align-top-left" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -121,8 +121,8 @@
 
     <!--		Modal confirm return book-->
 
-    <div class="modal fade" id="return" tabindex="-1" role="dialog" aria-labelledby="returnLabel"
-         style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="return" tabindex="-1" role="dialog" aria-labelledby="returnLabel" style="display: none;"
+      aria-hidden="true">
       <div class="modal-dialog  modal-dialog-align-top-left" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -148,8 +148,8 @@
 
     <!--		Modal add-->
 
-    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel"
-         style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel" style="display: none;"
+      aria-hidden="true">
       <div class="modal-dialog  modal-dialog-align-top-left" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -175,7 +175,7 @@
 
     <div class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" id="loader">
       <div class="modal-dialog modal-sm"
-           style="display: table; position: relative; margin: 0 auto; top: calc(50% - 24px); z-index: 99999;">
+        style="display: table; position: relative; margin: 0 auto; top: calc(50% - 24px); z-index: 99999;">
         <div class="modal-content" style="width: 48px; background-color: transparent; border: none;">
           <div class="spinner-grow text-primary" role="status">
             <span class="sr-only">Loading...</span>
@@ -188,37 +188,37 @@
   </div>
 </template>
 <script>
-	import Clm from "./js/clm";
-	import Utils from "./js/utils";
+  import Clm from "./js/clm";
+  import Utils from "./js/utils";
 
-	const md5 = require("md5");
+  const md5 = require("md5");
 
-	export default (props, {$f7, $update}) => {
-		let avatarSample = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
-		let account = {};
-		let avatarUrl = "";
+  export default (props, { $f7, $update }) => {
+    let avatarSample = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
+    let account = {};
+    let avatarUrl = "";
 
-		let waitBootInterval = setInterval(() => {
-			if (Clm.isBooted) {
-				clearInterval(waitBootInterval);
-				account = Clm.account;
-				avatarUrl = "http://www.gravatar.com/avatar/" + md5(account['email']) + "?s=64";
-				$update();
-			}
-		}, 100);
+    let waitBootInterval = setInterval(() => {
+      if (Clm.isBooted) {
+        clearInterval(waitBootInterval);
+        account = Clm.account;
+        avatarUrl = "http://www.gravatar.com/avatar/" + md5(account['email']) + "?s=64";
+        $update();
+      }
+    }, 100);
 
-		const logout = (e) => {
-			e.preventDefault();
-			chrome.storage.local.clear();
-			location.reload();
-		}
+    const logout = (e) => {
+      e.preventDefault();
+      chrome.storage.local.clear();
+      location.reload();
+    }
 
-		const confirmModal = (e) => {
-			let modalId = e.currentTarget.dataset.modalId;
-			Clm.modalResolver(true);
-			$(`#${modalId}`).modal('hide');
-		}
+    const confirmModal = (e) => {
+      let modalId = e.currentTarget.dataset.modalId;
+      Clm.modalResolver(true);
+      $(`#${modalId}`).modal('hide');
+    }
 
-		return $render;
-	}
+    return $render;
+  }
 </script>

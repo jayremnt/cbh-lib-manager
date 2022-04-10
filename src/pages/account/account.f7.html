@@ -8,7 +8,7 @@
             <div class="col-md-6 text-white p-b-30">
               <div class="media">
                 <div class="avatar avatar-xl mr-3">
-                  <img src="${avatarUrl}" class="rounded-circle" alt=""/>
+                  <img src="${avatarUrl}" class="rounded-circle" alt="" />
                 </div>
                 <div class="media-body">
                   <h1>${account.name}</h1>
@@ -57,63 +57,63 @@
               </div>
             </div>
 
-<!--            <div class="card m-b-30">-->
+            <!--            <div class="card m-b-30">-->
 
-<!--              <div class="card-header">-->
-<!--                <div class="avatar mr-2 avatar-xs">-->
-<!--                  <div class="avatar-title bg-primary rounded-circle">-->
-<!--                    <i class="mdi mdi-account mdi-18px"></i>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                Dự án đã tham gia-->
-<!--              </div>-->
+            <!--              <div class="card-header">-->
+            <!--                <div class="avatar mr-2 avatar-xs">-->
+            <!--                  <div class="avatar-title bg-primary rounded-circle">-->
+            <!--                    <i class="mdi mdi-account mdi-18px"></i>-->
+            <!--                  </div>-->
+            <!--                </div>-->
+            <!--                Dự án đã tham gia-->
+            <!--              </div>-->
 
-<!--              <div class="list-group list list-group-flush">-->
+            <!--              <div class="list-group list list-group-flush">-->
 
-<!--                <div class="list-group-item d-flex  align-items-center">-->
-<!--                  <div class="m-r-20">-->
-<!--                    <div class="avatar avatar-sm ">-->
-<!--                      <div class="avatar-title rounded-circle bg-success">M</div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="">-->
-<!--                    <div class="name"><span>MonokaiToolkit Android</span></div>-->
-<!--                    <div class="text-muted">Tester</div>-->
-<!--                  </div>-->
+            <!--                <div class="list-group-item d-flex  align-items-center">-->
+            <!--                  <div class="m-r-20">-->
+            <!--                    <div class="avatar avatar-sm ">-->
+            <!--                      <div class="avatar-title rounded-circle bg-success">M</div>-->
+            <!--                    </div>-->
+            <!--                  </div>-->
+            <!--                  <div class="">-->
+            <!--                    <div class="name"><span>MonokaiToolkit Android</span></div>-->
+            <!--                    <div class="text-muted">Tester</div>-->
+            <!--                  </div>-->
 
-<!--                </div>-->
-<!--                <div class="list-group-item d-flex  align-items-center">-->
-<!--                  <div class="m-r-20">-->
-<!--                    <div class="avatar avatar-sm ">-->
-<!--                      <div class="avatar-title rounded-circle bg-warning">M</div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="">-->
-<!--                    <div class="name">MonikaiToolkit IOS</div>-->
-<!--                    <div class="text-muted">Tester</div>-->
-<!--                  </div>-->
+            <!--                </div>-->
+            <!--                <div class="list-group-item d-flex  align-items-center">-->
+            <!--                  <div class="m-r-20">-->
+            <!--                    <div class="avatar avatar-sm ">-->
+            <!--                      <div class="avatar-title rounded-circle bg-warning">M</div>-->
+            <!--                    </div>-->
+            <!--                  </div>-->
+            <!--                  <div class="">-->
+            <!--                    <div class="name">MonikaiToolkit IOS</div>-->
+            <!--                    <div class="text-muted">Tester</div>-->
+            <!--                  </div>-->
 
-<!--                </div>-->
+            <!--                </div>-->
 
-<!--              </div>-->
+            <!--              </div>-->
 
 
-<!--            </div>-->
+            <!--            </div>-->
 
           </div>
 
 
-<!--          <div class="col-lg-8 order-1 order-lg-0 m-b-30">-->
-<!--            <div class="card m-b-30">-->
-<!--              <div class="card-header">-->
-<!--                <div class="card-title">Bài viết mới</div>-->
-<!--              </div>-->
-<!--              <div class="card-body">-->
-<!--                <div id="summernote"></div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            &lt;!&ndash;              bài đăng của người dùng &ndash;&gt;-->
-<!--          </div>-->
+          <!--          <div class="col-lg-8 order-1 order-lg-0 m-b-30">-->
+          <!--            <div class="card m-b-30">-->
+          <!--              <div class="card-header">-->
+          <!--                <div class="card-title">Bài viết mới</div>-->
+          <!--              </div>-->
+          <!--              <div class="card-body">-->
+          <!--                <div id="summernote"></div>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            &lt;!&ndash;              bài đăng của người dùng &ndash;&gt;-->
+          <!--          </div>-->
 
         </div>
 
@@ -126,7 +126,7 @@
   import Clm from "../../js/clm";
   const md5 = require("md5");
 
-  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
     $on("pageBeforeIn", (e, page) => {
       window.$("#summernote").summernote({
         height: 100

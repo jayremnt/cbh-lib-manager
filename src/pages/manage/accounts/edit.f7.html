@@ -21,12 +21,12 @@
                 <div class="form-group">
                   <label for="accountName">Họ và tên</label>
                   <input type="text" class="form-control" id="accountName" name="account-name"
-                         placeholder="Nhập họ và tên..." value="${account.name}"/>
+                    placeholder="Nhập họ và tên..." value="${account.name}" />
                 </div>
                 <div class="form-group">
                   <label for="accountEmail">Email</label>
                   <input type="text" class="form-control" id="accountEmail" name="account-email"
-                         placeholder="Nhập địa chỉ email..." value="${account.email}"/>
+                    placeholder="Nhập địa chỉ email..." value="${account.email}" />
                 </div>
                 <div class="form-group">
                   <label for="role">Vai trò</label>
@@ -39,7 +39,7 @@
                 <div class="form-group">
                   <label for="accountPassword">Mật khẩu</label>
                   <input type="password" class="form-control" id="accountPassword" name="account-password"
-                         placeholder="Nhập mật khẩu..."/>
+                    placeholder="Nhập mật khẩu..." />
                 </div>
                 <div class="form-group">
                   <button type="submit" name="create-project" value="ok" class="btn btn-primary">
@@ -56,79 +56,79 @@
 </template>
 
 <script>
-	import Clm from "../../../js/clm";
+  import Clm from "../../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		$on('pageBeforeIn', (e, page) => {
-			window.$(".js-select2").select2();
-		});
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    $on('pageBeforeIn', (e, page) => {
+      window.$(".js-select2").select2();
+    });
 
-		let isSubmitSent = false;
-		let addSuccess = false;
-		let returnMessage = "";
-		let accountId = props.accountId;
-		let account = {};
+    let isSubmitSent = false;
+    let addSuccess = false;
+    let returnMessage = "";
+    let accountId = props.accountId;
+    let account = {};
 
-		const resetInfo = async function () {
-			try {
-				let response = await Clm.api("users/info", {
-					userId: accountId
-				});
-				account = response.data.user;
-				if (response.error) {
-					isSubmitSent = true;
+    const resetInfo = async function () {
+      try {
+        let response = await Clm.api("users/info", {
+          userId: accountId
+        });
+        account = response.data.user;
+        if (response.error) {
+          isSubmitSent = true;
           addSuccess = false;
           returnMessage = response.message;
         }
-			}
-			catch (e) {
-				isSubmitSent = true;
-				addSuccess = false;
-				returnMessage = "Có lỗi xảy ra";
-			}
-			$update();
-		}
+      }
+      catch (e) {
+        isSubmitSent = true;
+        addSuccess = false;
+        returnMessage = "Có lỗi xảy ra";
+      }
+      $update();
+    }
 
-		resetInfo();
+    resetInfo();
 
-		const submitCreation = async function (e) {
-			e.preventDefault();
-			isSubmitSent = true;
-			let accountName = document.getElementById("accountName").value;
-			let accountEmail = document.getElementById("accountEmail").value;
-			let role = document.getElementById("role").value;
-			let password = document.getElementById("accountPassword").value;
+    const submitCreation = async function (e) {
+      e.preventDefault();
+      isSubmitSent = true;
+      let accountName = document.getElementById("accountName").value;
+      let accountEmail = document.getElementById("accountEmail").value;
+      let role = document.getElementById("role").value;
+      let password = document.getElementById("accountPassword").value;
 
-			if (!accountName || !accountEmail || !role) {
-				addSuccess = false;
-				returnMessage = "Chưa điền đủ mục";
-			}
-			else {
-				let response = password ? await Clm.api("users/edit", {
-					userId: accountId,
-					updateData: JSON.stringify({
-						name: accountName,
-						email: accountEmail,
-						role: role,
-						password: password
-					})
-				}) : await Clm.api("users/edit", {
-					userId: accountId,
-					updateData: JSON.stringify({
-						name: accountName,
-						email: accountEmail,
-						role: role
-					})
-				});
-				console.log(response);
-				addSuccess = !response.error;
-				returnMessage = response.message;
-				$update();
-			}
-			$update();
+      if (!accountName || !accountEmail || !role) {
+        addSuccess = false;
+        returnMessage = "Chưa điền đủ mục";
+      }
+      else {
+        let response = password ? await Clm.api("users/edit", {
+          userId: accountId,
+          updateData: JSON.stringify({
+            name: accountName,
+            email: accountEmail,
+            role: role,
+            password: password
+          })
+        }) : await Clm.api("users/edit", {
+          userId: accountId,
+          updateData: JSON.stringify({
+            name: accountName,
+            email: accountEmail,
+            role: role
+          })
+        });
+        console.log(response);
+        addSuccess = !response.error;
+        returnMessage = response.message;
+        $update();
+      }
+      $update();
 
-			await resetInfo();
-		}
-		return $render;
-	}
+      await resetInfo();
+    }
+    return $render;
+  }
 </script>

@@ -24,33 +24,32 @@
                 <div class="table-responsive" style="margin-top: 20px;">
                   <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>Tên sách</th>
-                      <th>Tác giả</th>
-                      <th>Mã sách</th>
-                      <th>Vị trí</th>
-                      <th>Lần được mượn</th>
-                      <th>Hành động</th>
-                    </tr>
+                      <tr>
+                        <th>Tên sách</th>
+                        <th>Tác giả</th>
+                        <th>Mã sách</th>
+                        <th>Vị trí</th>
+                        <th>Lần được mượn</th>
+                        <th>Hành động</th>
+                      </tr>
                     </thead>
                     <tbody id="listAllBooks">
-                    <tr>
-                      <td>${book.name}</td>
-                      <td>${book.author}</td>
-                      <td>${book.code}</td>
-                      <td>${book.location}</td>
-                      <td>${book.borrowed_times}</td>
-                      <td>
-                        <a href="/books/info/${book.code}/" class="btn btn-primary btn-sm" role="button">
-                          <i class="mdi mdi-menu"></i>
-                        </a>
-                        <a href="/books/trace/${book.code}/" class="btn btn-dark btn-sm"
-                           role="button">
-                          <i class="mdi mdi-history"></i>
-                        </a>
+                      <tr>
+                        <td>${book.name}</td>
+                        <td>${book.author}</td>
+                        <td>${book.code}</td>
+                        <td>${book.location}</td>
+                        <td>${book.borrowed_times}</td>
+                        <td>
+                          <a href="/books/info/${book.code}/" class="btn btn-primary btn-sm" role="button">
+                            <i class="mdi mdi-menu"></i>
+                          </a>
+                          <a href="/books/trace/${book.code}/" class="btn btn-dark btn-sm" role="button">
+                            <i class="mdi mdi-history"></i>
+                          </a>
 
-                      </td>
-                    </tr>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -64,41 +63,41 @@
   </div>
 </template>
 <script>
-	import Clm from "../../../js/clm";
+  import Clm from "../../../js/clm";
 
-	export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
-		let book = {};
-		let alert = false;
-		let alertSuccess = false;
-		let returnMessage = "";
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
+    let book = {};
+    let alert = false;
+    let alertSuccess = false;
+    let returnMessage = "";
 
-		const resetInfo = async function () {
-			try {
-				let response = await Clm.api("books/" + props.bookCode);
-				console.log(response);
-				if (!response.error) {
-					alert = false;
-					alertSuccess = true;
-					book = response.data.book_details;
-				}
-				else {
-					alert = true;
-					alertSuccess = false;
-					returnMessage = response.message;
-				}
-			}
-			catch (e) {
-				console.log(e);
-				alert = true;
-				alertSuccess = false;
-				returnMessage = "Có lỗi xảy ra";
-			}
-			$update();
-		}
+    const resetInfo = async function () {
+      try {
+        let response = await Clm.api("books/" + props.bookCode);
+        console.log(response);
+        if (!response.error) {
+          alert = false;
+          alertSuccess = true;
+          book = response.data.book_details;
+        }
+        else {
+          alert = true;
+          alertSuccess = false;
+          returnMessage = response.message;
+        }
+      }
+      catch (e) {
+        console.log(e);
+        alert = true;
+        alertSuccess = false;
+        returnMessage = "Có lỗi xảy ra";
+      }
+      $update();
+    }
 
-		resetInfo();
+    resetInfo();
 
-		// Return render function
-		return $render;
-	}
+    // Return render function
+    return $render;
+  }
 </script>

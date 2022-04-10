@@ -24,36 +24,36 @@
                 <div class="table-responsive">
                   <table class="table table-hover ">
                     <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Email</th>
-                      <th>Tên người dùng</th>
-                      <th>Vai trò</th>
-                      <th>Lựa chọn</th>
-                    </tr>
+                      <tr>
+                        <th>No</th>
+                        <th>Email</th>
+                        <th>Tên người dùng</th>
+                        <th>Vai trò</th>
+                        <th>Lựa chọn</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    ${accounts.map((account, i) => $h`
-                    <tr>
-                      <td>${i + 1}</td>
-                      <td>${account.email}</td>
-                      <td>${account.name}</td>
-                      <td>${account.role}</td>
-                      ${(account.email !== 'jayremnt@gmail.com' && account.email !== 'admin@gmail.com') && $h`
-                      <td>
-                        <a href="/manage/accounts/edit/${account._id}/" class="btn btn-info projects" role="button">
-                          <i class="mdi mdi-pencil-outline"></i>
-                        </a>
+                      ${accounts.map((account, i) => $h`
+                      <tr>
+                        <td>${i + 1}</td>
+                        <td>${account.email}</td>
+                        <td>${account.name}</td>
+                        <td>${account.role}</td>
+                        ${(account.email !== 'jayremnt@gmail.com' && account.email !== 'admin@gmail.com') && $h`
+                        <td>
+                          <a href="/manage/accounts/edit/${account._id}/" class="btn btn-info projects" role="button">
+                            <i class="mdi mdi-pencil-outline"></i>
+                          </a>
 
-                        <button @click="${deleteAccount}" type="button" class="btn btn-danger"
-                                data-id="${account._id}">
-                          <i class="mdi mdi-delete"></i>
-                        </button>
+                          <button @click="${deleteAccount}" type="button" class="btn btn-danger"
+                            data-id="${account._id}">
+                            <i class="mdi mdi-delete"></i>
+                          </button>
 
-                      </td>
-                      `}
-                    </tr>
-                    `)}
+                        </td>
+                        `}
+                      </tr>
+                      `)}
                     </tbody>
                   </table>
                 </div>
@@ -70,11 +70,11 @@
 <script>
   import Clm from "../../js/clm";
 
-  export default function (props, {$f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted}) {
+  export default function (props, { $f7, $on, $update, $onBeforeMount, $onMounted, $onBeforeUnmount, $onUnmounted }) {
     let accounts = [];
-		let alert = false;
-		let alertSuccess = false;
-		let returnMessage = "";
+    let alert = false;
+    let alertSuccess = false;
+    let returnMessage = "";
 
     const resetList = async () => {
       try {
